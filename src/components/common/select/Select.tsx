@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import * as S from "./style";
 
-const Select = () => {
+interface SelectProps {
+  label: string;
+  options: string[];
+}
+
+const Select = ({ label, options }: SelectProps) => {
   // 토글 설정
   const [isOptionVisible, setOptionVisible] = useState<boolean>(false);
 
@@ -13,14 +18,14 @@ const Select = () => {
   return (
     <S.Wrap>
       <S.Select onClick={onClickToggleHandler}>
-        <div>Select option</div>
+        <div>{label}</div>
         <div>icon</div>
       </S.Select>
       {isOptionVisible && (
         <S.Option>
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
+          {options.map((option, index) => (
+            <li key={index}>{option}</li>
+          ))}
         </S.Option>
       )}
     </S.Wrap>
