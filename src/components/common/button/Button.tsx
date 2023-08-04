@@ -21,17 +21,12 @@ import Button, { PrimaryButtonProps } from "../components/common/button/Button";
       </div>
  *--------------------------------------------------------*/
 
-const PrimitiveButton: React.FC<PrimitiveButtonProps> = ({ children, rightSlot, ...restProps }) => {
+const PrimitiveButton: React.FC<PrimitiveButtonProps> = ({ children, ...restProps }) => {
   return (
     <StyledButton {...restProps}>
-      {rightSlot ? (
-        <ButtonInner>
-          <>{rightSlot}</>
-          <>{children}</>
-        </ButtonInner>
-      ) : (
+      <ButtonInner>
         <>{children}</>
-      )}
+      </ButtonInner>
     </StyledButton>
   );
 };
