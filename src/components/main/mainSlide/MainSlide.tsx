@@ -49,6 +49,13 @@ const MainSlide = () => {
       <S.ProgressBar>
         {stepTexts.map((text, index) => (
           <S.StepWrapper>
+            {index !== stepTexts.length - 1 && (
+              <S.StepLine
+                active={
+                  index + 1 < currentStep || (currentStep === 1 && index === stepTexts.length - 1)
+                }
+              />
+            )}
             <S.Step key={index} active={index + 1 <= currentStep}></S.Step>
             <S.TextWrapper>
               <h3>{text.title}</h3>

@@ -18,6 +18,7 @@ export const StepWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 260px;
+  position: relative;
 `;
 
 export const Step = styled.div<{ active: boolean }>`
@@ -25,6 +26,17 @@ export const Step = styled.div<{ active: boolean }>`
   height: 73px;
   border-radius: 50%;
   background-color: ${(props) => (props.active ? "#FF5A00" : "#ECECEC")};
+`;
+
+export const StepLine = styled.div<{ active: boolean }>`
+  width: 4px;
+  height: 100%;
+  background-color: ${(props) => (props.active ? "#FF5A00" : "#ECECEC")};
+  /* transform: translateY(-50%); */
+  position: absolute;
+  top: 50%;
+  left: 7%;
+  z-index: -1;
 `;
 
 export const TextWrapper = styled.div`
