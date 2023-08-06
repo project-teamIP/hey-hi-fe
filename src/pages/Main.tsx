@@ -14,6 +14,7 @@ const Main = () => {
       <footer />
     </Layout>
   );
+};
 
 export default Main;
 
