@@ -9,6 +9,7 @@ export interface PrimitiveButtonProps {
   size?: "large" | "middle" | "small" | "the smallest" | "loginbtn";
   activeBc?: string;
   outlined?: boolean;
+  onClick?: () => void;
 }
 
 export const StyledButton = styled.button<PrimitiveButtonProps>`
