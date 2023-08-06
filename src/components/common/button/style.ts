@@ -2,12 +2,11 @@ import styled, { css } from "styled-components";
 
 export interface PrimitiveButtonProps {
   children: React.ReactNode;
-  rightSlot?: React.ReactNode;
   radius?: string;
   bc?: string;
   color?: string;
   fw?: string;
-  size?: "large" | "middle" | "small" | "loginbtn";
+  size?: "large" | "middle" | "small" | "the smallest" | "loginbtn";
   activeBc?: string;
   outlined?: boolean;
 }
@@ -44,6 +43,14 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
           font-size: 20px;
         `;
       case "small":
+        return css`
+          height: 60px;
+          width: 141px;
+          border-radius: 15px;
+          font-weight: 600;
+          font-size: 22px;
+        `;
+      case "the smallest":
         return css`
           height: 60px;
           width: 141px;
