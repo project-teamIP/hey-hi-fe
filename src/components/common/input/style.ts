@@ -8,7 +8,7 @@ export const InputBox = styled.input<InputProps>`
   width: ${(props) => (props.size === "small" ? "300px" : "458px")};
   height: 60px;
   padding: 20px 28px;
-  border-radius: 4px;
+  border-radius: 15px;
   border: 2px solid #a0a0a0;
   font-size: 18px;
 
