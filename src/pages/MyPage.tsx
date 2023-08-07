@@ -1,11 +1,13 @@
 import React from "react";
 import MyPageAside from "../components/myPage/myPageAside/MyPageAside";
 import { styled } from "styled-components";
+import MyPageEdit from "../components/myPage/myPageEdit/MyPageEdit";
 
 const MyPage = () => {
   return (
     <Layout>
       <MyPageAside />
+      <MyPageEdit />
     </Layout>
   );
 };
