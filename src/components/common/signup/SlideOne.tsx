@@ -20,11 +20,11 @@ const SlideOne = ({ slideIndex, onClickNextButtonHandler }: SlideOneProps) => {
 
       {/* 비밀번호 */}
       <S.Title>비밀번호</S.Title>
-      <Input placeholder="비밀번호" value="value" />
+      <Input placeholder="비밀번호" value="value" size="medium" />
 
       {/* 비밀번호 확인 */}
       <S.Title>성별</S.Title>
-      <Input placeholder="비밀번호 재입력" value="value" />
+      <Input placeholder="비밀번호 재입력" value="value" size="medium" />
 
       {/* 다음으로 넘어가기 */}
       <S.NextButton size="middle" onClick={onClickNextButtonHandler}>
