@@ -6,7 +6,7 @@ interface InputProps {
   readonly placeholder: string;
   readonly onChangeHandler?: (text: string) => void;
   readonly value: string;
-  size?: "small" | "large";
+  size?: "small" | "medium" | "large";
 }
 
 const Input = ({ placeholder, onChangeHandler, value, size }: InputProps) => {
