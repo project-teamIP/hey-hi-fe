@@ -16,7 +16,7 @@ const SlideOne = ({ slideIndex, onClickNextButtonHandler }: SlideTwoProps) => {
       <S.Title>닉네임</S.Title>
       <S.NameContainer>
         <Input placeholder="닉네임 입력" value="value" size="small" />
-        <Button.Primary size="small">중복확인</Button.Primary>
+        <Button.Primary size="the smallest">중복확인</Button.Primary>
       </S.NameContainer>
 
       {/* 거주국가 */}
