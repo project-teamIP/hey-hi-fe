@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 export interface DashBoardStyleProps {
   children: React.ReactNode;
   size?: "diallogBox" | "callLog" | "review" | "interest";
+  style?: React.CSSProperties;
 }
 
 export const StyledContainer = styled.div<DashBoardStyleProps>`
