@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as S from "./style";
 import SlideOne from "../../components/common/signup/SlideOne";
 import SlideTwo from "../../components/common/signup/SlideTwo";
@@ -7,7 +7,6 @@ import SlideThree from "../../components/common/signup/SlideThree";
 const Signup = () => {
   // 슬라이드의 번호를 체크
   const [slideIndex, setSlideIndex] = useState<number>(0);
-  const stepDotCount = 3;
 
   // 클릭 시 슬라이드 번호 이동
   const onClickNextButtonHandler = () => {
@@ -19,28 +18,33 @@ const Signup = () => {
     setSlideIndex(index);
   };
 
-  // 브라우저 뒤로가기 클릭시 뒤로가는 로직
-  useEffect(() => {
-    // 뒤로가기 이벤트 리스너 생성
-    const onClickPrevButtonHandler = () => {
-      const prevToSlide = Math.max(0, slideIndex - 1);
-      setSlideIndex(prevToSlide);
-    };
-
-    window.addEventListener("prev", onClickPrevButtonHandler);
-
-    // 컴포넌트 언 마운트 시 이벤트 리스너 제거
-    return () => {
-      window.removeEventListener("prev", onClickPrevButtonHandler);
-    };
-  }, [slideIndex]);
-
   return (
     <S.Wrap>
+      {/* 회원가입 스탭 */}
+      <S.Header>
+        <h1>회원가입</h1>
+        <S.StepDots>
+          <S.StepDot
+            onClick={() => goToSlide(0)}
+            className={slideIndex >= 0 ? "active hideAfter" : "hideAfter"}>
+            1
+          </S.StepDot>
+          <S.StepDot onClick={() => goToSlide(1)} className={slideIndex >= 1 ? "active" : ""}>
+            2
+          </S.StepDot>
+          <S.StepDot onClick={() => goToSlide(2)} className={slideIndex >= 2 ? "active" : ""}>
+            3
+          </S.StepDot>
+        </S.StepDots>
+      </S.Header>
+
+      {/* 회원가입 내용 */}
       <S.Container>
-        <SlideOne />
-        <SlideTwo />
-        <SlideThree />
+        <S.Slides style={{ transform: `translateX(-${slideIndex * 458}px)` }}>
+          <SlideOne slideIndex={slideIndex} onClickNextButtonHandler={onClickNextButtonHandler} />
+          <SlideTwo slideIndex={slideIndex} onClickNextButtonHandler={onClickNextButtonHandler} />
+          <SlideThree />
+        </S.Slides>
       </S.Container>
     </S.Wrap>
   );

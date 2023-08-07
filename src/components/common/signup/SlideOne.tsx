@@ -2,18 +2,34 @@ import React from "react";
 import * as S from "./style";
 import Button from "../button/Button";
 import Input from "../input/Input";
-import Select from "../select/Select";
 
-const SlideOne = () => {
+interface SlideOneProps {
+  slideIndex: number;
+  onClickNextButtonHandler: () => void;
+}
+
+const SlideOne = ({ slideIndex, onClickNextButtonHandler }: SlideOneProps) => {
   return (
     <S.Wrap>
-      <div>닉네임</div>
-      <div>
-        <Input placeholder="닉네임 입력" value="value" />
-        <Button.Primary size="small">1</Button.Primary>
-      </div>
-      <div>거주국가</div>
-      <Select label="국가를 선택해주세요." options={["한국", "일본"]} />
+      {/* 닉네임 */}
+      <S.Title>이메일</S.Title>
+      <S.NameContainer>
+        <Input placeholder="example@gmail.com" value="value" size="small" />
+        <Button.Primary size="small">중복확인</Button.Primary>
+      </S.NameContainer>
+
+      {/* 비밀번호 */}
+      <S.Title>비밀번호</S.Title>
+      <Input placeholder="비밀번호" value="value" />
+
+      {/* 비밀번호 확인 */}
+      <S.Title>성별</S.Title>
+      <Input placeholder="비밀번호 재입력" value="value" />
+
+      {/* 다음으로 넘어가기 */}
+      <S.NextButton size="middle" onClick={onClickNextButtonHandler}>
+        다음으로 넘어가기
+      </S.NextButton>
     </S.Wrap>
   );
 };

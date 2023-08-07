@@ -17,7 +17,6 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
-        <Signup />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
