@@ -31,19 +31,24 @@ const PrimitiveButton: React.FC<PrimitiveButtonProps> = ({ children, ...restProp
   );
 };
 
+interface PrimaryButtonProps extends PrimitiveButtonProps {
+  onClick?: () => void; // 클릭 이벤트 핸들러 추가
+}
+
 /*--------------------------------------------------------*
  * Primary Style
  *--------------------------------------------------------*/
 
 interface PrimaryButtonProps extends PrimitiveButtonProps {}
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = (props) => {
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({ onClick, ...props }) => {
   return (
     <PrimitiveButton
       {...props}
       bc="rgba(183, 183, 183, 1)"
       color="rgba(255, 255, 255, 1)"
       activeBc="rgba(50, 50, 50, 1)"
+      onClick={onClick}
     />
   );
 };

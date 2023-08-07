@@ -9,6 +9,7 @@ export interface PrimitiveButtonProps {
   size?: "large" | "middle" | "small" | "the smallest" | "loginbtn";
   activeBc?: string;
   outlined?: boolean;
+  onClick?: () => void;
 }
 
 export const StyledButton = styled.button<PrimitiveButtonProps>`
@@ -60,9 +61,9 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
         `;
       case "loginbtn":
         return css`
-          height: 44px;
-          width: 153px;
-          border-radius: 50px;
+          height: 60px;
+          width: 217px;
+          border-radius: 15px;
           font-weight: 400;
           font-size: 16px;
         `;
