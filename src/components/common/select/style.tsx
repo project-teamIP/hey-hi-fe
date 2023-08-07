@@ -1,22 +1,34 @@
 import { styled } from "styled-components";
 
+interface SelectProps {
+  size?: "normal" | "large";
+}
+
 export const Wrap = styled.div`
   position: relative;
 `;
 
-export const Select = styled.div`
+export const Select = styled.div<SelectProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 458px;
+  width: ${(props) =>
+    ({
+      normal: "458px",
+      large: "575px",
+    })[props.size || "large"]};
   height: 60px;
   padding: 13px 10px 12px 28px;
   border: 1px solid #bababa;
   border-radius: 15px;
 `;
 
-export const Option = styled.ul`
-  width: 458px;
+export const Option = styled.ul<SelectProps>`
+  width: ${(props) =>
+    ({
+      normal: "458px",
+      large: "575px",
+    })[props.size || "large"]};
   margin-top: 9px;
   padding: 9px 10px;
   border: 1px solid #bababa;

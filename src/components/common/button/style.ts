@@ -11,6 +11,7 @@ export interface PrimitiveButtonProps {
   height?: string;
   activeBc?: string;
   outlined?: boolean;
+  onClick?: () => void;
   style?: React.CSSProperties; // style 속성 추가
 }
 
@@ -63,9 +64,9 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
         `;
       case "loginbtn":
         return css`
-          height: 44px;
-          width: 153px;
-          border-radius: 50px;
+          height: 60px;
+          width: 217px;
+          border-radius: 15px;
           font-weight: 400;
           font-size: 16px;
         `;
