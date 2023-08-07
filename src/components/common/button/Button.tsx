@@ -41,13 +41,24 @@ interface PrimaryButtonProps extends PrimitiveButtonProps {
 
 interface PrimaryButtonProps extends PrimitiveButtonProps {}
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ onClick, ...props }) => {
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({
+  onClick,
+  bc,
+  color,
+  activeBc,
+  ...props
+}) => {
+  // 기본값을 설정합니다.
+  const defaultBc = "rgba(183, 183, 183, 1)";
+  const defaultColor = "rgba(255, 255, 255, 1)";
+  const defaultActiveBc = "rgba(50, 50, 50, 1)";
+
   return (
     <PrimitiveButton
       {...props}
-      bc="rgba(183, 183, 183, 1)"
-      color="rgba(255, 255, 255, 1)"
-      activeBc="rgba(50, 50, 50, 1)"
+      bc={bc || defaultBc} // bc 값이 없을 경우 기본값을 사용합니다.
+      color={color || defaultColor} // color 값이 없을 경우 기본값을 사용합니다.
+      activeBc={activeBc || defaultActiveBc} // activeBc 값이 없을 경우 기본값을 사용합니다.
       onClick={onClick}
     />
   );
