@@ -4,9 +4,10 @@ import * as S from "./style";
 interface SelectProps {
   label: string;
   options: string[];
+  size?: "normal" | "large";
 }
 
-const Select = ({ label, options }: SelectProps) => {
+const Select = ({ label, options, size }: SelectProps) => {
   // 토글 설정
   const [isOptionVisible, setOptionVisible] = useState<boolean>(false);
 
@@ -17,12 +18,12 @@ const Select = ({ label, options }: SelectProps) => {
 
   return (
     <S.Wrap>
-      <S.Select onClick={onClickToggleHandler}>
+      <S.Select onClick={onClickToggleHandler} size={size}>
         <div>{label}</div>
         <div>icon</div>
       </S.Select>
       {isOptionVisible && (
-        <S.Option>
+        <S.Option size={size}>
           {options.map((option, index) => (
             <li key={index}>{option}</li>
           ))}
