@@ -21,7 +21,7 @@ const SlideOne = ({ slideIndex, onClickNextButtonHandler }: SlideTwoProps) => {
 
       {/* 거주국가 */}
       <S.Title>거주국가</S.Title>
-      <Select label="국가를 선택해주세요." options={["한국", "미국"]} />
+      <Select label="국가를 선택해주세요." options={["한국", "미국"]} size="normal" />
 
       {/* 성별 */}
       <S.Title>성별</S.Title>
