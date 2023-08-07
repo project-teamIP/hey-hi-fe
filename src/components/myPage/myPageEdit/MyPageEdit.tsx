@@ -77,7 +77,7 @@ const MyPageEdit = () => {
           </S.RadioGroup>
         </S.FormGroup>
         <S.BtnPosition>
-          <Button.Primary size="small">중복확인</Button.Primary>
+          <Button.Primary size="small">정보 수정</Button.Primary>
         </S.BtnPosition>
       </form>
     </S.MyPageEditBox>

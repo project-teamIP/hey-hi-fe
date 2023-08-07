@@ -22,10 +22,8 @@ export const AsideNav = styled.div`
   p {
     font-size: 22px;
     font-weight: 500;
-
-    &:nth-child(3) {
-      margin: 38px 0;
-    }
+    margin-bottom: 38px;
+    color: #5a5a5a;
   }
 `;
 
