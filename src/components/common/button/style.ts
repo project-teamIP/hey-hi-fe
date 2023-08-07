@@ -45,9 +45,9 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
         `;
       case "small":
         return css`
-          height: 60px;
-          width: 141px;
-          border-radius: 15px;
+          height: 70px;
+          width: 185px;
+          border-radius: 50px;
           font-weight: 600;
           font-size: 22px;
         `;
