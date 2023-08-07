@@ -7,9 +7,12 @@ export interface PrimitiveButtonProps {
   color?: string;
   fw?: string;
   size?: "large" | "middle" | "small" | "the smallest" | "loginbtn";
+  width?: string;
+  height?: string;
   activeBc?: string;
   outlined?: boolean;
   onClick?: () => void;
+  style?: React.CSSProperties; // style 속성 추가
 }
 
 export const StyledButton = styled.button<PrimitiveButtonProps>`
