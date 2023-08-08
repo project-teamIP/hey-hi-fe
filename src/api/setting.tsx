@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
+import Cookies from "js-cookie";
 
 // Axios Instance 생성
 export const instance: AxiosInstance = axios.create({
@@ -9,11 +10,16 @@ export const instance: AxiosInstance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // 요청 전 수행할 작업
-    // 1. 로컬 스토리지에서 토큰 값 가져오기
-    const token = localStorage.getItem("token");
+    // 1. 쿠키에서 엑세스 토큰 및 리프레시 토큰 값 가져오기
+    const accessToken = Cookies.get("access_token");
+    const refreshToken = Cookies.get("refresh_token");
 
-    if (token !== null) {
-      config.headers.Authorization = `${token}`;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    if (refreshToken) {
+      config.headers.Refresh = `Bearer ${refreshToken}`;
     }
 
     return config;
