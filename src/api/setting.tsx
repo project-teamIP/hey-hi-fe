@@ -19,9 +19,10 @@ instance.interceptors.request.use(
     }
 
     if (refreshToken) {
-      config.headers.Refresh = `Bearer ${refreshToken}`;
+      config.headers.RefreshToken = `${refreshToken}`;
     }
 
+    console.log("요청 완료", config);
     return config;
   },
   function (error: AxiosError) {
