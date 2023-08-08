@@ -18,17 +18,18 @@ export const AsideNav = styled.div`
     font-weight: 700;
     margin-bottom: 42px;
   }
-
-  p {
-    font-size: 22px;
-    font-weight: 500;
-    margin-bottom: 38px;
-    color: #5a5a5a;
-  }
 `;
 
 export const Deactivate = styled.div`
   text-decoration: underline;
   font-size: 18px;
   color: #747474;
+`;
+
+export const NavItem = styled.p<{ isActive: boolean }>`
+  font-size: 22px;
+  font-weight: ${({ isActive }) => (isActive ? "700" : "500")};
+  margin-bottom: 38px;
+  color: ${({ isActive }) => (isActive ? "#000" : "#5a5a5a")};
+  cursor: pointer;
 `;
