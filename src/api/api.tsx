@@ -54,10 +54,15 @@ const userRegister = async (newUser: SignupInformationData) => {
   return response.data;
 };
 
-const userLogin = async (loginInformation: LoginInformationData) => {
-  const response = await instance.post(`/api/users/login`, loginInformation);
+const userLogin = async (loginData: LoginInformationData) => {
+  const response = await instance.post(`/api/users/login`, loginData);
+
+  // path:/ : 쿠키의 유효범위 설정
+  document.cookie = `access_token=${response.headers.accesstoken}; path=/;`;
+  document.cookie = `refresh_token=${response.headers.refreshtoken}; path=/`;
+
   console.log("로그인", response);
-  const token = response.headers.authorization;
-  localStorage.setItem("token", token);
   return response.data;
 };
+
+export { userRegister, userLogin };
