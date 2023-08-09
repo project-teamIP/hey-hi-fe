@@ -3,13 +3,9 @@ import * as S from "./style";
 import Button from "../button/Button";
 import Input from "../input/Input";
 import Select from "../select/Select";
+import { SlideProps } from "../../../types/types";
 
-interface SlideTwoProps {
-  slideIndex: number;
-  onClickNextButtonHandler: () => void;
-}
-
-const SlideOne = ({ slideIndex, onClickNextButtonHandler }: SlideTwoProps) => {
+const SlideOne = ({ onClickNextButtonHandler }: SlideProps) => {
   return (
     <S.Wrap>
       {/* 닉네임 */}
