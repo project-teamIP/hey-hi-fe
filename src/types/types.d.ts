@@ -6,13 +6,13 @@ export interface SlideProps {
 
 // 로그인
 export type LoginInformationData = {
-  id: string;
+  loginId: string;
   password: string;
 };
 
 // 회원가입
 export type SignupInformationData = {
-  id: string;
+  loginId: string;
   password: string;
   nickname: string;
 };

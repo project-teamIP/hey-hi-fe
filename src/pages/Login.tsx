@@ -3,8 +3,33 @@ import { styled } from "styled-components";
 import Button from "../components/common/button/Button";
 import Input from "../components/common/input/Input";
 import { Link } from "react-router-dom";
+import useInput from "../hooks/useInput";
+import { useMutation } from "react-query";
+import { userLogin } from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  // 아이디, 비밀번호
+  const [userId, onChangeUserIdHandler] = useInput();
+  const [password, onChangePasswordHnadler] = useInput();
+
+  // Mutation
+  const loginMutation = useMutation(userLogin, {
+    onSuccess: () => {
+      navigate("/dashboard");
+    },
+  });
+
+  // Hanlder
+  const onClickLoginHandler = () => {
+    const loginData = {
+      loginId: userId,
+      password: password,
+    };
+    loginMutation.mutate(loginData);
+  };
+
   return (
     <Wrap>
       <Logo>로고가 들어갈 위치</Logo>
@@ -17,11 +42,23 @@ const Login = () => {
       <OR>OR</OR>
       {/* 일반로그인 */}
       <LoginContainer>
-        <Input placeholder="아이디를 입력하세요" value="value" size="medium" />
-        <Input placeholder="비밀번호를 입력하세요" value="value" size="medium" />
+        <Input
+          placeholder="아이디를 입력하세요"
+          value={userId}
+          onChangeHandler={onChangeUserIdHandler}
+          size="medium"
+        />
+        <Input
+          placeholder="비밀번호를 입력하세요"
+          value={password}
+          onChangeHandler={onChangePasswordHnadler}
+          size="medium"
+        />
       </LoginContainer>
       {/* 로그인버튼 */}
-      <LoginButton size="middle">로그인하기</LoginButton>
+      <LoginButton size="middle" onClick={onClickLoginHandler}>
+        로그인하기
+      </LoginButton>
       {/* 회원가입 안내문 */}
       <SignUp>
         아직 회원이 아니신가요? <Link to="/signup">회원가입</Link>
@@ -88,7 +125,7 @@ const OR = styled.div`
 `;
 
 // 일반로그인 컨테이너
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 16px;

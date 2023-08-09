@@ -54,6 +54,7 @@ const userRegister = async (newUser: SignupInformationData) => {
   return response.data;
 };
 
+// 로그인
 const userLogin = async (loginData: LoginInformationData) => {
   const response = await instance.post(`/api/users/login`, loginData);
 
