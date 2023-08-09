@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
+import { LoginInformationData, SignupInformationData } from "../types/types";
 
 // Axios Instance 생성
 export const instance: AxiosInstance = axios.create({
@@ -11,8 +12,8 @@ instance.interceptors.request.use(
   function (config) {
     // 요청 전 수행할 작업
     // 1. 쿠키에서 엑세스 토큰 및 리프레시 토큰 값 가져오기
-    const accessToken = Cookies.get("access_token");
-    const refreshToken = Cookies.get("refresh_token");
+    const accessToken: string | undefined = Cookies.get("access_token");
+    const refreshToken: string | undefined = Cookies.get("refresh_token");
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -40,9 +41,23 @@ instance.interceptors.response.use(
     return response;
   },
   function (error: AxiosError) {
-    console.log("인터셉트 요청 오류");
+    console.log("error", error);
     return Promise.reject(error);
   }
 );
 
 export default instance;
+
+// 회원가입
+const userRegister = async (newUser: SignupInformationData) => {
+  const response = await instance.post(`/api/users/signup`, newUser);
+  return response.data;
+};
+
+const userLogin = async (loginInformation: LoginInformationData) => {
+  const response = await instance.post(`/api/users/login`, loginInformation);
+  console.log("로그인", response);
+  const token = response.headers.authorization;
+  localStorage.setItem("token", token);
+  return response.data;
+};
