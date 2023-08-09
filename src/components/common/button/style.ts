@@ -7,8 +7,12 @@ export interface PrimitiveButtonProps {
   color?: string;
   fw?: string;
   size?: "large" | "middle" | "small" | "the smallest" | "loginbtn";
+  width?: string;
+  height?: string;
   activeBc?: string;
   outlined?: boolean;
+  onClick?: () => void;
+  style?: React.CSSProperties; // style 속성 추가
 }
 
 export const StyledButton = styled.button<PrimitiveButtonProps>`
@@ -44,9 +48,9 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
         `;
       case "small":
         return css`
-          height: 60px;
+          height: 70px;
           width: 185px;
-          border-radius: 15px;
+          border-radius: 50px;
           font-weight: 600;
           font-size: 22px;
         `;
@@ -60,9 +64,9 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
         `;
       case "loginbtn":
         return css`
-          height: 44px;
-          width: 153px;
-          border-radius: 50px;
+          height: 60px;
+          width: 217px;
+          border-radius: 15px;
           font-weight: 400;
           font-size: 16px;
         `;
