@@ -68,10 +68,10 @@ const MainSlide = () => {
         <S.SliderImage src={images[currentStep - 1]} alt={`Slide ${currentStep}`} />
         <S.ButtonWrapper>
           <S.SlideBtn onClick={onClickPrevSlideHandler}>
-            <img src={require(`../../../assets/images/prev.png`)} alt="prev-btn" />
+            <img src={require(`../../../assets/images/main/prev.png`)} alt="prev-btn" />
           </S.SlideBtn>
           <S.SlideBtn onClick={onClickNextSlideHandler}>
-            <img src={require(`../../../assets/images/next.png`)} alt="next-btn" />
+            <img src={require(`../../../assets/images/main/next.png`)} alt="next-btn" />
           </S.SlideBtn>
         </S.ButtonWrapper>
       </S.SliderWrapper>
