@@ -64,8 +64,8 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       </S.IdContainer>
 
       {/* 중복 체크 성공 시 메시지 표시 */}
-      {emailError && <p>{emailError}</p>}
-      {userIdCheckMutation.isSuccess && <p>사용 가능한 이메일입니다.</p>}
+      {emailError && <S.ErrorTyping>{emailError}</S.ErrorTyping>}
+      {userIdCheckMutation.isSuccess && <S.ErrorTyping>사용 가능한 이메일입니다.</S.ErrorTyping>}
 
       {/* 비밀번호 */}
       <S.Title>비밀번호</S.Title>
@@ -88,11 +88,9 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       />
 
       {/* 비밀번호 일치 여부에 따른 메시지 표시 */}
-      {passwordMatch && passwordCheck !== "" ? (
-        <p>비밀번호가 일치합니다.</p>
-      ) : passwordCheck !== "" ? (
-        <p>비밀번호가 일치하지 않습니다.</p>
-      ) : null}
+      {!passwordMatch && passwordCheck !== "" && (
+        <S.ErrorTyping>비밀번호가 일치하지 않습니다.</S.ErrorTyping>
+      )}
 
       {/* 다음으로 넘어가기 */}
       <S.NextButton size="middle" onClick={onClickNextButtonHandler}>
