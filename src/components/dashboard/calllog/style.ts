@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export interface ProfileDivProps {
   image?: string; // image prop을 정의
@@ -18,6 +18,10 @@ export const CallList = styled.div`
   justify-content: space-around;
   align-items: center;
   flex-direction: row;
+  background-color: #f8f9fc;
+  width: 100%;
+  height: 61px;
+  border-radius: 20px;
 `;
 
 export const ButtonGroup = styled.div`
@@ -32,10 +36,36 @@ export const CallListBtn = styled.button`
   width: 39px;
   height: 39px;
   border-radius: 50%;
-  background-color: rgba(217, 217, 217, 1);
+  background-color: ${({ color }) => color};
   &:active {
-    background-color: rgba(50, 50, 50, 1);
+    background-color: ${({ color }) => (color === "#ffe4dc" ? "#e7cdc5" : "#ffe4dc")};
   }
+
+  ${({ color }) => {
+    switch (color) {
+      case "friend":
+        return css`
+          background-color: #ffe4dc;
+          &:active {
+            background-color: #e7cdc5;
+          }
+        `;
+      case "call":
+        return css`
+          background-color: #ff6e46;
+          &:active {
+            background-color: #c95434;
+          }
+        `;
+      default:
+        return css`
+          background-color: #ffe4dc;
+          &:active {
+            background-color: #e7cdc5;
+          }
+        `;
+    }
+  }}
 
   img {
     max-width: 100%;
