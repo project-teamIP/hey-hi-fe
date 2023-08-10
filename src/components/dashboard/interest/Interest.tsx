@@ -27,19 +27,19 @@ const Interest: React.FC = () => {
               </ImageBox>
               <p>텍스트</p>
             </InterestBox>
-            <InterestBox>
+            <InterestBox style={{ backgroundColor: "#004BC8", color: "#FFFFFF" }}>
               <ImageBox>
                 <img src={require("../../../assets/images/movie.png")} alt="movie" />
               </ImageBox>
               <p>텍스트</p>
             </InterestBox>
-            <InterestBox>
+            <InterestBox style={{ backgroundColor: "#000000", color: "#FFFFFF" }}>
               <ImageBox>
                 <img src={require("../../../assets/images/game.png")} alt="game" />
               </ImageBox>
               <p>텍스트</p>
             </InterestBox>
-            <InterestBox>
+            <InterestBox style={{ backgroundColor: "#FF6E46" }}>
               <ImageBox style={{ width: "48px", height: "48px" }}>
                 <img src={require("../../../assets/images/sport.png")} alt="sport" />
               </ImageBox>
@@ -47,17 +47,17 @@ const Interest: React.FC = () => {
             </InterestBox>
           </InterestBoxContainer>
         </div>
-        <div>
+        <ChartBox>
           <h3>지금 접속한 인원</h3>
           <LineChart data={data} labels={labels} />
-        </div>
+        </ChartBox>
       </InterestWrapper>
     </DashBoardBox>
   );
 };
 
 const InterestBox = styled.div`
-  background-color: rgba(255, 255, 255, 1);
+  background-color: #f8f9fc;
   width: 177px;
   height: 134px;
   border-radius: 30px;
@@ -68,7 +68,7 @@ const InterestBox = styled.div`
   align-items: center;
 
   p {
-    font-size: 21px;
+    font-size: 15px;
     font-weight: 600;
   }
 `;
@@ -82,12 +82,17 @@ const InterestBoxContainer = styled.div`
 
 const InterestWrapper = styled.div`
   margin: 40px 20px 10px 20px;
+  margin-left: 30px;
   gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
   h3 {
     font-size: 20px;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    line-height: 23.87px;
   }
 `;
 
@@ -101,6 +106,16 @@ const ImageBox = styled.div`
     size: cover;
     top: 0;
     left: 0;
+  }
+`;
+
+const ChartBox = styled.div`
+  margin-top: 50px;
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    line-height: 23.87px;
   }
 `;
 export default Interest;

@@ -1,6 +1,6 @@
+import React from "react";
 import DashBoardBox from "../DashBoardBox";
 import * as S from "./style";
-import addfriend from "../../../assets/images/addfreind.png";
 
 const CallLog = () => {
   return (
@@ -13,10 +13,10 @@ const CallLog = () => {
             <p style={{ fontSize: "17px", fontWeight: "400" }}>에릭 제임스 | 미국 거주</p>
             <p style={{ fontSize: "17px", fontWeight: "700" }}>1:00:02</p>
             <S.ButtonGroup>
-              <S.CallListBtn>
-                <img src={require("../../../assets/images/addfreind.png")} alt="addfriend" />
+              <S.CallListBtn color="friend">
+                <img src={require("../../../assets/images/addfriend.png")} alt="addfriend" />
               </S.CallListBtn>
-              <S.CallListBtn>
+              <S.CallListBtn color="call">
                 <img
                   style={{ width: "85%" }}
                   src={require("../../../assets/images/call.png")}
@@ -30,10 +30,10 @@ const CallLog = () => {
             <p style={{ fontSize: "17px", fontWeight: "400" }}>에릭 제임스 | 미국 거주</p>
             <p style={{ fontSize: "17px", fontWeight: "700" }}>1:00:02</p>
             <S.ButtonGroup>
-              <S.CallListBtn>
-                <img src={require("../../../assets/images/addfreind.png")} alt="addfriend" />
+              <S.CallListBtn color="friend">
+                <img src={require("../../../assets/images/addfriend.png")} alt="addfriend" />
               </S.CallListBtn>
-              <S.CallListBtn>
+              <S.CallListBtn color="call">
                 <img
                   style={{ width: "85%" }}
                   src={require("../../../assets/images/call.png")}
@@ -47,10 +47,10 @@ const CallLog = () => {
             <p style={{ fontSize: "17px", fontWeight: "400" }}>에릭 제임스 | 미국 거주</p>
             <p style={{ fontSize: "17px", fontWeight: "700" }}>1:00:02</p>
             <S.ButtonGroup>
-              <S.CallListBtn>
-                <img src={require("../../../assets/images/addfreind.png")} alt="addfriend" />
+              <S.CallListBtn color="friend">
+                <img src={require("../../../assets/images/addfriend.png")} alt="addfriend" />
               </S.CallListBtn>
-              <S.CallListBtn>
+              <S.CallListBtn color="call">
                 <img
                   style={{ width: "85%" }}
                   src={require("../../../assets/images/call.png")}
@@ -64,10 +64,10 @@ const CallLog = () => {
             <p style={{ fontSize: "17px", fontWeight: "400" }}>에릭 제임스 | 미국 거주</p>
             <p style={{ fontSize: "17px", fontWeight: "700" }}>1:00:02</p>
             <S.ButtonGroup>
-              <S.CallListBtn>
-                <img src={require("../../../assets/images/addfreind.png")} alt="addfriend" />
+              <S.CallListBtn color="friend">
+                <img src={require("../../../assets/images/addfriend.png")} alt="addfriend" />
               </S.CallListBtn>
-              <S.CallListBtn>
+              <S.CallListBtn color="call">
                 <img
                   style={{ width: "85%" }}
                   src={require("../../../assets/images/call.png")}
