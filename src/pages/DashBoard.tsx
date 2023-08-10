@@ -1,8 +1,7 @@
 import React, { Children } from "react";
 import DiallogBox from "../components/dashboard/dialogbox/DiallogBox";
 import CallLog from "../components/dashboard/calllog/CallLog";
-import Review from "../components/dashboard/review/Review";
-import DashBoardBox from "../components/dashboard/DashBoardBox";
+import Memo from "../components/dashboard/memo/Memo";
 import Interest from "../components/dashboard/interest/Interest";
 import Header from "../components/common/header/Header";
 import styled from "styled-components";
@@ -17,9 +16,7 @@ const DashBoard = () => {
             <DiallogBox />
             <CallLog />
           </div>
-          <DashBoardBox size="review">
-            <Review />
-          </DashBoardBox>
+          <Memo />
         </div>
         <Interest />
       </DashBoardWrapper>

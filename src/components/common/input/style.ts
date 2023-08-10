@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 interface InputProps {
-  size?: "small" | "medium" | "large";
+  size?: string;
 }
 
 export const InputBox = styled.input<InputProps>`
@@ -10,6 +10,7 @@ export const InputBox = styled.input<InputProps>`
       small: "300px",
       medium: "458px",
       large: "574px",
+      etc: "411px",
     })[props.size || "large"]};
   height: 60px;
   padding: 20px 28px;

@@ -2,14 +2,15 @@ import styled, { css } from "styled-components";
 
 export interface DashBoardStyleProps {
   children: React.ReactNode;
-  size?: "diallogBox" | "callLog" | "review" | "interest";
+  size?: "diallogBox" | "callLog" | "memo" | "interest";
   style?: React.CSSProperties;
 }
 
 export const StyledContainer = styled.div<DashBoardStyleProps>`
   border: none;
   border-radius: 30px;
-  background-color: rgba(246, 246, 246, 1);
+  background-color: #ffffff;
+  box-shadow: 0px 4px 25px 0px #e2e8f2;
 
   ${({ size }) => {
     switch (size) {
@@ -23,7 +24,7 @@ export const StyledContainer = styled.div<DashBoardStyleProps>`
           height: 392px;
           width: 623px;
         `;
-      case "review":
+      case "memo":
         return css`
           height: 392px;
           width: 1106px;
