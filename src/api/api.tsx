@@ -49,8 +49,14 @@ instance.interceptors.response.use(
 export default instance;
 
 // 회원가입
-const userRegister = async (newUser: SignupInformationData) => {
-  const response = await instance.post(`/api/users/signup`, newUser);
+const userRegister = async (userData: SignupInformationData) => {
+  const response = await instance.post(`/api/users/signup`, userData);
+  return response.data;
+};
+
+// 회원 아이디 중복 조회
+const userIdCheck = async (loginId: string) => {
+  const response = await instance.get(`/api/users/check?email=${loginId}`);
   return response.data;
 };
 
@@ -66,4 +72,4 @@ const userLogin = async (loginData: LoginInformationData) => {
   return response.data;
 };
 
-export { userRegister, userLogin };
+export { userRegister, userLogin, userIdCheck };

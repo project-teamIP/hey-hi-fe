@@ -1,5 +1,25 @@
 // 회원가입 페이지 슬라이드
 export interface SlideProps {
+  userData: {
+    loginId: string;
+    password: string;
+    nickname: string;
+    country: string;
+    gender: string;
+    language: string;
+    interest: string;
+  };
+  setUserData: React.Dispatch<
+    React.SetStateAction<{
+      loginId: string;
+      password: string;
+      nickname: string;
+      country: string;
+      gender: string;
+      language: string;
+      interest: string;
+    }>
+  >;
   slideIndex: number;
   onClickNextButtonHandler: () => void;
 }

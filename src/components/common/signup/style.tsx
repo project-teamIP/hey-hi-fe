@@ -14,6 +14,11 @@ export const NameContainer = styled.div`
   justify-content: space-between;
 `;
 
+export const IdContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Title = styled.div`
   margin-top: 28px;
   margin-bottom: 16px;
