@@ -4,7 +4,7 @@ export const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 458px;
-  margin: 0 auto;
+  margin: 70px auto 0px;
 `;
 
 // 회원가입 헤더
