@@ -35,7 +35,7 @@ export const Option = styled.ul<SelectProps>`
   border-radius: 15px;
 
   li {
-    width: 440px;
+    width: 100%;
     height: 51px;
     padding: 16px 0px 14px 19px;
     border-radius: 10px;
