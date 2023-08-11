@@ -4,8 +4,9 @@ import Button from "../button/Button";
 export const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 458px;
+  width: 462px;
   margin: 0 auto;
+  padding: 0px 2px;
 `;
 
 // 상단 닉네임 / 이메일 / 관심사 컨테이너

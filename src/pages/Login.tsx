@@ -41,7 +41,7 @@ const Login = () => {
       {/* 일반로그인 */}
       <LoginContainer>
         <Input
-          placeholder="아이디를 입력하세요"
+          placeholder="이메일을 입력하세요"
           value={userId}
           onChangeHandler={onChangeUserIdHandler}
           size="medium"
@@ -109,6 +109,10 @@ const OR = styled.div`
   position: relative;
   justify-content: center;
   margin: 35px 0px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #a0a0a0;
+
   &::before {
     display: block;
     position: absolute;
