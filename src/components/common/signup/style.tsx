@@ -29,6 +29,11 @@ export const Count = styled.div`
   margin-bottom: 16px;
 `;
 
+export const ErrorTyping = styled.p`
+  margin-top: 8px;
+  color: #ff5049;
+`;
+
 // 회원가입 2단계 - 거주국가 / 언어 컨테이너
 export const InputContainer = styled.div`
   display: flex;

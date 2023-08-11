@@ -10,12 +10,19 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
   // 상태관리
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   // 이메일 중복 체크
   const loginId = userData.loginId;
 
   // Mutation
   const userIdCheckMutation = useMutation(userIdCheck);
+
+  // 이메일 유효성 검사
+  const validateLoginId = (loginId: string) => {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return re.test(loginId);
+  };
 
   // 비밀번호 확인
   useEffect(() => {
@@ -26,6 +33,19 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
   const onClickLoginIdCheckHanlder = () => {
     userIdCheckMutation.mutate(loginId);
   };
+
+  // 이메일 유효성 검사 후 데이터 전송
+  const onChangeEmailHandler = (loginId: string) => {
+    if (loginId === "") {
+      setEmailError("");
+    } else if (!validateLoginId(loginId)) {
+      setEmailError("이메일 형식이 맞지 않습니다.");
+    } else {
+      setEmailError("");
+    }
+    setUserData({ ...userData, loginId: loginId });
+  };
+
   return (
     <S.Wrap>
       {/* 닉네임 */}
@@ -35,7 +55,7 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
           placeholder="example@gmail.com"
           value={userData.loginId}
           type="text"
-          onChangeHandler={(e) => setUserData({ ...userData, loginId: e.target.value })}
+          onChangeHandler={(e) => onChangeEmailHandler(e.target.value)}
           size="small"
         />
         <Button.Primary size="the smallest" onClick={onClickLoginIdCheckHanlder}>
@@ -44,7 +64,8 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       </S.IdContainer>
 
       {/* 중복 체크 성공 시 메시지 표시 */}
-      {userIdCheckMutation.isSuccess ? <p>사용 가능한 이메일입니다.</p> : null}
+      {emailError && <S.ErrorTyping>{emailError}</S.ErrorTyping>}
+      {userIdCheckMutation.isSuccess && <S.ErrorTyping>사용 가능한 이메일입니다.</S.ErrorTyping>}
 
       {/* 비밀번호 */}
       <S.Title>비밀번호</S.Title>
@@ -67,11 +88,9 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       />
 
       {/* 비밀번호 일치 여부에 따른 메시지 표시 */}
-      {passwordMatch && passwordCheck !== "" ? (
-        <p>비밀번호가 일치합니다.</p>
-      ) : passwordCheck !== "" ? (
-        <p>비밀번호가 일치하지 않습니다.</p>
-      ) : null}
+      {!passwordMatch && passwordCheck !== "" && (
+        <S.ErrorTyping>비밀번호가 일치하지 않습니다.</S.ErrorTyping>
+      )}
 
       {/* 다음으로 넘어가기 */}
       <S.NextButton size="middle" onClick={onClickNextButtonHandler}>
