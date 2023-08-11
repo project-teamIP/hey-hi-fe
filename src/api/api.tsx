@@ -16,7 +16,7 @@ instance.interceptors.request.use(
     const refreshToken: string | undefined = Cookies.get("refresh_token");
 
     if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.Authorization = `${accessToken}`;
     }
 
     if (refreshToken) {
