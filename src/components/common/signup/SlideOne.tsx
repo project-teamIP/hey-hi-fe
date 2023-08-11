@@ -10,7 +10,8 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
   // 상태관리
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(false);
-  const [emailError, setEmailError] = useState("");
+  const [loginIdError, setloginIdError] = useState("");
+  const [isloginIdValid, setIsloginIdValid] = useState(false);
 
   // 이메일 중복 체크
   const loginId = userData.loginId;
@@ -18,30 +19,38 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
   // Mutation
   const userIdCheckMutation = useMutation(userIdCheck);
 
+  // 비밀번호 확인
+  useEffect(() => {
+    setPasswordMatch(userData.password === passwordCheck);
+  }, [userData.password, passwordCheck]);
+
   // 이메일 유효성 검사
   const validateLoginId = (loginId: string) => {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return re.test(loginId);
   };
 
-  // 비밀번호 확인
+  // 이메일 유효성 변경 시 이메일 상태 업데이트
   useEffect(() => {
-    setPasswordMatch(userData.password === passwordCheck);
-  }, [userData.password, passwordCheck]);
+    setIsloginIdValid(validateLoginId(loginId));
+  }, [loginId]);
 
   // 중복 이메일 체크 함수
   const onClickLoginIdCheckHanlder = () => {
-    userIdCheckMutation.mutate(loginId);
+    if (isloginIdValid) {
+      // 이메일 유효성 검사 통과한 경우에만 API 호출
+      userIdCheckMutation.mutate(loginId);
+    }
   };
 
   // 이메일 유효성 검사 후 데이터 전송
   const onChangeEmailHandler = (loginId: string) => {
     if (loginId === "") {
-      setEmailError("");
+      setloginIdError("");
     } else if (!validateLoginId(loginId)) {
-      setEmailError("이메일 형식이 맞지 않습니다.");
+      setloginIdError("올바른 이메일 형식으로 입력해주세요.");
     } else {
-      setEmailError("");
+      setloginIdError("");
     }
     setUserData({ ...userData, loginId: loginId });
   };
@@ -64,7 +73,7 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       </S.IdContainer>
 
       {/* 중복 체크 성공 시 메시지 표시 */}
-      {emailError && <S.ErrorTyping>{emailError}</S.ErrorTyping>}
+      {loginIdError && <S.ErrorTyping>{loginIdError}</S.ErrorTyping>}
       {userIdCheckMutation.isSuccess && <S.ErrorTyping>사용 가능한 이메일입니다.</S.ErrorTyping>}
 
       {/* 비밀번호 */}
@@ -93,7 +102,7 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       )}
 
       {/* 다음으로 넘어가기 */}
-      <S.NextButton size="middle" onClick={onClickNextButtonHandler}>
+      <S.NextButton size="middle" onClick={onClickNextButtonHandler} bc="#FF6E46">
         다음으로 넘어가기
       </S.NextButton>
     </S.Wrap>

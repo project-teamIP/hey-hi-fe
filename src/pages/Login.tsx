@@ -8,6 +8,9 @@ import { useMutation } from "react-query";
 import { userLogin } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import LogoImage from "../assets/images/LogoImage.svg";
+import Google from "../assets/images/google.svg";
+import Kakao from "../assets/images/kakao.svg";
+
 const Login = () => {
   const navigate = useNavigate();
   // 아이디, 비밀번호
@@ -35,13 +38,6 @@ const Login = () => {
       <Logo>
         <img src={LogoImage} alt="로고" />
       </Logo>
-      {/* 소셜로그인 */}
-      <SocialContainer>
-        <Button.Primary size="loginbtn">구글로 시작하기</Button.Primary>
-        <Button.Primary size="loginbtn">카카오로 시작하기</Button.Primary>
-      </SocialContainer>
-      {/* OR */}
-      <OR>OR</OR>
       {/* 일반로그인 */}
       <LoginContainer>
         <Input
@@ -57,8 +53,21 @@ const Login = () => {
           size="medium"
         />
       </LoginContainer>
+      {/* OR */}
+      <OR>OR</OR>
+      {/* 소셜로그인 */}
+      <SocialContainer>
+        <Button.Primary size="loginbtn" bc="#F8F8F8" color="#000000">
+          <img src={Google} alt="google" />
+          구글로 시작하기
+        </Button.Primary>
+        <Button.Primary size="loginbtn" bc="#F8F8F8" color="#000000">
+          <img src={Kakao} alt="kakao" />
+          카카오로 시작하기
+        </Button.Primary>
+      </SocialContainer>
       {/* 로그인버튼 */}
-      <LoginButton size="middle" onClick={onClickLoginHandler}>
+      <LoginButton size="middle" onClick={onClickLoginHandler} bc="#FF6E46">
         로그인하기
       </LoginButton>
       {/* 회원가입 안내문 */}
@@ -77,14 +86,14 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 458px;
-  margin: 70px auto 0px;
+  margin: 210px auto 0px;
 `;
 
 // 로고
 const Logo = styled.div`
   display: flex;
   justify-content: center;
-  margin: 50px 0px;
+  margin-bottom: 55px;
 `;
 
 // 소셜로그인 컨테이너
@@ -99,7 +108,7 @@ const OR = styled.div`
   display: flex;
   position: relative;
   justify-content: center;
-  margin: 33px 0px;
+  margin: 35px 0px;
   &::before {
     display: block;
     position: absolute;
@@ -130,12 +139,12 @@ const OR = styled.div`
 const LoginContainer = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 35px;
 `;
 
 // 로그인 버튼
 const LoginButton = styled(Button.Primary)`
-  margin: 20px 0px 80px;
+  margin: 35px 0px 80px;
 `;
 
 // 회원가입
