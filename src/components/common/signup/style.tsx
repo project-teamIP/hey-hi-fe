@@ -4,8 +4,9 @@ import Button from "../button/Button";
 export const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 458px;
+  width: 462px;
   margin: 0 auto;
+  padding: 0px 2px;
 `;
 
 // 상단 닉네임 / 이메일 / 관심사 컨테이너
@@ -22,6 +23,8 @@ export const IdContainer = styled.div`
 export const Title = styled.div`
   margin-top: 28px;
   margin-bottom: 16px;
+  font-size: 22px;
+  font-weight: bold;
 `;
 
 export const Count = styled.div`
@@ -37,7 +40,19 @@ export const ErrorTyping = styled.p`
 // 회원가입 2단계 - 거주국가 / 언어 컨테이너
 export const InputContainer = styled.div`
   display: flex;
-  margin-bottom: 70px;
+  align-items: center;
+  margin-bottom: 20px;
+
+  input {
+    width: 24px;
+    height: 24px;
+  }
+
+  label {
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 46px;
+  }
 `;
 
 // 회원가입 3단계 - 관심사 컨테이너
