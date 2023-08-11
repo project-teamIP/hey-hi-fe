@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../common/button/Button";
 import DashBoardBox from "../DashBoardBox";
 import { diallogBtnStyle, dialogBoxStyle } from "./style";
 import * as S from "./style";
 
 const DiallogBox = () => {
+  const navigate = useNavigate();
+  const onClickGotoCallRoom = () => {
+    navigate("/calling");
+  };
   return (
     <DashBoardBox style={dialogBoxStyle} size="diallogBox">
       <S.ImageContainer>
@@ -14,7 +19,9 @@ const DiallogBox = () => {
             반가워요!<br></br>스트로베리님!
           </div>
           <S.ButtonWrapper>
-            <Button.Primary style={diallogBtnStyle}>통화하기</Button.Primary>
+            <Button.Primary style={diallogBtnStyle} onClick={onClickGotoCallRoom}>
+              통화하기
+            </Button.Primary>
           </S.ButtonWrapper>
         </S.InnerGroup>
       </S.ImageContainer>
