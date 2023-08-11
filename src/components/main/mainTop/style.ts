@@ -1,16 +1,21 @@
 import { styled } from "styled-components";
+import { colors } from "../../../assets/styles/colors";
+import mainTextSvg from "../../../assets/images/main/maintext.svg";
 
 export const MainBox = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 70px;
   width: 100%;
-  height: 1055px;
+  height: 1039px;
+  background-color: ${colors.orange};
 `;
 
 export const MainInner = styled.div`
   max-width: 1920px;
+  height: 984px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,12 +37,24 @@ export const MainInner = styled.div`
 export const ImgBox = styled.div`
   width: 53.5rem;
   height: 41.5625rem;
-  background-color: gray;
-  margin-right: 96px;
+  margin-right: 92px;
 
   img {
-    width: 100%;
     height: 100%;
-    object-fit: cover;
+    width: 100%;
   }
+`;
+
+export const SvgBox = styled.div`
+  text-align: end;
+  transform: translateX(18.75rem);
+`;
+
+export const SvgBox2 = styled.div`
+  height: 55px;
+  width: 100%;
+  padding-top: 13px;
+  background-image: url(${mainTextSvg});
+  background-repeat: repeat-x;
+  background-position: center;
 `;

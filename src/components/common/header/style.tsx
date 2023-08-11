@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
+import { colors } from "../../../assets/styles/colors";
 
-export const HeaderBox = styled.div`
+interface HeaderBoxProps {
+  isMainPage: boolean;
+}
+
+export const HeaderBox = styled.div<HeaderBoxProps>`
   width: 100%;
   height: 70px;
-  background-color: gray;
+  background-color: ${({ isMainPage }) => (isMainPage ? colors.header_orange : colors.white)};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,6 +38,7 @@ export const Nav = styled.div`
 
   ul {
     display: flex;
+    margin-left: 45px;
   }
 
   li {
