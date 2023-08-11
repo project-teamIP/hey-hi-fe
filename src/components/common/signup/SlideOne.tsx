@@ -55,6 +55,9 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
     setUserData({ ...userData, loginId: loginId });
   };
 
+  // 모든 입력 항목이 유효한지 검사
+  const isFormValid = isloginIdValid && passwordMatch && passwordCheck !== "";
+
   return (
     <S.Wrap>
       {/* 닉네임 */}
@@ -67,7 +70,10 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
           onChangeHandler={(e) => onChangeEmailHandler(e.target.value)}
           size="small"
         />
-        <Button.Primary size="the smallest" onClick={onClickLoginIdCheckHanlder}>
+        <Button.Primary
+          size="the smallest"
+          onClick={onClickLoginIdCheckHanlder}
+          bc={userIdCheckMutation.isSuccess ? "#FF6E46" : "#999"}>
           중복확인
         </Button.Primary>
       </S.IdContainer>
@@ -102,7 +108,12 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       )}
 
       {/* 다음으로 넘어가기 */}
-      <S.NextButton size="middle" onClick={onClickNextButtonHandler} bc="#FF6E46">
+      <S.NextButton
+        size="middle"
+        onClick={onClickNextButtonHandler}
+        bc={isFormValid ? "#FF6E46" : "#999"} // 유효할 때만 활성화된 스타일 적용
+        disabled={!isFormValid} // 유효하지 않을 경우 버튼 비활성화
+      >
         다음으로 넘어가기
       </S.NextButton>
     </S.Wrap>
