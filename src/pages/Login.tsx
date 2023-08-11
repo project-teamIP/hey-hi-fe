@@ -7,7 +7,7 @@ import useInput from "../hooks/useInput";
 import { useMutation } from "react-query";
 import { userLogin } from "../api/api";
 import { useNavigate } from "react-router-dom";
-
+import LogoImage from "../assets/images/LogoImage.svg";
 const Login = () => {
   const navigate = useNavigate();
   // 아이디, 비밀번호
@@ -32,7 +32,9 @@ const Login = () => {
 
   return (
     <Wrap>
-      <Logo>로고가 들어갈 위치</Logo>
+      <Logo>
+        <img src={LogoImage} alt="로고" />
+      </Logo>
       {/* 소셜로그인 */}
       <SocialContainer>
         <Button.Primary size="loginbtn">구글로 시작하기</Button.Primary>
