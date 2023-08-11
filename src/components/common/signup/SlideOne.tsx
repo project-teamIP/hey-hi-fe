@@ -48,7 +48,7 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
     if (loginId === "") {
       setloginIdError("");
     } else if (!validateLoginId(loginId)) {
-      setloginIdError("이메일 형식이 맞지 않습니다.");
+      setloginIdError("올바른 이메일 형식으로 입력해주세요.");
     } else {
       setloginIdError("");
     }
@@ -102,7 +102,7 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       )}
 
       {/* 다음으로 넘어가기 */}
-      <S.NextButton size="middle" onClick={onClickNextButtonHandler}>
+      <S.NextButton size="middle" onClick={onClickNextButtonHandler} bc="#FF6E46">
         다음으로 넘어가기
       </S.NextButton>
     </S.Wrap>
