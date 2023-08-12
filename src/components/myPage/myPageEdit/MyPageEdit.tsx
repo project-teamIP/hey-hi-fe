@@ -11,8 +11,7 @@ import { getUserInfo } from "../../../api/api";
 const MyPageEdit = () => {
   const tempfunc = () => {};
 
-  const { data: user, error, isLoading } = useQuery("myInfo", getUserInfo);
-  console.log("내정보", user);
+  const { data: user } = useQuery("myInfo", getUserInfo);
 
   //관심사
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);

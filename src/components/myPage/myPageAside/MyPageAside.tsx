@@ -1,5 +1,10 @@
 import React from "react";
 import * as S from "./style";
+import { userLogout } from "../../../api/api";
+import { logOut } from "../../../redux/modules/userAuth";
+import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 interface MyPageAsideProps {
   activePage: string;
@@ -7,6 +12,20 @@ interface MyPageAsideProps {
 }
 
 const MyPageAside: React.FC<MyPageAsideProps> = ({ activePage, onClickPageHandler }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutMutation = useMutation(userLogout, {
+    onSuccess: () => {
+      dispatch(logOut());
+      navigate("/");
+    },
+  });
+
+  const onClickLogoutHandler = () => {
+    logoutMutation.mutate();
+  };
+
   return (
     <S.AsideBox>
       <S.AsideNav>
@@ -26,11 +45,7 @@ const MyPageAside: React.FC<MyPageAsideProps> = ({ activePage, onClickPageHandle
           onClick={() => onClickPageHandler("친구관리")}>
           친구관리
         </S.NavItem>
-        <S.NavItem
-          isActive={activePage === "로그아웃"}
-          onClick={() => onClickPageHandler("로그아웃")}>
-          로그아웃
-        </S.NavItem>
+        <S.LogoutBtn onClick={() => onClickLogoutHandler()}>로그아웃</S.LogoutBtn>
       </S.AsideNav>
       <S.Deactivate>회원탈퇴</S.Deactivate>
     </S.AsideBox>
