@@ -1,12 +1,35 @@
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../button/Button";
 import * as S from "./style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { RootState } from "../../../types/user";
+import { useMutation } from "react-query";
+import { userLogout } from "../../../api/api";
+import { logOut } from "../../../redux/modules/userAuth";
 
 const Header = () => {
   //메인헤더만 오렌지컬러
   const location = useLocation();
   const isMainPage = location.pathname === "/";
+
+  //로그인 상태 따라 버튼 변경
+  const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
+  console.log("로그인상태", state);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutMutation = useMutation(userLogout, {
+    onSuccess: () => {
+      dispatch(logOut());
+      navigate("/");
+    },
+  });
+
+  const onClickLogoutHandler = () => {
+    logoutMutation.mutate();
+  };
 
   return (
     <S.HeaderBox ismainpage={isMainPage}>
@@ -37,11 +60,24 @@ const Header = () => {
             </li>
           </ul>
         </S.Nav>
-        <S.StyledLink to="/login">
-          <Button.Primary size="loginbtn" outlined>
-            로그인 / 회원가입
-          </Button.Primary>
-        </S.StyledLink>
+        {state ? (
+          <div>
+            <S.StyledLink to="/mypage/1">
+              <Button.Primary size="loginbtn" outlined>
+                마이페이지
+              </Button.Primary>
+            </S.StyledLink>
+            <Button.Primary size="loginbtn" onClick={onClickLogoutHandler} outlined>
+              로그아웃
+            </Button.Primary>
+          </div>
+        ) : (
+          <S.StyledLink to="/login">
+            <Button.Primary size="loginbtn" outlined>
+              로그인 / 회원가입
+            </Button.Primary>
+          </S.StyledLink>
+        )}
       </S.HeaderInner>
     </S.HeaderBox>
   );

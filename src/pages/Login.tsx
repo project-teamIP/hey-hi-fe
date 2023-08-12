@@ -8,20 +8,25 @@ import { useMutation } from "react-query";
 import { userLogin } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import LogoImage from "../assets/images/LogoImage.svg";
+import { useDispatch } from "react-redux";
+import { logIn } from "../redux/modules/userAuth";
+
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // 아이디, 비밀번호
   const [userId, onChangeUserIdHandler] = useInput();
-  const [password, onChangePasswordHnadler] = useInput();
+  const [password, onChangePasswordHandler] = useInput();
 
   // Mutation
   const loginMutation = useMutation(userLogin, {
     onSuccess: () => {
+      dispatch(logIn());
       navigate("/dashboard");
     },
   });
 
-  // Hanlder
+  // Handler
   const onClickLoginHandler = () => {
     const loginData = {
       loginId: userId,
@@ -53,7 +58,7 @@ const Login = () => {
         <Input
           placeholder="비밀번호를 입력하세요"
           value={password}
-          onChangeHandler={onChangePasswordHnadler}
+          onChangeHandler={onChangePasswordHandler}
           size="medium"
         />
       </LoginContainer>
