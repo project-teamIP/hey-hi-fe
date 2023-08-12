@@ -16,7 +16,7 @@ instance.interceptors.request.use(
     const refreshToken: string | undefined = Cookies.get("refresh_token");
 
     if (accessToken) {
-      config.headers.Authorization = `${accessToken}`;
+      config.headers.AccessToken = `${accessToken}`;
     }
 
     if (refreshToken) {
@@ -76,7 +76,7 @@ const userLogin = async (loginData: LoginInformationData) => {
   return response.data;
 };
 
-export { userRegister, userLogin, userIdCheck };
+export { userRegister, userLogin, userIdCheck, userNickNameCheck };
 
 // 로그아웃
 export const userLogout = async () => {
@@ -95,4 +95,12 @@ export const userLogout = async () => {
   }
 };
 
-
+// 마이페이지 조회
+export const getUserInfo = async () => {
+  try {
+    const response = await instance.get(`/api/users/mypage`);
+    return response.data;
+  } catch (error) {
+    console.error("mypage 조회 오류", error);
+  }
+};
