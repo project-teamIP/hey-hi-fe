@@ -36,7 +36,6 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   function (response: AxiosResponse<any>) {
     // 응답 성공 처리
-    // 데이터 가공도 가능하다.
     console.log("response", response);
     return response;
   },
@@ -69,7 +68,6 @@ const userNickNameCheck = async (nickName: string) => {
 // 로그인
 const userLogin = async (loginData: LoginInformationData) => {
   const response = await instance.post(`/api/users/login`, loginData);
-
   // path:/ : 쿠키의 유효범위 설정
   document.cookie = `access_token=${response.headers.accesstoken}; path=/;`;
   document.cookie = `refresh_token=${response.headers.refreshtoken}; path=/`;
@@ -78,4 +76,23 @@ const userLogin = async (loginData: LoginInformationData) => {
   return response.data;
 };
 
-export { userRegister, userLogin, userIdCheck, userNickNameCheck };
+export { userRegister, userLogin, userIdCheck };
+
+// 로그아웃
+export const userLogout = async () => {
+  try {
+    const response = await instance.post(`/api/users/logout`);
+    if (response.status === 200) {
+      alert("로그아웃되었습니다😘");
+      return response.data;
+    } else {
+      console.error("로그아웃 실패");
+      return null;
+    }
+  } catch (error) {
+    console.error("로그아웃 중 오류 발생:", error);
+    throw error;
+  }
+};
+
+
