@@ -21,7 +21,12 @@ import Button, { PrimaryButtonProps } from "../components/common/button/Button";
       </div>
  *--------------------------------------------------------*/
 
-const PrimitiveButton: React.FC<PrimitiveButtonProps> = ({ children, ...restProps }) => {
+interface ButtonProps extends PrimitiveButtonProps {
+  onClick?: () => void; // 클릭 이벤트 핸들러 추가
+  disabled?: boolean;
+}
+
+const PrimitiveButton: React.FC<ButtonProps> = ({ children, ...restProps }) => {
   return (
     <StyledButton {...restProps}>
       <ButtonInner>
@@ -31,21 +36,12 @@ const PrimitiveButton: React.FC<PrimitiveButtonProps> = ({ children, ...restProp
   );
 };
 
-interface PrimaryButtonProps extends PrimitiveButtonProps {
-  onClick?: () => void; // 클릭 이벤트 핸들러 추가
-}
-
-/*--------------------------------------------------------*
- * Primary Style
- *--------------------------------------------------------*/
-
-interface PrimaryButtonProps extends PrimitiveButtonProps {}
-
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({
+const PrimaryButton: React.FC<ButtonProps> = ({
   onClick,
   bc,
   color,
   activeBc,
+  disabled,
   ...props
 }) => {
   // 기본값을 설정합니다.
@@ -60,6 +56,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
       color={color || defaultColor} // color 값이 없을 경우 기본값을 사용합니다.
       activeBc={activeBc || defaultActiveBc} // activeBc 값이 없을 경우 기본값을 사용합니다.
       onClick={onClick}
+      disabled={disabled} // 추가
     />
   );
 };

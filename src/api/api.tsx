@@ -16,7 +16,7 @@ instance.interceptors.request.use(
     const refreshToken: string | undefined = Cookies.get("refresh_token");
 
     if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers.Authorization = `${accessToken}`;
     }
 
     if (refreshToken) {
@@ -59,6 +59,12 @@ const userIdCheck = async (loginId: string) => {
   return response.data;
 };
 
+// 회원 닉네임 중복 조회
+const userNickNameCheck = async (nickName: string) => {
+  const response = await instance.get(`/api/users/check?nickname=${nickName}`);
+  return response.data;
+};
+
 // 로그인
 const userLogin = async (loginData: LoginInformationData) => {
   const response = await instance.post(`/api/users/login`, loginData);
@@ -88,3 +94,5 @@ export const userLogout = async () => {
     throw error;
   }
 };
+
+
