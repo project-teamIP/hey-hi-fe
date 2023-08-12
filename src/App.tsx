@@ -22,7 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/mypage/:userId" element={<MyPage />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/review" element={<Review />} />
           <Route path="/matching" element={<Matching />} />
           <Route path="/calling" element={<Calling />} />
