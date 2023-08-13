@@ -4,21 +4,44 @@ import Select from "../../common/select/Select";
 import * as S from "./style";
 import countries from "../../../utils/countries.json";
 import interests from "../../../utils/interests.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { getUserInfo } from "../../../api/api";
 import pencilSvg from "../../../assets/images/pencil.svg";
+import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
 
 const MyPageEdit = () => {
+  const [profileImg, setProfileImg] = useState(null);
+  const [imgPreview, setImgPreview] = useState(null);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
   const tempfunc = () => {};
 
-  const { data: user } = useQuery("myInfo", getUserInfo);
+  const { data: user, isLoading } = useQuery("myInfo", getUserInfo);
+  if (isLoading) {
+    return (
+      <p>
+        <img src={rabbitSvg} alt="isLoading" />
+        Loading...
+      </p>
+    );
+  }
+
   // 프로필 이미지
-  const [profileImg, setProfileImg] = useState(user.image);
-  const isImage = profileImg !== null;
+  const onChangeImageHandler = (event: any) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      setProfileImg(file);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        setImgPreview(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   //관심사
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
   const onChangeInterestHandler = (selectedInterest: string) => {
     if (selectedInterests.includes(selectedInterest)) {
@@ -34,17 +57,23 @@ const MyPageEdit = () => {
         <S.MyPageEditBox>
           <S.ProfileTop>
             <S.ImgForm>
-              {isImage ? (
-                <img src={profileImg} alt="profile_pic" />
+              {imgPreview ? ( // Show preview image if available
+                <img
+                  src={imgPreview}
+                  alt="profile_pic_preview"
+                  style={{ maxWidth: "100%", maxHeight: "300px" }}
+                />
               ) : (
-                <img src="https://via.placeholder.com/156" alt="profile_pic" />
+                <img
+                  src={user.image || rabbitSvg} // Show user.image if available, or fallback to rabbitSvg
+                  alt={profileImg ? "profile_pic" : "temp_img"}
+                />
               )}
-              {/* <img src="https://via.placeholder.com/156" alt="profile_pic" /> */}
               <S.ImgInput>
                 <label htmlFor="profile-img">
                   <img src={pencilSvg} alt="img-edit-btn" />
                 </label>
-                <input type="file" id="profile-img" />
+                <input type="file" id="profile-img" onChange={onChangeImageHandler} />
               </S.ImgInput>
             </S.ImgForm>
             <h1>
