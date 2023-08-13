@@ -7,11 +7,15 @@ import interests from "../../../utils/interests.json";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { getUserInfo } from "../../../api/api";
+import pencilSvg from "../../../assets/images/pencil.svg";
 
 const MyPageEdit = () => {
   const tempfunc = () => {};
 
   const { data: user } = useQuery("myInfo", getUserInfo);
+  // 프로필 이미지
+  const [profileImg, setProfileImg] = useState(user.image);
+  const isImage = profileImg !== null;
 
   //관심사
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
@@ -30,20 +34,18 @@ const MyPageEdit = () => {
         <S.MyPageEditBox>
           <S.ProfileTop>
             <S.ImgForm>
-              <img src="https://via.placeholder.com/156" alt="profile_pic" />
-              <button>
-                <svg
-                  width="21"
-                  height="21"
-                  viewBox="0 0 21 21"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M17.0417 6.62497L14.375 3.95831L15.25 3.08331C15.4861 2.84719 15.7813 2.73261 16.1354 2.73956C16.4896 2.7465 16.7847 2.86803 17.0208 3.10414L17.9167 3.99997C18.1528 4.23608 18.2708 4.52775 18.2708 4.87497C18.2708 5.22219 18.1528 5.51386 17.9167 5.74997L17.0417 6.62497ZM16.1667 7.49997L5.66667 18H3V15.3333L13.5 4.83331L16.1667 7.49997Z"
-                    fill="white"
-                  />
-                </svg>
-              </button>
+              {isImage ? (
+                <img src={profileImg} alt="profile_pic" />
+              ) : (
+                <img src="https://via.placeholder.com/156" alt="profile_pic" />
+              )}
+              {/* <img src="https://via.placeholder.com/156" alt="profile_pic" /> */}
+              <S.ImgInput>
+                <label htmlFor="profile-img">
+                  <img src={pencilSvg} alt="img-edit-btn" />
+                </label>
+                <input type="file" id="profile-img" />
+              </S.ImgInput>
             </S.ImgForm>
             <h1>
               만나서 반가워요!
@@ -56,16 +58,22 @@ const MyPageEdit = () => {
               <label htmlFor="nickname">닉네임</label>
               <S.Gap>
                 <Input value="" placeholder={user.nickname} onChangeHandler={tempfunc} size="etc" />
-                <Button.Primary size="the smallest">중복확인</Button.Primary>
+                <Button.Primary size="the smallest" bc="#757575">
+                  중복확인
+                </Button.Primary>
               </S.Gap>
             </S.FormGroup>
             <S.FormGroup>
               <label htmlFor="email">이메일</label>
-              <Input value="" placeholder={user.loginId} onChangeHandler={tempfunc} size="large" />
+              <Input value={user.userId} placeholder={user.loginId} size="large" />
             </S.FormGroup>
             <S.FormGroup>
               <label htmlFor="country">거주국가</label>
-              <Select label="거주국가" options={countries} />
+              <Select label={user.country} options={countries} />
+            </S.FormGroup>
+            <S.FormGroup>
+              <label htmlFor="country">사용언어</label>
+              <Select label={user.language} options={["한국어", "English"]} />
             </S.FormGroup>
             <S.FormGroup>
               <label htmlFor="interests">관심사</label>
@@ -83,7 +91,9 @@ const MyPageEdit = () => {
               </S.RadioGroup>
             </S.FormGroup>
             <S.BtnPosition>
-              <Button.Primary size="small">정보 수정</Button.Primary>
+              <Button.Primary size="the smallest" bc="#FF6E46">
+                정보 수정
+              </Button.Primary>
             </S.BtnPosition>
           </form>
         </S.MyPageEditBox>

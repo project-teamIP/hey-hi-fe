@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const MyPageEditBox = styled.div`
   height: 874px;
-  width: 574px;
+  width: 750px;
   margin-left: 351px;
   margin-top: 87px;
 
@@ -10,7 +10,7 @@ export const MyPageEditBox = styled.div`
     display: block;
     font-size: 22px;
     font-weight: 600;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 `;
 
@@ -18,7 +18,7 @@ export const ProfileTop = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 39px;
 
   h1 {
     font-size: 40px;
@@ -36,29 +36,33 @@ export const ImgForm = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 50%;
-  }
-
-  button {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    border: none;
-    background-color: #323232;
-    padding: 0;
-    bottom: 10px;
-    right: 0;
-
-    img {
-      width: 20px;
-      height: 20px;
-      object-fit: scale-down;
-    }
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
 `;
 
+export const ImgInput = styled.div`
+  label {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  input[type="file"] {
+    /* 파일 필드 숨기기 */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+`;
 export const FormGroup = styled.div`
-  margin-bottom: 38px;
+  margin-bottom: 34px;
 `;
 
 export const Gap = styled.div`
@@ -69,9 +73,9 @@ export const Gap = styled.div`
 
 export const RadioGroup = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   width: 574px;
-  grid-column-gap: 107px;
+  grid-column-gap: 49px;
 `;
 
 export const RadioButton = styled.label<{ isSelected: boolean }>`
@@ -95,5 +99,5 @@ export const RadioButton = styled.label<{ isSelected: boolean }>`
 
 export const BtnPosition = styled.div`
   text-align: end;
-  margin-top: 57px;
+  margin-top: -40px;
 `;
