@@ -45,8 +45,9 @@ export const ImgInput = styled.div`
     width: 35px;
     height: 35px;
     position: absolute;
-    right: 0;
-    bottom: 0;
+    left: 0;
+    bottom: -10px;
+    cursor: pointer;
   }
 
   input[type="file"] {
@@ -59,6 +60,18 @@ export const ImgInput = styled.div`
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
+  }
+
+  button {
+    background: none;
+    border: none;
+    width: 33px;
+    height: 33px;
+    position: absolute;
+    right: 1px;
+    bottom: 6px;
+    padding: 0;
+    cursor: pointer;
   }
 `;
 export const FormGroup = styled.div`

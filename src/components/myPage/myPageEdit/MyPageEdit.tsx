@@ -4,17 +4,25 @@ import Select from "../../common/select/Select";
 import * as S from "./style";
 import countries from "../../../utils/countries.json";
 import interests from "../../../utils/interests.json";
-import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { getUserInfo } from "../../../api/api";
+import { useState } from "react";
+import { useQuery, useMutation } from "react-query";
+import { changeProfileImg, getUserInfo } from "../../../api/api";
 import pencilSvg from "../../../assets/images/pencil.svg";
 import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
 
 const MyPageEdit = () => {
+  //이미지
   const [profileImg, setProfileImg] = useState(null);
   const [imgPreview, setImgPreview] = useState(null);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-
+  const mutation = useMutation(changeProfileImg, {
+    onSuccess: () => {
+      alert("프로필 이미지가 변경되었습니다.");
+    },
+    onError: (error) => {
+      console.error("Image change error:", error);
+    },
+  });
   const tempfunc = () => {};
 
   const { data: user, isLoading } = useQuery("myInfo", getUserInfo);
@@ -41,7 +49,14 @@ const MyPageEdit = () => {
     }
   };
 
-  //관심사
+  const onClickImageSubmitHandler = () => {
+    if (profileImg) {
+      const formdataFile = new FormData();
+      formdataFile.append("file", profileImg);
+
+      mutation.mutate(formdataFile);
+    }
+  };
 
   const onChangeInterestHandler = (selectedInterest: string) => {
     if (selectedInterests.includes(selectedInterest)) {
@@ -74,6 +89,9 @@ const MyPageEdit = () => {
                   <img src={pencilSvg} alt="img-edit-btn" />
                 </label>
                 <input type="file" id="profile-img" onChange={onChangeImageHandler} />
+                <button type="button" onClick={onClickImageSubmitHandler}>
+                  <img src={require(`../../../assets/images/check.png`)} alt="submit-btn" />
+                </button>
               </S.ImgInput>
             </S.ImgForm>
             <h1>
