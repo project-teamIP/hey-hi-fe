@@ -32,7 +32,7 @@ export const Count = styled.div`
   margin-bottom: 16px;
 `;
 
-export const ErrorTyping = styled.p`
+export const Message = styled.p`
   margin-top: 8px;
   color: #ff5049;
 `;
@@ -72,6 +72,17 @@ export const Categori = styled.div`
   height: 102px;
   border: 1px solid #323232;
   border-radius: 15px;
+`;
+
+export const Image = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+`;
+
+export const Name = styled.div`
+  margin-top: 10px;
 `;
 
 // Button ( 다음으로 넘어가기 )
