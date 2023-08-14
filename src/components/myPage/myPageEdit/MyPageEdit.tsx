@@ -1,37 +1,45 @@
+import * as S from "./style";
 import Button from "../../common/button/Button";
 import Input from "../../common/input/Input";
 import Select from "../../common/select/Select";
-import * as S from "./style";
 import countries from "../../../utils/countries.json";
 import interests from "../../../utils/interests.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "react-query";
-import { changeProfileImg, getUserInfo, userNickNameCheck } from "../../../api/api";
+import { changeProfileImg, changeUserInfo, getUserInfo, userNickNameCheck } from "../../../api/api";
 import pencilSvg from "../../../assets/images/pencil.svg";
 import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
+import { UserInfoType } from "../../../types/user";
 
 const MyPageEdit = () => {
   const [profileImg, setProfileImg] = useState(null);
   const [imgPreview, setImgPreview] = useState(null);
-  const [selectedInterest, setSelectedInterest] = useState<string>("");
-  const [userInfo, setUserInfo] = useState({
+  const [userInfo, setUserInfo] = useState<UserInfoType>({
     nickname: "",
     country: "",
     language: "",
-    interests: "",
+    interest: "",
   });
-  console.log(userInfo.nickname);
-  const tempfunc = () => {};
-
+  console.log(userInfo);
   //0. 로그인된 사용자 정보 조회
   const { data: user, isLoading } = useQuery("myInfo", getUserInfo);
   console.log("유저정보", user);
+
+  useEffect(() => {
+    if (user) {
+      setUserInfo({
+        nickname: user.nickname,
+        country: user.country,
+        language: user.language,
+        interest: user.interest,
+      });
+    }
+  }, [user]);
 
   //1. 프로필 이미지 뮤테이션
   const imgChangeMutation = useMutation(changeProfileImg, {
     onSuccess: (data) => {
       alert("프로필 이미지가 변경되었습니다.");
-      console.log("이미지 변경 성공:", data);
     },
     onError: (error) => {
       alert("잠시 후 다시 시도해주세요😭");
@@ -41,6 +49,17 @@ const MyPageEdit = () => {
 
   //2. 닉네임 중복 뮤테이션
   const nickNameCheckMutation = useMutation(userNickNameCheck);
+
+  // 3. 업데이트 뮤테이션
+  const userInfoChangeMutation = useMutation(changeUserInfo, {
+    onSuccess: (data) => {
+      alert("정보가 변경되었습니다.");
+    },
+    onError: (error) => {
+      alert("잠시 후 다시 시도해주세요😭");
+      console.error("Image change error:", error);
+    },
+  });
 
   // 1-1. 프로필 이미지 pc에서 선택
   const onChangeImageHandler = (event: any) => {
@@ -67,27 +86,23 @@ const MyPageEdit = () => {
   };
 
   // 2-1. 닉네임 중복 확인
-
   const onClickNickNameCheckHandler = () => {
     const nickName = userInfo.nickname;
     if (nickName) {
-      nickNameCheckMutation.mutate(nickName);
+      nickNameCheckMutation.mutate(nickName, {
+        onSuccess: (data) => {
+          console.log("닉넴 중복 확인 결과", data);
+        },
+        onError: (error) => {
+          console.error("닉넴 중복 확인 오류", error);
+        },
+      });
     }
   };
 
-  // 관심사
-  const onChangeInterestHandler = (interest: string) => {
-    setSelectedInterest(interest);
-  };
-
   // 수정
-  const onSubmitUserInfo = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    const updatedUserInfo = {
-      ...userInfo,
-      interest: selectedInterest,
-    };
-    setUserInfo(updatedUserInfo);
+  const onSubmitUserInfo = () => {
+    userInfoChangeMutation.mutate(userInfo);
   };
 
   // 로딩중 스피너 설정
@@ -158,23 +173,35 @@ const MyPageEdit = () => {
             </S.FormGroup>
             <S.FormGroup>
               <label htmlFor="country">거주국가</label>
-              <Select label={user.country} options={countries} />
+              <Select
+                label={user.country}
+                options={countries}
+                onChangeHandler={(selectedCountry) =>
+                  setUserInfo({ ...userInfo, country: selectedCountry })
+                }
+              />
             </S.FormGroup>
             <S.FormGroup>
               <label htmlFor="country">사용언어</label>
-              <Select label={user.language} options={["한국어", "English"]} />
+              <Select
+                label={user.language}
+                options={["한국어", "English"]}
+                onChangeHandler={(selectedLanguage) =>
+                  setUserInfo({ ...userInfo, language: selectedLanguage })
+                }
+              />
             </S.FormGroup>
             <S.FormGroup>
               <label htmlFor="interests">관심사</label>
               <S.RadioGroup>
                 {interests.map((interest) => (
-                  <S.RadioButton key={interest} isselected={selectedInterest === interest}>
+                  <S.RadioButton key={interest} isselected={user.interest === interest}>
                     <input
                       type="radio"
                       name="interest"
                       value={interest}
-                      checked={selectedInterest === interest}
-                      onChange={() => onChangeInterestHandler(interest)}
+                      checked={userInfo.interest === interest}
+                      onChange={() => setUserInfo({ ...userInfo, interest })}
                     />
                     {interest}
                   </S.RadioButton>
@@ -182,7 +209,7 @@ const MyPageEdit = () => {
               </S.RadioGroup>
             </S.FormGroup>
             <S.BtnPosition>
-              <Button.Primary size="the smallest" bc="#FF6E46">
+              <Button.Primary size="the smallest" bc="#FF6E46" onClick={onSubmitUserInfo}>
                 정보 수정
               </Button.Primary>
             </S.BtnPosition>

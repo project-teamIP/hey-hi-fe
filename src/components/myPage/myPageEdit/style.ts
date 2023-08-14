@@ -1,6 +1,6 @@
 import { keyframes, styled } from "styled-components";
 
-//로딩중 화면
+//로딩중 스피너
 const rotate = keyframes`
   0% {
     transform: rotate(0deg);
@@ -16,6 +16,7 @@ export const LoadingSpinner = styled.div`
   justify-content: center;
   animation: ${rotate} 2s linear infinite;
 `;
+//스피너 끝
 
 export const MyPageEditBox = styled.div`
   height: 874px;
