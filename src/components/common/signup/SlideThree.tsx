@@ -35,7 +35,7 @@ const SlideThree = ({ userData, setUserData, onClickUserRegisterHandler }: Slide
         ))}
       </S.CategoriContainer>
       {/* 회원가입 완료 */}
-      <Button.Primary size="middle" onClick={onClickUserRegisterHandler}>
+      <Button.Primary size="middle" onClick={onClickUserRegisterHandler} activeBc="#FF6E46">
         회원가입 완료
       </Button.Primary>
     </S.Wrap>
