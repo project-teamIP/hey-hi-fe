@@ -76,7 +76,7 @@ const userLogin = async (loginData: LoginInformationData) => {
   return response.data;
 };
 
-export { userRegister, userLogin, userIdCheck };
+export { userRegister, userLogin, userIdCheck, userNickNameCheck };
 
 // 로그아웃
 export const userLogout = async () => {
@@ -94,5 +94,3 @@ export const userLogout = async () => {
     throw error;
   }
 };
-
-
