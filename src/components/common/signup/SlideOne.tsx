@@ -12,6 +12,7 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
   const [passwordMatch, setPasswordMatch] = useState(false);
   const [loginIdError, setloginIdError] = useState("");
   const [isloginIdValid, setIsloginIdValid] = useState(false);
+  const [isMessage, setIsMessage] = useState("");
 
   // 이메일 중복 체크
   const loginId = userData.loginId;
@@ -36,10 +37,16 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
   }, [loginId]);
 
   // 중복 이메일 체크 함수
-  const onClickLoginIdCheckHanlder = () => {
+  const onClickLoginIdCheckHanlder = async () => {
     if (isloginIdValid) {
-      // 이메일 유효성 검사 통과한 경우에만 API 호출
-      userIdCheckMutation.mutate(loginId);
+      try {
+        // 이메일 유효성 검사 통과한 경우에만 API 호출
+        const result = await userIdCheckMutation.mutateAsync(loginId);
+        // response.data를 가공
+        setIsMessage(result.message);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -79,8 +86,8 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       </S.IdContainer>
 
       {/* 중복 체크 성공 시 메시지 표시 */}
-      {loginIdError && <S.ErrorTyping>{loginIdError}</S.ErrorTyping>}
-      {userIdCheckMutation.isSuccess && <S.ErrorTyping>사용 가능한 이메일입니다.</S.ErrorTyping>}
+      {loginIdError && <S.Message>{loginIdError}</S.Message>}
+      {userIdCheckMutation.isSuccess && <S.Message>{isMessage}</S.Message>}
 
       {/* 비밀번호 */}
       <S.Title>비밀번호</S.Title>
@@ -104,7 +111,7 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
 
       {/* 비밀번호 일치 여부에 따른 메시지 표시 */}
       {!passwordMatch && passwordCheck !== "" && (
-        <S.ErrorTyping>비밀번호가 일치하지 않습니다.</S.ErrorTyping>
+        <S.Message>비밀번호가 일치하지 않습니다.</S.Message>
       )}
 
       {/* 다음으로 넘어가기 */}
