@@ -101,6 +101,17 @@ export const Gap = styled.div`
   }
 `;
 
+export const EmailReadOnly = styled.div`
+  height: 60px;
+  width: 574px;
+  border-radius: 15px;
+  border: 1px solid #bababa;
+  color: #a0a0a0;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 19px 0 20px 28px;
+`;
+
 export const RadioGroup = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -108,20 +119,19 @@ export const RadioGroup = styled.div`
   grid-column-gap: 49px;
 `;
 
-export const RadioButton = styled.label<{ isSelected: boolean }>`
-  display: flex;
-  align-items: center;
+export const RadioButton = styled.label<{ isselected: boolean }>`
   cursor: pointer;
   font-size: 18px;
   font-weight: 600;
+  color: #a0a0a0;
 
   input[type="radio"] {
     height: 24px;
     width: 24px;
   }
 
-  ${({ isSelected }) =>
-    isSelected &&
+  ${({ isselected }) =>
+    isselected &&
     `
     font-weight: bold;
   `}
