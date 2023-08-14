@@ -20,6 +20,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //로그아웃
   const logoutMutation = useMutation(userLogout, {
     onSuccess: () => {
       dispatch(logOut());
@@ -62,7 +63,7 @@ const Header = () => {
         </S.Nav>
         {state ? (
           <div>
-            <S.StyledLink to="/mypage/1">
+            <S.StyledLink to="/mypage">
               <Button.Primary size="loginbtn" outlined>
                 마이페이지
               </Button.Primary>

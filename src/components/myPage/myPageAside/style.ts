@@ -33,3 +33,15 @@ export const NavItem = styled.p<{ isActive: boolean }>`
   color: ${({ isActive }) => (isActive ? "#000" : "#5a5a5a")};
   cursor: pointer;
 `;
+
+export const LogoutBtn = styled.button`
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 38px;
+  color: #5a5a5a;
+  cursor: pointer;
+  margin: 0px;
+  border: none;
+  background: none;
+  padding: 0px;
+`;
