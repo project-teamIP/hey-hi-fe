@@ -15,30 +15,34 @@ const MyPageEdit = () => {
   const [profileImg, setProfileImg] = useState(null);
   const [imgPreview, setImgPreview] = useState(null);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
   const mutation = useMutation(changeProfileImg, {
-    onSuccess: () => {
+    onSuccess: (data) => {
       alert("프로필 이미지가 변경되었습니다.");
+      console.log("이미지 변경 성공:", data);
     },
     onError: (error) => {
+      alert("잠시 후 다시 시도해주세요😭");
       console.error("Image change error:", error);
     },
   });
-  const tempfunc = () => {};
 
+  const tempfunc = () => {};
+  // 로그인된 사용자 정보 조회
   const { data: user, isLoading } = useQuery("myInfo", getUserInfo);
   if (isLoading) {
     return (
-      <p>
-        <img src={rabbitSvg} alt="isLoading" />
-        Loading...
-      </p>
+      <S.MyPageEditBox>
+        <S.LoadingSpinner>
+          <img src={rabbitSvg} alt="isLoading" />
+        </S.LoadingSpinner>
+      </S.MyPageEditBox>
     );
   }
 
-  // 프로필 이미지
+  // 프로필 이미지 1. pc에서 선택
   const onChangeImageHandler = (event: any) => {
     const file = event.target.files[0];
-
     if (file) {
       setProfileImg(file);
       const reader = new FileReader();
@@ -48,13 +52,15 @@ const MyPageEdit = () => {
       reader.readAsDataURL(file);
     }
   };
-
+  // 프로필 이미지 2. 서버로 전송
   const onClickImageSubmitHandler = () => {
     if (profileImg) {
       const formdataFile = new FormData();
-      formdataFile.append("file", profileImg);
-
+      formdataFile.append("image", profileImg);
+      console.log(profileImg, formdataFile.keys);
       mutation.mutate(formdataFile);
+    } else {
+      alert("변경할 이미지를 선택해주세요😉");
     }
   };
 
@@ -72,23 +78,20 @@ const MyPageEdit = () => {
         <S.MyPageEditBox>
           <S.ProfileTop>
             <S.ImgForm>
-              {imgPreview ? ( // Show preview image if available
+              {imgPreview ? (
                 <img
                   src={imgPreview}
                   alt="profile_pic_preview"
                   style={{ maxWidth: "100%", maxHeight: "300px" }}
                 />
               ) : (
-                <img
-                  src={user.image || rabbitSvg} // Show user.image if available, or fallback to rabbitSvg
-                  alt={profileImg ? "profile_pic" : "temp_img"}
-                />
+                <img src={user.image || rabbitSvg} alt={profileImg ? "profile_pic" : "temp_img"} />
               )}
               <S.ImgInput>
                 <label htmlFor="profile-img">
                   <img src={pencilSvg} alt="img-edit-btn" />
                 </label>
-                <input type="file" id="profile-img" onChange={onChangeImageHandler} />
+                <input name="file" type="file" id="profile-img" onChange={onChangeImageHandler} />
                 <button type="button" onClick={onClickImageSubmitHandler}>
                   <img src={require(`../../../assets/images/check.png`)} alt="submit-btn" />
                 </button>

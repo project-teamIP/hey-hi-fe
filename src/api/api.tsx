@@ -106,11 +106,13 @@ export const getUserInfo = async () => {
 };
 
 // 프로필 이미지 변경
-export const changeProfileImg = async (formdataFile: FormData) => {
+export const changeProfileImg = async (image: FormData) => {
   try {
-    const response = await instance.post(`/api/users/image`, formdataFile);
-    return response.data; // Return the data from the response
+    const request = await instance.put(`/api/users/image`, image, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return request; // Return the data from the response
   } catch (error) {
-    console.error("이미지 변경 오류", error);
+    throw error;
   }
 };
