@@ -1,11 +1,38 @@
 [
-  "독서",
-	"여행",
-  "운동",
-	"게임",
-  "영화",
-  "음악",
-  "요리",
-  "패션",
-  "예술"
+  {
+    "name": "독서",
+    "image": "reading.svg"
+  },
+  {
+    "name": "여행",
+    "image": "travel.svg"
+  },
+  {
+    "name": "운동",
+    "image": "health.svg"
+  },
+  {
+    "name": "게임",
+    "image": "game.svg"
+  },
+  {
+    "name": "영화",
+    "image": "movie.svg"
+  },
+  {
+    "name": "음악",
+    "image": "music.svg"
+  },
+  {
+    "name": "요리",
+    "image": "cook.svg"
+  },
+  {
+    "name": "패션",
+    "image": "fashion.svg"
+  },
+  {
+    "name": "예술",
+    "image": "art.svg"
+  }
 ]

@@ -67,11 +67,11 @@ const MyPageEdit = () => {
             {interests.map((interest) => (
               <S.RadioButton
                 className="radio-label"
-                key={interest}
-                isSelected={selectedInterests.includes(interest)}
-                onClick={() => onChangeInterestHandler(interest)}>
-                <input type="radio" checked={selectedInterests.includes(interest)} readOnly />
-                {interest}
+                key={interest.name}
+                isSelected={selectedInterests.includes(interest.name)}
+                onClick={() => onChangeInterestHandler(interest.name)}>
+                <input type="radio" checked={selectedInterests.includes(interest.name)} readOnly />
+                {interest.name}
               </S.RadioButton>
             ))}
           </S.RadioGroup>
