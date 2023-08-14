@@ -2,8 +2,18 @@ import React from "react";
 import * as S from "./style";
 import Categori from "./Categori";
 import Button from "../button/Button";
+import { SlideProps } from "../../../types/types";
+import interests from "../../../utils/interests.json";
 
-const SlideThree = () => {
+const SlideThree = ({ userData, setUserData, onClickUserRegisterHandler }: SlideProps) => {
+  // handler
+  const handleInterestClick = (selectedInterest: string) => {
+    // 관심사 선택 시 호출되는 핸들러 함수
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      interest: selectedInterest,
+    }));
+  };
   return (
     <S.Wrap>
       {/* 관심사 */}
@@ -15,18 +25,19 @@ const SlideThree = () => {
       {/* 관심사 컨테이너 */}
       <S.CategoriContainer>
         {/* 관심사 Items */}
-        <Categori />
-        <Categori />
-        <Categori />
-        <Categori />
-        <Categori />
-        <Categori />
-        <Categori />
-        <Categori />
-        <Categori />
+        {interests.map((interest, index) => (
+          <Categori
+            key={index}
+            interest={interest.name}
+            image={interest.image}
+            onClick={() => handleInterestClick(interest.name)}
+          />
+        ))}
       </S.CategoriContainer>
       {/* 회원가입 완료 */}
-      <Button.Primary size="middle">회원가입 완료</Button.Primary>
+      <Button.Primary size="middle" onClick={onClickUserRegisterHandler}>
+        회원가입 완료
+      </Button.Primary>
     </S.Wrap>
   );
 };
