@@ -195,15 +195,15 @@ const MyPageEdit = () => {
               <label htmlFor="interests">관심사</label>
               <S.RadioGroup>
                 {interests.map((interest) => (
-                  <S.RadioButton key={interest} isselected={user.interest === interest}>
+                  <S.RadioButton key={interest.name} isselected={user.interest === interest.name}>
                     <input
                       type="radio"
                       name="interest"
-                      value={interest}
-                      checked={userInfo.interest === interest}
-                      onChange={() => setUserInfo({ ...userInfo, interest })}
+                      value={interest.name}
+                      checked={userInfo.interest === interest.name}
+                      onChange={() => setUserInfo({ ...userInfo, interest.name })}
                     />
-                    {interest}
+                    {interest.name}
                   </S.RadioButton>
                 ))}
               </S.RadioGroup>

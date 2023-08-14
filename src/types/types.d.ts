@@ -21,7 +21,8 @@ export interface SlideProps {
     }>
   >;
   slideIndex: number;
-  onClickNextButtonHandler: () => void;
+  onClickNextButtonHandler?: () => void;
+  onClickUserRegisterHandler?: () => void;
 }
 
 // 로그인
@@ -35,4 +36,11 @@ export type SignupInformationData = {
   loginId: string;
   password: string;
   nickname: string;
+};
+
+// 카테고리
+export type CategoriProps = {
+  interest: string;
+  image: string;
+  onClick: () => void;
 };

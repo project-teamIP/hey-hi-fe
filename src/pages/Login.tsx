@@ -52,6 +52,7 @@ const Login = () => {
         />
         <Input
           placeholder="비밀번호를 입력하세요"
+          type="password"
           value={password}
           onChangeHandler={onChangePasswordHandler}
           size="medium"
