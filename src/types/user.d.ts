@@ -17,3 +17,11 @@ export type RootState = {
     isLoggedIn: boolean;
   };
 };
+
+// 개인정보 수정
+export type UserInfoType = {
+  nickname: string;
+  country: string;
+  language: string;
+  interest: string;
+};

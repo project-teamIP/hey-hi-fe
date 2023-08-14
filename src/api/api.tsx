@@ -62,6 +62,7 @@ const userIdCheck = async (loginId: string) => {
 // 회원 닉네임 중복 조회
 const userNickNameCheck = async (nickName: string) => {
   const response = await instance.get(`/api/users/check?nickname=${nickName}`);
+  console.log("닉넴 중복 확인", nickName, response.data);
   return response.data;
 };
 
@@ -111,7 +112,17 @@ export const changeProfileImg = async (image: FormData) => {
     const request = await instance.put(`/api/users/image`, image, {
       headers: { "Content-Type": "multipart/form-data" },
     });
-    return request; // Return the data from the response
+    return request;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 회원정보 수정
+export const changeUserInfo = async (userInfo: any) => {
+  try {
+    const response = await instance.patch(`/api/users`, userInfo);
+    return response;
   } catch (error) {
     throw error;
   }
