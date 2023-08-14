@@ -82,7 +82,7 @@ export const Image = styled.div`
 `;
 
 export const Name = styled.div`
-  margin-top: 5px;
+  margin-top: 10px;
 `;
 
 // Button ( 다음으로 넘어가기 )
