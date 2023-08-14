@@ -20,6 +20,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //로그아웃
   const logoutMutation = useMutation(userLogout, {
     onSuccess: () => {
       dispatch(logOut());

@@ -104,3 +104,15 @@ export const getUserInfo = async () => {
     console.error("mypage 조회 오류", error);
   }
 };
+
+// 프로필 이미지 변경
+export const changeProfileImg = async (image: FormData) => {
+  try {
+    const request = await instance.put(`/api/users/image`, image, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return request; // Return the data from the response
+  } catch (error) {
+    throw error;
+  }
+};
