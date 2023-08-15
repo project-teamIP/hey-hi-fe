@@ -29,7 +29,13 @@ const SlideTwo = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
     }
   };
 
-  console.log(nickName);
+  // 닉네임, 거주국가, 사용언어, 성별 선택시 버튼 활성화
+  const isFormValid =
+    userData.nickname !== "" &&
+    userData.country !== "" &&
+    userData.language !== "" &&
+    userData.gender !== "";
+
   return (
     <S.Wrap>
       {/* 닉네임 */}
@@ -93,7 +99,12 @@ const SlideTwo = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
         <label>여성</label>
       </S.InputContainer>
 
-      <Button.Primary size="middle" onClick={onClickNextButtonHandler} bc="#FF6E46">
+      <Button.Primary
+        size="middle"
+        onClick={onClickNextButtonHandler}
+        bc={isFormValid ? "#FF6E46" : "#999"}
+        disabled={!isFormValid} // 유효하지 않을 경우 버튼 비활성화
+      >
         다음으로 넘어가기
       </Button.Primary>
     </S.Wrap>

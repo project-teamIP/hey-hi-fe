@@ -1,29 +1,33 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
-import Cookies from "js-cookie";
-import { LoginInformationData, SignupInformationData } from "../types/types";
+import { SignupInformationData } from "../types/types";
+import { LoginInformationData } from "../types/types";
 
-// Axios Instance 생성
+// Axios 인스턴스 생성
 export const instance: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
+// 토큰을 헤더에 추가하는 함수
+const addTokenToHeaders = (config: any, token: string | undefined, header: string) => {
+  if (token) {
+    config.headers[header] = token;
+  }
+};
+
 // 요청 인터셉터 설정
 instance.interceptors.request.use(
-  function (config) {
-    // 요청 전 수행할 작업
-    // 1. 쿠키에서 엑세스 토큰 및 리프레시 토큰 값 가져오기
-    const accessToken: string | undefined = Cookies.get("access_token");
-    const refreshToken: string | undefined = Cookies.get("refresh_token");
+  async function (config) {
+    const cookies = getCookies(); // 쿠키 가져오기
+    const { access_token, refresh_token } = cookies;
 
-    if (accessToken) {
-      config.headers.AccessToken = `${accessToken}`;
+    addTokenToHeaders(config, access_token, "Authorization");
+    addTokenToHeaders(config, refresh_token, "RefreshToken");
+
+    // 개발환경에서난 콘솔이 보이도록 하기
+    if (process.env.NODE_ENV === "development") {
+      console.log("요청 완료", config);
     }
 
-    if (refreshToken) {
-      config.headers.RefreshToken = `${refreshToken}`;
-    }
-
-    console.log("요청 완료", config);
     return config;
   },
   function (error: AxiosError) {
@@ -35,15 +39,52 @@ instance.interceptors.request.use(
 // 응답 인터셉터 설정
 instance.interceptors.response.use(
   function (response: AxiosResponse<any>) {
-    // 응답 성공 처리
     console.log("response", response);
     return response;
   },
-  function (error: AxiosError) {
+  async function (error: AxiosError) {
     console.log("error", error);
+
+    if (
+      error.response?.status === 401 &&
+      (error.response.data as any)?.message === "토큰이 만료되었습니다."
+    ) {
+      const cookies = getCookies();
+      const { refresh_token } = cookies;
+
+      if (refresh_token) {
+        try {
+          const refreshResponse = await instance.post("/auth/re-access", { refresh_token });
+          const newAccessToken = refreshResponse.data.access_token;
+
+          if (error.config) {
+            const newConfig = { ...error.config };
+            addTokenToHeaders(newConfig, newAccessToken, "Authorization");
+            return instance.request(newConfig);
+          }
+        } catch (refreshError) {
+          console.log("액세스 토큰 재발급 실패", refreshError);
+        }
+      }
+    }
+
     return Promise.reject(error);
   }
 );
+
+// 쿠키를 읽어오는 함수
+const getCookies = (): { [key: string]: string } => {
+  const cookies = document.cookie;
+  const cookieArray = cookies.split(";");
+  const cookieObject: { [key: string]: string } = {};
+
+  cookieArray.forEach((cookie) => {
+    const [name, value] = cookie.trim().split("=");
+    cookieObject[name] = value;
+  });
+
+  return cookieObject;
+};
 
 export default instance;
 

@@ -72,6 +72,7 @@ export const Categori = styled.div`
   height: 102px;
   border: 1px solid #323232;
   border-radius: 15px;
+  cursor: pointer;
 `;
 
 export const Image = styled.div`
