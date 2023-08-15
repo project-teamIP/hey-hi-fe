@@ -132,6 +132,7 @@ export const changeUserInfo = async (userInfo: any) => {
 export const getBuddies = async () => {
   try {
     const response = await instance.get(`/api/users/buddy`);
+    console.log(response);
     return response.data;
   } catch (error) {
     console.error("친구 조회 오류", error);
