@@ -25,3 +25,9 @@ export type UserInfoType = {
   language: string;
   interest: string;
 };
+
+//친구목록
+export type BuddiesType = {
+  nickname: string;
+  loginId: string;
+};
