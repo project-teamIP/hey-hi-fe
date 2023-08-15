@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./style";
 import Categori from "./Categori";
 import Button from "../button/Button";
@@ -6,6 +6,8 @@ import { SlideProps } from "../../../types/types";
 import interests from "../../../utils/interests.json";
 
 const SlideThree = ({ userData, setUserData, onClickUserRegisterHandler }: SlideProps) => {
+  // useState
+  const [selectedInterest, setSelectedInterest] = useState("");
   // handler
   const handleInterestClick = (selectedInterest: string) => {
     // 관심사 선택 시 호출되는 핸들러 함수
@@ -13,7 +15,12 @@ const SlideThree = ({ userData, setUserData, onClickUserRegisterHandler }: Slide
       ...prevUserData,
       interest: selectedInterest,
     }));
+    setSelectedInterest(selectedInterest);
   };
+
+  // 관심사 선택시 버튼 활성화
+  const isFormValid = selectedInterest !== "";
+
   return (
     <S.Wrap>
       {/* 관심사 */}
@@ -35,7 +42,11 @@ const SlideThree = ({ userData, setUserData, onClickUserRegisterHandler }: Slide
         ))}
       </S.CategoriContainer>
       {/* 회원가입 완료 */}
-      <Button.Primary size="middle" onClick={onClickUserRegisterHandler} activeBc="#FF6E46">
+      <Button.Primary
+        size="middle"
+        onClick={onClickUserRegisterHandler}
+        bc={isFormValid ? "#FF6E46" : "#999"}
+        disabled={!isFormValid}>
         회원가입 완료
       </Button.Primary>
     </S.Wrap>
