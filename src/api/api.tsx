@@ -20,7 +20,7 @@ instance.interceptors.request.use(
     const cookies = getCookies(); // 쿠키 가져오기
     const { access_token, refresh_token } = cookies;
 
-    addTokenToHeaders(config, access_token, "Authorization");
+    addTokenToHeaders(config, access_token, "AccessToken");
     addTokenToHeaders(config, refresh_token, "RefreshToken");
 
     // 개발환경에서난 콘솔이 보이도록 하기
