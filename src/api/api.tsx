@@ -47,7 +47,7 @@ instance.interceptors.response.use(
 
     if (
       error.response?.status === 401 &&
-      (error.response.data as any)?.message === "Access token has expired"
+      (error.response.data as any)?.message === "토큰이 만료되었습니다."
     ) {
       const cookies = getCookies();
       const { refresh_token } = cookies;
