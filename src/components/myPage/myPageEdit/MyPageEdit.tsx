@@ -1,4 +1,5 @@
 import * as S from "./style";
+import * as C from "../../../assets/styles/commonStyle";
 import Button from "../../common/button/Button";
 import Input from "../../common/input/Input";
 import Select from "../../common/select/Select";
@@ -20,10 +21,9 @@ const MyPageEdit = () => {
     language: "",
     interest: "",
   });
-  console.log(userInfo);
+
   //0. 로그인된 사용자 정보 조회
   const { data: user, isLoading } = useQuery("myInfo", getUserInfo);
-  console.log("유저정보", user);
 
   useEffect(() => {
     if (user) {
@@ -108,11 +108,11 @@ const MyPageEdit = () => {
   // 로딩중 스피너 설정
   if (isLoading) {
     return (
-      <S.MyPageEditBox>
-        <S.LoadingSpinner>
+      <C.SpinnerBox>
+        <C.LoadingSpinner>
           <img src={rabbitSvg} alt="isLoading" />
-        </S.LoadingSpinner>
-      </S.MyPageEditBox>
+        </C.LoadingSpinner>
+      </C.SpinnerBox>
     );
   }
 
@@ -201,7 +201,7 @@ const MyPageEdit = () => {
                       name="interest"
                       value={interest.name}
                       checked={userInfo.interest === interest.name}
-                      onChange={() => setUserInfo({ ...userInfo, interest.name })}
+                      onChange={() => setUserInfo({ ...userInfo, interest: interest.name })}
                     />
                     {interest.name}
                   </S.RadioButton>

@@ -58,7 +58,7 @@ export const TableRow = styled.tr`
   td {
     height: 115px;
     vertical-align: middle;
-    padding: 21px 78px;
+    padding: 21px 0;
     font-size: 18px;
     font-weight: 600;
   }
@@ -71,13 +71,8 @@ export const TableRow = styled.tr`
   }
 `;
 
-export const CallingTd = styled.td`
-  div {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background-color: #d9d9d9;
-    text-align: center;
-    padding-top: 13px;
-  }
+export const CallingTd = styled.img`
+  width: 55px;
+  height: 55px;
+  text-align: center;
 `;
