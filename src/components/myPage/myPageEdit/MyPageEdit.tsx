@@ -201,7 +201,7 @@ const MyPageEdit = () => {
                       name="interest"
                       value={interest.name}
                       checked={userInfo.interest === interest.name}
-                      onChange={() => setUserInfo({ ...userInfo, interest.name })}
+                      onChange={() => setUserInfo({ ...userInfo, interest: interest.name })}
                     />
                     {interest.name}
                   </S.RadioButton>
