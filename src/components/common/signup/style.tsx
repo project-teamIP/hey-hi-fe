@@ -70,9 +70,14 @@ export const Categori = styled.div`
   justify-content: center;
   width: 144px;
   height: 102px;
-  border: 1px solid #323232;
+  border: none;
   border-radius: 15px;
+  background: #ffffff;
   cursor: pointer;
+
+  &.selected {
+    border: 2px solid #ff6e46;
+  }
 `;
 
 export const Image = styled.div`
