@@ -16,6 +16,7 @@ export const HeaderBox = styled.div<HeaderBoxProps>`
   position: fixed;
   top: 0;
   z-index: 1000;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
 `;
 
 export const HeaderInner = styled.div`

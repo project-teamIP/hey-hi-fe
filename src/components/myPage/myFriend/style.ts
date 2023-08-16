@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { colors } from "../../../assets/styles/colors";
 
 export const MyFriendBox = styled.div`
   margin: 67px 0 0 79px;
@@ -16,13 +17,13 @@ export const Table = styled.table`
   border-radius: 20px;
   border-style: hidden;
   box-shadow: 0 0 0 1px #d2d2d2;
+`;
 
-  img {
-    height: 66px;
-    width: 66px;
-    border-radius: 50%;
-    margin: 0 10px 0 30px;
-  }
+export const ProfileImg = styled.img`
+  height: 66px;
+  width: 66px;
+  border-radius: 50%;
+  margin-right: 20px;
 `;
 
 export const TableHead = styled.thead`
@@ -66,13 +67,30 @@ export const TableRow = styled.tr`
   td:nth-child(1) {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     line-height: 50%;
+    padding-left: 30px;
   }
 `;
 
-export const CallingTd = styled.img`
-  width: 55px;
-  height: 55px;
-  text-align: center;
+export const FuncBtn = styled.button`
+  width: 52px;
+  height: 52px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .smaller {
+    background-color: ${colors.gray};
+    border-radius: 50%;
+    padding: 10px;
+    object-fit: scale-down;
+  }
 `;
