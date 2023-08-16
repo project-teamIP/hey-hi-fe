@@ -192,3 +192,14 @@ export const deleteBuddy = async (nickname: string) => {
     throw error;
   }
 };
+
+// 메모 조회
+export const getMemos = async () => {
+  try {
+    const response = await instance.get(`/api/memos`);
+    return response.data;
+  } catch (error) {
+    console.error("메모 조회 오류", error);
+    throw error;
+  }
+};
