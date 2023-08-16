@@ -30,4 +30,5 @@ export type UserInfoType = {
 export type BuddiesType = {
   nickname: string;
   loginId: string;
+  profileImage: string;
 };

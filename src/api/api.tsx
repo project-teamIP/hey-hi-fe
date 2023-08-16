@@ -59,7 +59,7 @@ instance.interceptors.response.use(
 
           if (error.config) {
             const newConfig = { ...error.config };
-            addTokenToHeaders(newConfig, newAccessToken, "Authorization");
+            addTokenToHeaders(newConfig, newAccessToken, "AccessToken");
             return instance.request(newConfig);
           }
         } catch (refreshError) {
@@ -173,7 +173,6 @@ export const changeUserInfo = async (userInfo: any) => {
 export const getBuddies = async () => {
   try {
     const response = await instance.get(`/api/users/buddy`);
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error("친구 조회 오류", error);
