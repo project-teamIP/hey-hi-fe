@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import MemoModal from "./MemoModal";
 
 export const MyMemoBox = styled.div`
   margin: 4.1875rem 0 0 4.9375rem;
@@ -47,6 +48,7 @@ export const MemoCard = styled.div`
   border-radius: 1.25rem;
   border: 0.0625rem solid #d8dee9;
   padding: 2.0625rem 1.3125rem;
+  cursor: pointer;
 
   /* 메모 제목 */
   h3 {
@@ -97,5 +99,97 @@ export const CardHeader = styled.div`
     font-weight: 600;
     padding: 0.4375rem 0;
     text-align: center;
+  }
+`;
+
+/* ! memo modal */
+export const MemoModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(94, 94, 94, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`;
+
+export const MemoModalBox = styled.div`
+  width: 968px;
+  height: 773px;
+  background-color: white;
+  padding: 0 45px;
+  border-radius: 30px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+`;
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 37px;
+  right: 45px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+`;
+
+export const MemoModalHeader = styled.div`
+  width: 100%;
+  height: 200px;
+  padding: 72px 0 28px 0;
+  border-bottom: 1px solid #d1d1d1;
+
+  p {
+    width: fit-content;
+    height: 39px;
+    padding: 11px 20px;
+    color: #ff6e46;
+    font-size: 18px;
+    font-weight: 600;
+    background-color: #ffe4dc;
+    border-radius: 30px;
+  }
+
+  h3 {
+    color: #3f3f3f;
+    font-size: 35px;
+    font-weight: 700;
+    margin-top: 19px;
+  }
+`;
+
+export const MemoModalMore = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const MemoModalBody = styled.p`
+  margin-top: 66px;
+  width: 100%;
+  height: 430px;
+  color: #606060;
+  font-size: 18px;
+  font-weight: 500;
+  overflow: scroll;
+
+  /* 스크롤바 설정 1. 너비 */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  /* 스크롤바 설정 2. 길이, 색 */
+  &::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: #ff6e46;
+    border-radius: 10px;
+  }
+  /* 스크롤바 설정 3. 배경 */
+  &::-webkit-scrollbar-track {
+    background: #ffe4dc;
   }
 `;

@@ -198,13 +198,23 @@ export const deleteBuddy = async (nickname: string) => {
   }
 };
 
-// 메모 조회
+// 메모 조회 전체
 export const getMemos = async (page: number) => {
   try {
     const response = await instance.get(`/api/memos?page=${page}`);
     return response.data;
   } catch (error) {
-    console.error("메모 조회 오류", error);
+    console.error("메모목록 조회 오류", error);
     throw error;
+  }
+};
+
+// 특정 메모 조회
+export const getSingleMemo = async (id: number) => {
+  try {
+    const response = await instance.get(`/api/memo/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("메모 조회 오류", error);
   }
 };
