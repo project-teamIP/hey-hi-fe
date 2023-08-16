@@ -179,3 +179,16 @@ export const getBuddies = async () => {
     throw error;
   }
 };
+
+//친구 삭제
+export const deleteBuddy = async (nickname: string) => {
+  console.log("친삭", nickname);
+  try {
+    const response = await instance.delete(`/api/users/buddy/${nickname}`);
+
+    return response;
+  } catch (error) {
+    console.error("친구 삭제 오류", error);
+    throw error;
+  }
+};
