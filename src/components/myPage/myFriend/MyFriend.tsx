@@ -92,7 +92,11 @@ const MyFriend = () => {
           )}
         </S.TableBody>
       </S.Table>
-      <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onChangePageHandler={setCurrentPage}
+      />
     </S.MyFriendBox>
   );
 };

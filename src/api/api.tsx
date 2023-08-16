@@ -194,9 +194,9 @@ export const deleteBuddy = async (nickname: string) => {
 };
 
 // 메모 조회
-export const getMemos = async () => {
+export const getMemos = async (page: number) => {
   try {
-    const response = await instance.get(`/api/memos`);
+    const response = await instance.get(`/api/memos?page=${page}`);
     return response.data;
   } catch (error) {
     console.error("메모 조회 오류", error);
