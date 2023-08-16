@@ -7,6 +7,20 @@ export const instance: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
+// 쿠키를 읽어오는 함수
+const getCookies = (): { [key: string]: string } => {
+  const cookies = document.cookie;
+  const cookieArray = cookies.split(";");
+  const cookieObject: { [key: string]: string } = {};
+
+  cookieArray.forEach((cookie) => {
+    const [name, value] = cookie.trim().split("=");
+    cookieObject[name] = value;
+  });
+
+  return cookieObject;
+};
+
 // 토큰을 헤더에 추가하는 함수
 const addTokenToHeaders = (config: any, token: string | undefined, header: string) => {
   if (token) {
@@ -44,7 +58,7 @@ instance.interceptors.response.use(
   },
   async function (error: AxiosError) {
     console.log("error", error);
-
+    console.log(error.response?.data);
     if (
       error.response?.status === 401 &&
       (error.response.data as any)?.message === "토큰이 만료되었습니다."
@@ -52,15 +66,20 @@ instance.interceptors.response.use(
       const cookies = getCookies();
       const { refresh_token } = cookies;
 
+      // 리프레시 토큰이 존재할 경우에만 실행
       if (refresh_token) {
         try {
-          const refreshResponse = await instance.post("/auth/re-access", { refresh_token });
-          const newAccessToken = refreshResponse.data.access_token;
+          const refreshResponse = await instance.post("/auth/re-access", {
+            refresh_token,
+          });
+          const newAccessToken = refreshResponse.headers.access_token;
+          console.log(newAccessToken);
+          console.log(refreshResponse);
 
           if (error.config) {
-            const newConfig = { ...error.config };
-            addTokenToHeaders(newConfig, newAccessToken, "Authorization");
-            return instance.request(newConfig);
+            const newRequestConfig = { ...error.config };
+            addTokenToHeaders(newRequestConfig, newAccessToken, "AccessToken");
+            return instance(newRequestConfig);
           }
         } catch (refreshError) {
           console.log("액세스 토큰 재발급 실패", refreshError);
@@ -71,20 +90,6 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// 쿠키를 읽어오는 함수
-const getCookies = (): { [key: string]: string } => {
-  const cookies = document.cookie;
-  const cookieArray = cookies.split(";");
-  const cookieObject: { [key: string]: string } = {};
-
-  cookieArray.forEach((cookie) => {
-    const [name, value] = cookie.trim().split("=");
-    cookieObject[name] = value;
-  });
-
-  return cookieObject;
-};
 
 export default instance;
 
