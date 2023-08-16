@@ -13,7 +13,7 @@ import GlobalStyle from "./assets/styles/GlobalStyle";
 
 function App() {
   return (
-    <>
+    <div>
       <GlobalStyle />
       <BrowserRouter>
         <Header />
@@ -28,7 +28,7 @@ function App() {
           <Route path="/calling" element={<Calling />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

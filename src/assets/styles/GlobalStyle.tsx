@@ -15,6 +15,9 @@ const GlobalStyle = createGlobalStyle`
       display: none; /* 크롬, 사파리, 오페라, 엣지 */
     }
   }
+  body {
+    background: #fafafa;
+  }
 `;
 
 export default GlobalStyle;

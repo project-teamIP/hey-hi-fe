@@ -3,7 +3,9 @@ import * as S from "./style";
 import SlideOne from "../../components/common/signup/SlideOne";
 import SlideTwo from "../../components/common/signup/SlideTwo";
 import SlideThree from "../../components/common/signup/SlideThree";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { userRegister } from "../../api/api";
 
 const Signup = () => {
   // useState
@@ -17,6 +19,8 @@ const Signup = () => {
     language: "",
     interest: "",
   });
+  // Mutation
+  const userRegisterMutation = useMutation(userRegister);
 
   // useNavigate
   const navigate = useNavigate();
@@ -40,16 +44,7 @@ const Signup = () => {
 
   // 클릭 시 슬라이드 번호 이동
   const onClickNextButtonHandler = () => {
-    // 슬라이드 1 에서 아이디와 비밀번호 입력을 마친 경우
-    if (slideIndex === 0) {
-      // 슬라이드 이동
-      goToSlide(slideIndex + 1);
-    } else {
-      if (slideIndex === 2) {
-        // Api 호출을 통해 통신 보내기
-      }
-      goToSlide(slideIndex + 1);
-    }
+    goToSlide(slideIndex + 1);
   };
 
   // 슬라이드 이동
@@ -59,7 +54,11 @@ const Signup = () => {
     window.history.pushState(null, "", `?slide=${index}`);
   };
 
-  console.log(userData);
+  // 유저 회원가입 버튼
+  const onClickUserRegisterHandler = () => {
+    userRegisterMutation.mutate(userData);
+    navigate("/login");
+  };
   return (
     <S.Wrap>
       {/* 회원가입 스탭 */}
@@ -90,7 +89,12 @@ const Signup = () => {
             onClickNextButtonHandler={onClickNextButtonHandler}
           />
           {/* 페이지 3 */}
-          <SlideThree />
+          <SlideThree
+            userData={userData}
+            setUserData={setUserData}
+            slideIndex={slideIndex}
+            onClickUserRegisterHandler={onClickUserRegisterHandler}
+          />
         </S.Slides>
       </S.Container>
     </S.Wrap>
