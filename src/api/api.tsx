@@ -175,9 +175,9 @@ export const changeUserInfo = async (userInfo: any) => {
 };
 
 // 친구 조회
-export const getBuddies = async () => {
+export const getBuddies = async (page: number) => {
   try {
-    const response = await instance.get(`/api/users/buddy`);
+    const response = await instance.get(`/api/users/buddy?page=${page}`);
     return response.data;
   } catch (error) {
     console.error("친구 조회 오류", error);
@@ -199,9 +199,9 @@ export const deleteBuddy = async (nickname: string) => {
 };
 
 // 메모 조회
-export const getMemos = async () => {
+export const getMemos = async (page: number) => {
   try {
-    const response = await instance.get(`/api/memos`);
+    const response = await instance.get(`/api/memos?page=${page}`);
     return response.data;
   } catch (error) {
     console.error("메모 조회 오류", error);

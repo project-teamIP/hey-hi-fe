@@ -6,16 +6,19 @@ import { useQuery } from "react-query";
 import { MemosType } from "../../../types/user";
 import Pagination from "../../common/pagination/Pagination";
 import { useState } from "react";
+import { formatDateTime } from "../../../utils/formattedDate";
 
 const MyMemo = () => {
-  const { data, isLoading } = useQuery("myInfo", getMemos);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading } = useQuery(["myMemo", currentPage], () => getMemos(currentPage));
+
   // 메모 목록
   const memoList = data?.content || [];
   const totalMemos = data?.totalElements || 0;
   console.log("메모: ", memoList, "페이지네이션: ", data);
 
-  //페이지네이션 전체 페이지
-  const [currentPage, setCurrentPage] = useState(1);
+  // 페이지네이션 전체 페이지
+
   const totalPages: number = data?.totalPages || 1;
 
   // 로딩중 스피너 설정
@@ -31,30 +34,31 @@ const MyMemo = () => {
 
   return (
     <S.MyMemoBox>
-      <h1>나의 메모</h1>
-      <S.TotalMemoBox>{totalMemos}</S.TotalMemoBox>
-
-      {memoList.length === 0 ? (
-        <S.EmptyMsgBox>등록된 메모가 없습니다.</S.EmptyMsgBox>
-      ) : (
-        memoList.map((memo: MemosType) => (
-          <S.MemoCards>
-            <S.MemoCard>
+      <S.PageTitle>
+        <h1>나의 메모</h1>
+        <span>{totalMemos}</span>
+      </S.PageTitle>
+      <S.MemoCards>
+        {memoList.length === 0 ? (
+          <S.EmptyMsgBox>등록된 메모가 없습니다.</S.EmptyMsgBox>
+        ) : (
+          memoList.map((memo: MemosType) => (
+            <S.MemoCard key={memo.id}>
               <S.CardHeader>
-                <span>날짜</span>
-                <span>누구와의 통화</span>
+                <span>{formatDateTime(memo.createdAt)}</span>
+                <span>{memo.partnerNickname}과의 통화</span>
               </S.CardHeader>
-              <h3>제목</h3>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt rem adipisci at
-                consequuntur atque quaerat corporis facilis nisi? Consectetur repellat deleniti
-                inventore, tempora earum dolore? Dignissimos magnam dolorum vero dolor!
-              </p>
-            </S.MemoCard>{" "}
-          </S.MemoCards>
-        ))
-      )}
-      <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+              <h3>{memo.title}</h3>
+              <p>{memo.content}</p>
+            </S.MemoCard>
+          ))
+        )}
+      </S.MemoCards>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onChangePageHandler={setCurrentPage}
+      />
     </S.MyMemoBox>
   );
 };
