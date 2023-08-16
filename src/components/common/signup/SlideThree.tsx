@@ -38,6 +38,7 @@ const SlideThree = ({ userData, setUserData, onClickUserRegisterHandler }: Slide
             interest={interest.name}
             image={interest.image}
             onClick={() => handleInterestClick(interest.name)}
+            selected={selectedInterest === interest.name}
           />
         ))}
       </S.CategoriContainer>

@@ -43,4 +43,5 @@ export type CategoriProps = {
   interest: string;
   image: string;
   onClick: () => void;
+  selected: boolean;
 };
