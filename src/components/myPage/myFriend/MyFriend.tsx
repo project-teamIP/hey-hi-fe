@@ -8,10 +8,11 @@ import Pagination from "../../common/pagination/Pagination";
 import { useState } from "react";
 
 const MyFriend = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const queryClient = useQueryClient();
 
   //친구 목록 조회
-  const { data, isLoading } = useQuery("myBuddies", getBuddies);
+  const { data, isLoading } = useQuery(["myBuddies", currentPage], () => getBuddies(currentPage));
 
   //친구 목록
   const buddiesList = data?.content || [];
@@ -32,7 +33,6 @@ const MyFriend = () => {
   };
 
   //페이지네이션 전체 페이지
-  const [currentPage, setCurrentPage] = useState(1);
   const totalPages: number = data?.totalPages || 1;
   console.log("buddy", data, "current page: ", currentPage);
 
