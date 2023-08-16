@@ -77,9 +77,9 @@ instance.interceptors.response.use(
           console.log(refreshResponse);
 
           if (error.config) {
-            const newRequestConfig = { ...error.config };
-            addTokenToHeaders(newRequestConfig, newAccessToken, "AccessToken");
-            return instance(newRequestConfig);
+            const newConfig = { ...error.config };
+            addTokenToHeaders(newConfig, newAccessToken, "AccessToken");
+            return instance.request(newConfig);
           }
         } catch (refreshError) {
           console.log("액세스 토큰 재발급 실패", refreshError);
@@ -170,6 +170,41 @@ export const changeUserInfo = async (userInfo: any) => {
     const response = await instance.patch(`/api/users`, userInfo);
     return response;
   } catch (error) {
+    throw error;
+  }
+};
+
+// 친구 조회
+export const getBuddies = async () => {
+  try {
+    const response = await instance.get(`/api/users/buddy`);
+    return response.data;
+  } catch (error) {
+    console.error("친구 조회 오류", error);
+    throw error;
+  }
+};
+
+//친구 삭제
+export const deleteBuddy = async (nickname: string) => {
+  console.log("친삭", nickname);
+  try {
+    const response = await instance.delete(`/api/users/buddy/${nickname}`);
+
+    return response;
+  } catch (error) {
+    console.error("친구 삭제 오류", error);
+    throw error;
+  }
+};
+
+// 메모 조회
+export const getMemos = async () => {
+  try {
+    const response = await instance.get(`/api/memos`);
+    return response.data;
+  } catch (error) {
+    console.error("메모 조회 오류", error);
     throw error;
   }
 };

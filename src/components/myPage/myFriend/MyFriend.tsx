@@ -1,9 +1,55 @@
 import * as S from "./style";
+import * as C from "../../../assets/styles/commonStyle";
+import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { deleteBuddy, getBuddies } from "../../../api/api";
+import { BuddiesType } from "../../../types/user";
+import Pagination from "../../common/pagination/Pagination";
+import { useState } from "react";
 
 const MyFriend = () => {
+  const queryClient = useQueryClient();
+
+  //친구 목록 조회
+  const { data, isLoading } = useQuery("myBuddies", getBuddies);
+
+  //친구 목록
+  const buddiesList = data?.content || [];
+
+  //친구 삭제
+  const deleteBuddyMutation = useMutation((nickname: string) => deleteBuddy(nickname), {
+    onSuccess: () => {
+      // 친구 삭제 성공하면 해당 친구 캐시 업뎃
+      queryClient.invalidateQueries("myBuddies");
+    },
+  });
+
+  // 친구 삭제 버튼
+  const onClickDeleteBuddy = (nickname: string) => {
+    if (window.confirm("정말로 친구를 삭제하시겠습니까?")) {
+      deleteBuddyMutation.mutate(nickname);
+    }
+  };
+
+  //페이지네이션 전체 페이지
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages: number = data?.totalPages || 1;
+  console.log("buddy", data, "current page: ", currentPage);
+
+  // 로딩중 스피너 설정
+  if (isLoading) {
+    return (
+      <C.SpinnerBox>
+        <C.LoadingSpinner>
+          <img src={rabbitSvg} alt="isLoading" />
+        </C.LoadingSpinner>
+      </C.SpinnerBox>
+    );
+  }
+
   return (
     <S.MyFriendBox>
-      <h1>나의 메모</h1>
+      <h1>친구관리</h1>
       <S.Table>
         <S.TableHead>
           <tr>
@@ -14,43 +60,39 @@ const MyFriend = () => {
           </tr>
         </S.TableHead>
         <S.TableBody>
-          <S.TableRow>
-            <td>
-              <img src="https://via.placeholder.com/60" alt="user_profile" />
-              <span>호주사라</span>
-            </td>
-            <td>example@gmail.com</td>
-            <S.CallingTd>
-              <div>
-                <svg
-                  width="28"
-                  height="27"
-                  viewBox="0 0 28 27"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M24.9925 13.2401C24.8683 10.2279 23.7599 7.6763 21.6672 5.58522C19.5745 3.49411 17.0209 2.38649 14.0065 2.26236V0.0196533C15.8189 0.0693074 17.5133 0.44792 19.0898 1.15549C20.6663 1.86306 22.0504 2.8127 23.2421 4.0044C24.4338 5.19609 25.3835 6.5802 26.0911 8.15672C26.7986 9.73324 27.1772 11.4277 27.2269 13.2401H24.9925ZM18.6616 13.2401C18.5374 11.9987 18.0409 10.9498 17.1719 10.0932C16.303 9.2367 15.2478 8.74636 14.0065 8.62223V6.38779C15.8685 6.51193 17.4512 7.2195 18.7547 8.51051C20.0581 9.80151 20.7719 11.378 20.896 13.2401H18.6616ZM25.6628 26.9074C22.7828 26.9074 19.847 26.2122 16.8554 24.8219C13.8637 23.4316 11.0893 21.4578 8.53212 18.9006C5.97493 16.3434 4.00118 13.569 2.61086 10.5774C1.22055 7.5857 0.525391 4.6499 0.525391 1.76996C0.525391 1.29825 0.686766 0.901014 1.00952 0.578262C1.33227 0.25551 1.7295 0.0941345 2.20122 0.0941345H7.4149C7.76248 0.0941345 8.0604 0.21827 8.30867 0.46654C8.55694 0.714811 8.73073 1.02515 8.83004 1.39755L9.83554 6.08987C9.88519 6.43745 9.87898 6.75399 9.81692 7.0395C9.75485 7.32502 9.62451 7.56708 9.42589 7.7657L5.70183 11.527C6.34734 12.6194 7.03008 13.6373 7.75006 14.5807C8.47005 15.5242 9.26451 16.4179 10.1335 17.262C11.0521 18.2055 12.0203 19.0682 13.0382 19.8503C14.0561 20.6323 15.1237 21.3213 16.2409 21.9171L19.7788 18.2675C20.027 17.9944 20.3126 17.8082 20.6353 17.7089C20.9581 17.6096 21.2808 17.5848 21.6036 17.6345L26.0352 18.6027C26.4076 18.702 26.7179 18.9006 26.9662 19.1986C27.2145 19.4965 27.3386 19.8316 27.3386 20.2041V25.2315C27.3386 25.7032 27.1772 26.1005 26.8545 26.4232C26.5317 26.746 26.1345 26.9074 25.6628 26.9074Z"
-                    fill="black"
-                  />
-                </svg>
-              </div>
-            </S.CallingTd>
-            <td>
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 48 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M23.9925 40C23.3306 40 22.7663 39.7643 22.2996 39.2929C21.8329 38.8215 21.5996 38.2549 21.5996 37.5929C21.5996 36.931 21.8353 36.3667 22.3067 35.9C22.7781 35.4333 23.3447 35.2 24.0067 35.2C24.6686 35.2 25.2329 35.4357 25.6996 35.9071C26.1663 36.3785 26.3996 36.9451 26.3996 37.6071C26.3996 38.269 26.1639 38.8333 25.6925 39.3C25.2211 39.7667 24.6545 40 23.9925 40ZM23.9925 26.4C23.3306 26.4 22.7663 26.1643 22.2996 25.6929C21.8329 25.2215 21.5996 24.6549 21.5996 23.9929C21.5996 23.331 21.8353 22.7667 22.3067 22.3C22.7781 21.8333 23.3447 21.6 24.0067 21.6C24.6686 21.6 25.2329 21.8357 25.6996 22.3071C26.1663 22.7785 26.3996 23.3451 26.3996 24.0071C26.3996 24.669 26.1639 25.2333 25.6925 25.7C25.2211 26.1667 24.6545 26.4 23.9925 26.4ZM23.9925 12.8C23.3306 12.8 22.7663 12.5643 22.2996 12.0929C21.8329 11.6215 21.5996 11.0549 21.5996 10.3929C21.5996 9.73097 21.8353 9.16667 22.3067 8.7C22.7781 8.23333 23.3447 8 24.0067 8C24.6686 8 25.2329 8.2357 25.6996 8.7071C26.1663 9.17847 26.3996 9.74513 26.3996 10.4071C26.3996 11.069 26.1639 11.6333 25.6925 12.1C25.2211 12.5667 24.6545 12.8 23.9925 12.8Z"
-                  fill="black"
-                />
-              </svg>
-            </td>
-          </S.TableRow>
+          {buddiesList.length === 0 ? (
+            <S.TableRow>
+              <td></td>
+              <td>등록된 친구가 없습니다. </td>
+            </S.TableRow>
+          ) : (
+            buddiesList.map((buddy: BuddiesType) => (
+              <S.TableRow key={buddy.loginId}>
+                <td>
+                  <S.ProfileImg src={buddy.profileImage} alt="user_profile" />
+                  <span>{buddy.nickname}</span>
+                </td>
+                <td>{buddy.loginId}</td>
+                <td>
+                  <S.FuncBtn>
+                    <img src={require(`../../../assets/images/call.png`)} alt="call" />
+                  </S.FuncBtn>
+                </td>
+                <td>
+                  <S.FuncBtn onClick={() => onClickDeleteBuddy(buddy.nickname)}>
+                    <img
+                      src={require(`../../../assets/images/trash-can.png`)}
+                      className="smaller"
+                      alt="more"
+                    />
+                  </S.FuncBtn>
+                </td>
+              </S.TableRow>
+            ))
+          )}
         </S.TableBody>
       </S.Table>
+      <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
     </S.MyFriendBox>
   );
 };
