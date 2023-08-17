@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Signup from "./pages/signup/Signup";
 import DashBoard from "./pages/DashBoard";
 import Matching from "./pages/Matching";
 import Calling from "./pages/Calling";
@@ -13,7 +13,7 @@ import GlobalStyle from "./assets/styles/GlobalStyle";
 
 function App() {
   return (
-    <>
+    <div>
       <GlobalStyle />
       <BrowserRouter>
         <Header />
@@ -28,7 +28,7 @@ function App() {
           <Route path="/calling" element={<Calling />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

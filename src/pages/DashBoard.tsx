@@ -1,7 +1,37 @@
-import React from "react";
+import React, { Children } from "react";
+import DiallogBox from "../components/dashboard/dialogbox/DiallogBox";
+import CallLog from "../components/dashboard/calllog/CallLog";
+import Memo from "../components/dashboard/memo/Memo";
+import Interest from "../components/dashboard/interest/Interest";
+import Header from "../components/common/header/Header";
+import styled from "styled-components";
 
 const DashBoard = () => {
-  return <div></div>;
+  return (
+    <>
+      <Header />
+      <DashBoardWrapper>
+        <div style={{ display: "flex", flexDirection: "column", gap: "33px" }}>
+          <div style={{ display: "flex", gap: "33px" }}>
+            <DiallogBox />
+            <CallLog />
+          </div>
+          <Memo />
+        </div>
+        <Interest />
+      </DashBoardWrapper>
+    </>
+  );
 };
+
+const DashBoardWrapper = styled.div`
+  display: flex;
+  margin-top: 103px;
+  gap: 33px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 export default DashBoard;
