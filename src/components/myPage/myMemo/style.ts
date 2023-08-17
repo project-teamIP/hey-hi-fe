@@ -1,7 +1,4 @@
 import { styled } from "styled-components";
-import MemoModal from "./MemoModal";
-import Button from "../../common/button/Button";
-import Dropdown from "../../common/dropdown/Dropdown";
 
 export const MyMemoBox = styled.div`
   margin: 4.1875rem 0 0 4.9375rem;
