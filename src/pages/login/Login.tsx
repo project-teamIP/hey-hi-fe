@@ -1,17 +1,17 @@
 import React from "react";
 import { styled } from "styled-components";
-import Button from "../components/common/button/Button";
-import Input from "../components/common/input/Input";
+import Button from "../../components/common/button/Button";
+import Input from "../../components/common/input/Input";
 import { Link } from "react-router-dom";
-import useInput from "../hooks/useInput";
+import useInput from "../../hooks/useInput";
 import { useMutation } from "react-query";
-import { userLogin } from "../api/api";
+import { userLogin } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import LogoImage from "../assets/images/LogoImage.svg";
 import { useDispatch } from "react-redux";
-import { logIn } from "../redux/modules/userAuth";
-import Google from "../assets/images/google.svg";
-import Kakao from "../assets/images/kakao.svg";
+import { logIn } from "../../redux/modules/userAuth";
+import LogoImage from "../../assets/images/LogoImage.svg";
+import Google from "../../assets/images/google.svg";
+import Kakao from "../../assets/images/kakao.svg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,6 +19,11 @@ const Login = () => {
   // 아이디, 비밀번호
   const [userId, onChangeUserIdHandler] = useInput();
   const [password, onChangePasswordHandler] = useInput();
+
+  // KaKao 로그인
+  const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
+  const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   // Mutation
   const loginMutation = useMutation(userLogin, {
@@ -35,6 +40,10 @@ const Login = () => {
       password: password,
     };
     loginMutation.mutate(loginData);
+  };
+
+  const onClickKaKaoLoginHandler = () => {
+    window.location.href = KAKAO_AUTH_URL;
   };
 
   return (
@@ -66,7 +75,11 @@ const Login = () => {
           <img src={Google} alt="google" />
           구글로 시작하기
         </Button.Primary>
-        <Button.Primary size="loginbtn" bc="#F8F8F8" color="#000000">
+        <Button.Primary
+          size="loginbtn"
+          bc="#F8F8F8"
+          color="#000000"
+          onClick={onClickKaKaoLoginHandler}>
           <img src={Kakao} alt="kakao" />
           카카오로 시작하기
         </Button.Primary>
