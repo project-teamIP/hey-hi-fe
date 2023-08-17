@@ -62,7 +62,7 @@ const MainSlide = () => {
       <S.MainSlideInner>
         <S.ProgressBar>
           {stepTexts.map((text, index) => (
-            <S.StepWrapper className="step-wrapper">
+            <S.StepWrapper key={index} className="step-wrapper">
               {index !== stepTexts.length - 1 && (
                 <S.StepLine
                   active={

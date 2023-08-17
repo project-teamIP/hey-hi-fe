@@ -4,7 +4,7 @@ import * as S from "./style";
 //<Input value={text} placeholder="Enter text" onChangeHandler={onChangeHandler} size="small" />
 interface InputProps {
   readonly placeholder: string;
-  readonly onChangeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   readonly value: string;
   size?: string;
   type?: string;
