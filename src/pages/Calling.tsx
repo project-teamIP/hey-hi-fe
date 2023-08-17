@@ -3,6 +3,7 @@ import Header from "../components/common/header/Header";
 import CallingPageMemo from "../components/calling/memo/CallingPageMemo";
 import CallingPageInterestSelect from "../components/calling/interest/CallingPageInterestSelect";
 import styled from "styled-components";
+import Video from "../components/calling/video/Video";
 
 const Calling: React.FC = () => {
   return (
@@ -19,12 +20,7 @@ const Calling: React.FC = () => {
                 </CallingTextGroup>
                 <CallTimer>00:00:00</CallTimer>
               </div>
-              <div>내 비디오</div>
-              <div>상대방 비디오</div>
-              <button>마이크 끄기</button>
-              <button>비디오 끄기</button>
-              <button>신고 하기</button>
-              <button>나가기</button>
+              <Video />
             </MediaBox>
             <SideBox>
               <CallingPageMemo />
