@@ -86,7 +86,7 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
       return css`
         border: 1px solid rgba(0, 0, 0, 1);
         border-radius: 50px;
-        background-color: rgba(255, 255, 255, 1);
+        background: transparent;
         color: rgba(0, 0, 0, 1);
 
         &:active {

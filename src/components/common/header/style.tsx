@@ -3,19 +3,20 @@ import { styled } from "styled-components";
 import { colors } from "../../../assets/styles/colors";
 
 interface HeaderBoxProps {
-  isMainPage: boolean;
+  ismainpage: boolean;
 }
 
 export const HeaderBox = styled.div<HeaderBoxProps>`
   width: 100%;
   height: 70px;
-  background-color: ${({ isMainPage }) => (isMainPage ? colors.header_orange : colors.white)};
+  background-color: ${({ ismainpage }) => (ismainpage ? colors.header_orange : colors.white)};
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
   z-index: 1000;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
 `;
 
 export const HeaderInner = styled.div`

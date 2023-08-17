@@ -1,27 +1,77 @@
+import { getMemos } from "../../../api/api";
 import * as S from "./style";
+import * as C from "../../../assets/styles/commonStyle";
+import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
+import { useQuery } from "react-query";
+import { MemosType } from "../../../types/user";
+import Pagination from "../../common/pagination/Pagination";
+import { useState } from "react";
+import { formatDateTime } from "../../../utils/formattedDate";
+import MemoModal from "./MemoModal";
 
 const MyMemo = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading } = useQuery(["myMemo", currentPage], () => getMemos(currentPage));
+
+  // 메모 목록
+  const memoList = data?.content || [];
+  const totalMemos = data?.totalElements || 0;
+  console.log("메모: ", memoList, "페이지네이션: ", data);
+
+  // 페이지네이션 전체 페이지
+  const totalPages: number = data?.totalPages || 1;
+
+  // 메모 조회 모달 - 클릭한 메모의 정보를 저장하는 상태
+  const [selectedMemo, setSelectedMemo] = useState<MemosType | null>(null);
+  const handleMemoCardClick = (memo: MemosType) => {
+    setSelectedMemo(memo);
+  };
+
+  const handleModalClose = () => {
+    setSelectedMemo(null);
+  };
+
+  // 로딩중 스피너 설정
+  if (isLoading) {
+    return (
+      <C.SpinnerBox>
+        <C.LoadingSpinner>
+          <img src={rabbitSvg} alt="isLoading" />
+        </C.LoadingSpinner>
+      </C.SpinnerBox>
+    );
+  }
+
   return (
     <S.MyMemoBox>
-      <h1>나의 메모</h1>
-      <S.Table>
-        <S.TableHead>
-          <tr>
-            <th>제목</th>
-            <th>통화 정보</th>
-          </tr>
-        </S.TableHead>
-        <S.TableBody>
-          <S.TableRow>
-            <td>호주문화~!</td>
-            <td>
-              2023년 08월 08일 화요일 오후 6:20
-              <img src="https://via.placeholder.com/60" alt="user_profile" />
-              <span>호주사라</span>
-            </td>
-          </S.TableRow>
-        </S.TableBody>
-      </S.Table>
+      <S.PageTitle>
+        <h1>나의 메모</h1>
+        <span>{totalMemos}</span>
+      </S.PageTitle>
+      <S.MemoCards>
+        {memoList.length === 0 ? (
+          <S.EmptyMsgBox>등록된 메모가 없습니다.</S.EmptyMsgBox>
+        ) : (
+          memoList.map((memo: MemosType) => (
+            <S.MemoCard key={memo.id} onClick={() => handleMemoCardClick(memo)}>
+              <S.CardHeader>
+                <span>{formatDateTime(memo.createdAt)}</span>
+                <span>{memo.partnerNickname}과의 통화</span>
+              </S.CardHeader>
+              <h3>{memo.title}</h3>
+              <p>{memo.content}</p>
+            </S.MemoCard>
+          ))
+        )}
+      </S.MemoCards>
+      {/* 페이지네이션 */}
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onChangePageHandler={setCurrentPage}
+      />
+      {/* 모달 */}
+      {selectedMemo && <MemoModal memo={selectedMemo} onClose={handleModalClose} />}
     </S.MyMemoBox>
   );
 };
