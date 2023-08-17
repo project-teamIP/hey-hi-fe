@@ -23,11 +23,11 @@ const MyMemo = () => {
 
   // 메모 조회 모달 - 클릭한 메모의 정보를 저장하는 상태
   const [selectedMemo, setSelectedMemo] = useState<MemosType | null>(null);
-  const handleMemoCardClick = (memo: MemosType) => {
+  const onClickMemoModalHandler = (memo: MemosType) => {
     setSelectedMemo(memo);
   };
 
-  const handleModalClose = () => {
+  const closeModalHandler = () => {
     setSelectedMemo(null);
   };
 
@@ -53,7 +53,7 @@ const MyMemo = () => {
           <S.EmptyMsgBox>등록된 메모가 없습니다.</S.EmptyMsgBox>
         ) : (
           memoList.map((memo: MemosType) => (
-            <S.MemoCard key={memo.id} onClick={() => handleMemoCardClick(memo)}>
+            <S.MemoCard key={memo.id} onClick={() => onClickMemoModalHandler(memo)}>
               <S.CardHeader>
                 <span>{formatDateTime(memo.createdAt)}</span>
                 <span>{memo.partnerNickname}과의 통화</span>
@@ -71,7 +71,7 @@ const MyMemo = () => {
         onChangePageHandler={setCurrentPage}
       />
       {/* 모달 */}
-      {selectedMemo && <MemoModal memo={selectedMemo} onClose={handleModalClose} />}
+      {selectedMemo && <MemoModal memo={selectedMemo} onCloseModalHandler={closeModalHandler} />}
     </S.MyMemoBox>
   );
 };
