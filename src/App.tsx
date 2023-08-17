@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import DashBoard from "./pages/DashBoard";
 import Matching from "./pages/Matching";
@@ -10,6 +10,7 @@ import MyPage from "./pages/MyPage";
 import Review from "./pages/Review";
 import Header from "./components/common/header/Header";
 import GlobalStyle from "./assets/styles/GlobalStyle";
+import KakaoRedirect from "./pages/login/KakaoRedirect";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/review" element={<Review />} />
           <Route path="/matching" element={<Matching />} />
           <Route path="/calling" element={<Calling />} />
+          <Route path="/oauth/" element={<KakaoRedirect />} />
         </Routes>
       </BrowserRouter>
     </div>
