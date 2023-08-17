@@ -213,3 +213,13 @@ export const getSingleMemo = async (id: number) => {
     console.error("메모 조회 오류", error);
   }
 };
+
+// 메모 삭제
+export const deleteSingleMemo = async (id: number) => {
+  try {
+    const response = await instance.delete(`/api/memo/${id}`);
+    return response;
+  } catch (error) {
+    console.error("메모 조회 오류", error);
+  }
+};
