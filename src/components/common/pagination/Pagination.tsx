@@ -3,13 +3,17 @@ import * as S from "./style";
 interface PaginationProps {
   totalPages: number;
   currentPage: number;
-  onPageChange: (page: number) => void;
+  onChangePageHandler: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPageChange }) => {
+const Pagination: React.FC<PaginationProps> = ({
+  totalPages,
+  currentPage,
+  onChangePageHandler,
+}) => {
   return (
     <S.PaginationBox>
-      <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage === 1}>
+      <button onClick={() => onChangePageHandler(currentPage - 1)} disabled={currentPage === 1}>
         <svg
           width="27"
           height="27"
@@ -24,15 +28,17 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages, currentPage, onPage
       </button>
       <div>
         {Array.from({ length: totalPages }, (_, index) => (
-          <button
+          <S.PageNumber
             key={index}
-            onClick={() => onPageChange(index + 1)}
-            style={{ fontWeight: currentPage === index + 1 ? "bold" : "normal" }}>
+            onClick={() => onChangePageHandler(index + 1)}
+            $isClicked={currentPage === index + 1}>
             {index + 1}
-          </button>
+          </S.PageNumber>
         ))}
       </div>
-      <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+      <button
+        onClick={() => onChangePageHandler(currentPage + 1)}
+        disabled={currentPage === totalPages}>
         <svg
           width="27"
           height="27"

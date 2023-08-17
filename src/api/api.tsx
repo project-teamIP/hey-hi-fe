@@ -108,7 +108,7 @@ const userIdCheck = async (loginId: string) => {
 // 회원 닉네임 중복 조회
 const userNickNameCheck = async (nickName: string) => {
   const response = await instance.get(`/api/users/check?nickname=${nickName}`);
-  console.log("닉넴 중복 확인", nickName, response.data);
+  console.log("닉네임 중복 확인", nickName, response.data);
   return response.data;
 };
 
@@ -123,7 +123,17 @@ const userLogin = async (loginData: LoginInformationData) => {
   return response.data;
 };
 
-export { userRegister, userLogin, userIdCheck, userNickNameCheck };
+// 카카오 로그인
+const userKakaoLogin = async (KAKAO_CODE: string) => {
+  const response = await instance.get(`/api/users/login/kakao?code=${KAKAO_CODE}`);
+  // path:/ : 쿠키의 유효범위 설정
+  document.cookie = `access_token=${response.headers.accesstoken}; path=/;`;
+  document.cookie = `refresh_token=${response.headers.refreshtoken}; path=/`;
+
+  console.log("카카오 로그인", response);
+  return response.data;
+};
+export { userRegister, userLogin, userKakaoLogin, userIdCheck, userNickNameCheck };
 
 // 로그아웃
 export const userLogout = async () => {
@@ -175,9 +185,9 @@ export const changeUserInfo = async (userInfo: any) => {
 };
 
 // 친구 조회
-export const getBuddies = async () => {
+export const getBuddies = async (page: number) => {
   try {
-    const response = await instance.get(`/api/users/buddy`);
+    const response = await instance.get(`/api/users/buddy?page=${page}`);
     return response.data;
   } catch (error) {
     console.error("친구 조회 오류", error);
@@ -198,13 +208,33 @@ export const deleteBuddy = async (nickname: string) => {
   }
 };
 
-// 메모 조회
-export const getMemos = async () => {
+// 메모 조회 전체
+export const getMemos = async (page: number) => {
   try {
-    const response = await instance.get(`/api/memos`);
+    const response = await instance.get(`/api/memos?page=${page}`);
+    return response.data;
+  } catch (error) {
+    console.error("메모목록 조회 오류", error);
+    throw error;
+  }
+};
+
+// 특정 메모 조회
+export const getSingleMemo = async (id: number) => {
+  try {
+    const response = await instance.get(`/api/memo/${id}`);
     return response.data;
   } catch (error) {
     console.error("메모 조회 오류", error);
-    throw error;
+  }
+};
+
+// 메모 삭제
+export const deleteSingleMemo = async (id: number) => {
+  try {
+    const response = await instance.delete(`/api/memo/${id}`);
+    return response;
+  } catch (error) {
+    console.error("메모 조회 오류", error);
   }
 };

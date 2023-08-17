@@ -18,6 +18,7 @@ const MyPageAside: React.FC<MyPageAsideProps> = ({ activePage, onClickPageHandle
   const logoutMutation = useMutation(userLogout, {
     onSuccess: () => {
       dispatch(logOut());
+      localStorage.removeItem("activePage"); // 로그아웃 시 현재 페이지 데이타 삭제
       navigate("/");
     },
   });

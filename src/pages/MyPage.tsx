@@ -1,15 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyPageAside from "../components/myPage/myPageAside/MyPageAside";
 import { styled } from "styled-components";
 import MyPageEdit from "../components/myPage/myPageEdit/MyPageEdit";
 import MyMemo from "../components/myPage/myMemo/MyMemo";
 import MyFriend from "../components/myPage/myFriend/MyFriend";
+import { useQueryClient } from "react-query";
 
 const MyPage = () => {
+  const queryClient = useQueryClient();
   const [activePage, setActivePage] = useState<string>("계정정보");
 
+  // 새로고침해도 현재 페이지 유지
+  useEffect(() => {
+    const storedActivePage = localStorage.getItem("activePage");
+    if (storedActivePage) {
+      setActivePage(storedActivePage);
+    }
+  }, []);
+
   const onClickPageHandler = (page: string) => {
+    queryClient.setQueriesData("activePage", page);
     setActivePage(page);
+    localStorage.setItem("activePage", page);
   };
 
   return (
