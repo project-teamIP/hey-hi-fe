@@ -196,6 +196,17 @@ export const changeUserInfo = async (userInfo: any) => {
   }
 };
 
+// 회원 탈퇴
+export const withdrawalUser = async () => {
+  try {
+    const response = await instance.delete(`/api/users/withdrawal`);
+    return response;
+  } catch (error) {
+    console.error("회원 탈퇴 오류", error);
+    throw error;
+  }
+};
+
 // 친구 조회
 export const getBuddies = async (page: number) => {
   try {
