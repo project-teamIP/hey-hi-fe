@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import * as S from "./style"; // 모달 스타일 파일을 import합니다.
+import * as S from "./style";
 import { MemosType } from "../../../types/user";
 import { formatDateTime2 } from "../../../utils/formattedDate";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteSingleMemo } from "../../../api/api";
 
 interface MemoModalProps {
-  memo: MemosType; // 클릭한 메모의 데이터를 받아옵니다.
-  onCloseModalHandler: () => void; // 모달을 닫는 함수를 받아옵니다.
+  memo: MemosType;
+  onCloseModalHandler: () => void;
 }
 
 const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
@@ -18,13 +18,14 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
   };
   // 메모 수정
   const onClickMemoEditHandler = () => {
-    setShowDropDown(!showDropDown);
+    setShowDropDown(false);
   };
   // 메모 삭제
   const queryClient = useQueryClient();
   const deleteMemoMutation = useMutation((memoId: number) => deleteSingleMemo(memoId), {
     onSuccess: () => {
       queryClient.invalidateQueries("myMemo");
+      alert("메모가 삭제되었습니다.");
     },
   });
   const onClickMemoDeleteHandler = () => {
@@ -56,13 +57,24 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
           <S.MemoModalMore>
             <h3>{memo.title}</h3>
             <button onClick={onClickDropDownHandler}>
-              <img src={require("../../../assets/images/more.png")} alt="memo-more" />
+              <img src={require("../../../assets/images/mypage/kebab-btn.png")} alt="memo-more" />
             </button>
           </S.MemoModalMore>
           {showDropDown && (
             <S.MoreDropdown>
-              <button onClick={onClickMemoEditHandler}>수정</button>
-              <button onClick={onClickMemoDeleteHandler}>삭제</button>
+              <button onClick={onClickMemoEditHandler}>
+                {" "}
+                <img src={require("../../../assets/images/mypage/memo-edit.png")} alt="memo-edit" />
+                수정하기
+              </button>
+              <button onClick={onClickMemoDeleteHandler}>
+                {" "}
+                <img
+                  src={require("../../../assets/images/mypage/memo-delete.png")}
+                  alt="memo-delete"
+                />
+                삭제하기
+              </button>
             </S.MoreDropdown>
           )}
         </S.MemoModalHeader>

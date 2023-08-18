@@ -7,7 +7,7 @@ export const MyMemoBox = styled.div`
 export const PageTitle = styled.div`
   display: flex;
   align-items: top;
-  height: 96px;
+  height: 6rem;
 
   h1 {
     font-size: 2.5rem;
@@ -44,8 +44,9 @@ export const MemoCards = styled.div`
 export const MemoCard = styled.div`
   width: 20.625rem;
   height: 20.0625rem;
+  background-color: #fff;
   border-radius: 1.25rem;
-  border: 0.0625rem solid #d8dee9;
+  border: 1px solid #d8dee9;
   padding: 2.0625rem 1.3125rem;
   cursor: pointer;
 
@@ -175,26 +176,39 @@ export const MemoModalMore = styled.div`
 `;
 
 export const MoreDropdown = styled.div`
-  display: flex;
-  flex-direction: column;
+  width: 178px;
+  height: 123px;
   position: absolute;
-  top: 120px;
-  right: 80px;
-  border-radius: 10px;
+  top: 15%;
+  right: -15%;
+  padding: 10px;
+  border-radius: 20px;
   border: 1px solid #d8dee9;
   background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1;
+
   button {
-    padding: 10px 15px;
-    width: 100%;
-    text-align: left;
+    width: 157px;
+    height: 51px;
     border: none;
-    background-color: transparent;
     cursor: pointer;
-    &:hover {
-      background-color: #f2f2f2;
-    }
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #fff;
+  }
+
+  button:hover {
+    background-color: #f1f1f1;
+  }
+
+  img {
+    width: 21px;
+    height: 21px;
+    margin-right: 18px;
   }
 `;
 
