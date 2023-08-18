@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
-import { SignupInformationData } from "../types/types";
+import { MemoEditType, SignupInformationData } from "../types/types";
 import { LoginInformationData } from "../types/types";
+import { UserInfoType } from "../types/user";
 
 // Axios 인스턴스 생성
 export const instance: AxiosInstance = axios.create({
@@ -187,7 +188,7 @@ export const changeProfileImg = async (image: FormData) => {
 };
 
 // 회원정보 수정
-export const changeUserInfo = async (userInfo: any) => {
+export const changeUserInfo = async (userInfo: UserInfoType) => {
   try {
     const response = await instance.patch(`/api/users`, userInfo);
     return response;
@@ -249,6 +250,21 @@ export const getSingleMemo = async (id: number) => {
     return response.data;
   } catch (error) {
     console.error("메모 조회 오류", error);
+    throw error;
+  }
+};
+
+// 메모 수정
+export const editMemo = async (memoData: MemoEditType) => {
+  try {
+    const response = await instance.put(`api/memo/${memoData.id}`, {
+      title: memoData.title,
+      content: memoData.content,
+    });
+    return response;
+  } catch (error) {
+    console.error("메모 수정 오류", error);
+    throw error;
   }
 };
 
