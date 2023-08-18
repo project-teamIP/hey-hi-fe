@@ -31,6 +31,7 @@ const SlideTwo = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
 
   // 닉네임, 거주국가, 사용언어, 성별 선택시 버튼 활성화
   const isFormValid =
+    isCheckNickName !== "사용 중인 닉네임입니다." &&
     userData.nickname !== "" &&
     userData.country !== "" &&
     userData.language !== "" &&

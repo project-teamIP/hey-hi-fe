@@ -133,7 +133,19 @@ const userKakaoLogin = async (KAKAO_CODE: string) => {
   console.log("카카오 로그인", response);
   return response.data;
 };
-export { userRegister, userLogin, userKakaoLogin, userIdCheck, userNickNameCheck };
+
+// 구글 로그인
+const userGoogleLogin = async (GOOGLE_CODE: string) => {
+  const response = await instance.get(`/api/users/login/google?code=${GOOGLE_CODE}`);
+  // path:/ : 쿠키의 유효범위 설정
+  document.cookie = `access_token=${response.headers.accesstoken}; path=/;`;
+  document.cookie = `refresh_token=${response.headers.refreshtoken}; path=/`;
+
+  console.log("구글 로그인", response);
+  return response.data;
+};
+
+export { userRegister, userLogin, userKakaoLogin, userGoogleLogin, userIdCheck, userNickNameCheck };
 
 // 로그아웃
 export const userLogout = async () => {
@@ -180,6 +192,17 @@ export const changeUserInfo = async (userInfo: any) => {
     const response = await instance.patch(`/api/users`, userInfo);
     return response;
   } catch (error) {
+    throw error;
+  }
+};
+
+// 회원 탈퇴
+export const withdrawalUser = async () => {
+  try {
+    const response = await instance.delete(`/api/users/withdrawal`);
+    return response;
+  } catch (error) {
+    console.error("회원 탈퇴 오류", error);
     throw error;
   }
 };
