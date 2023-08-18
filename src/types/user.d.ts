@@ -43,3 +43,11 @@ export type MemosType = {
   partnerNickname: string;
   title: string;
 };
+
+export type DashboardMemosType = {
+  content: string;
+  nickname: string;
+  id: string;
+  title: string;
+  date: string;
+};

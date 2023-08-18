@@ -22,6 +22,7 @@ export const CallList = styled.div`
   width: 100%;
   height: 61px;
   border-radius: 20px;
+  border: 1px solid #d8dee9;
 `;
 
 export const ButtonGroup = styled.div`

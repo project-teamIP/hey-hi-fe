@@ -64,17 +64,17 @@ const Header = () => {
         {state ? (
           <div>
             <S.StyledLink to="/mypage">
-              <Button.Primary size="loginbtn" outlined>
+              <Button.Primary size="loginbtn" outlined="true">
                 마이페이지
               </Button.Primary>
             </S.StyledLink>
-            <Button.Primary size="loginbtn" onClick={onClickLogoutHandler} outlined>
+            <Button.Primary size="loginbtn" onClick={onClickLogoutHandler} outlined="true">
               로그아웃
             </Button.Primary>
           </div>
         ) : (
           <S.StyledLink to="/login">
-            <Button.Primary size="loginbtn" outlined>
+            <Button.Primary size="loginbtn" outlined="true">
               로그인 / 회원가입
             </Button.Primary>
           </S.StyledLink>
