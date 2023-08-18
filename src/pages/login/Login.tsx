@@ -21,9 +21,16 @@ const Login = () => {
   const [password, onChangePasswordHandler] = useInput();
 
   // KaKao 로그인
-  const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
-  const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
+  const KAKAO_REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  // Google 로그인
+  const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const GOOGLE_REDIRECT_URI = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
+  const GOOGLE_SCOPE = "openid profile email";
+  const GOOGLE_RESPONSE_TYPE = "code";
+  const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&scope=${GOOGLE_SCOPE}&response_type=${GOOGLE_RESPONSE_TYPE}`;
 
   // Mutation
   const loginMutation = useMutation(userLogin, {
@@ -46,6 +53,9 @@ const Login = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
 
+  const onClickGoogleLoginHandler = () => {
+    window.location.href = GOOGLE_AUTH_URL;
+  };
   return (
     <Wrap>
       <Logo>
@@ -71,7 +81,11 @@ const Login = () => {
       <OR>OR</OR>
       {/* 소셜로그인 */}
       <SocialContainer>
-        <Button.Primary size="loginbtn" bc="#F8F8F8" color="#000000">
+        <Button.Primary
+          size="loginbtn"
+          bc="#F8F8F8"
+          color="#000000"
+          onClick={onClickGoogleLoginHandler}>
           <img src={Google} alt="google" />
           구글로 시작하기
         </Button.Primary>
