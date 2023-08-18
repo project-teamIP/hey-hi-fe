@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import MemoModal from "./MemoModal";
 
 export const MyMemoBox = styled.div`
   margin: 4.1875rem 0 0 4.9375rem;
@@ -167,6 +166,36 @@ export const MemoModalMore = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+`;
+
+export const MoreDropdown = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 120px;
+  right: 80px;
+  border-radius: 10px;
+  border: 1px solid #d8dee9;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  button {
+    padding: 10px 15px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  }
 `;
 
 export const MemoModalBody = styled.p`
