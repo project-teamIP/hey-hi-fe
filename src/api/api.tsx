@@ -238,3 +238,9 @@ export const deleteSingleMemo = async (id: number) => {
     console.error("메모 조회 오류", error);
   }
 };
+
+//접속 인원 조회
+export const fetchOnlineUsers = async () => {
+  const response = await instance.get("/api/users/count");
+  return response.data;
+};
