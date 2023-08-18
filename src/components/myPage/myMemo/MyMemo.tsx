@@ -11,12 +11,11 @@ import MemoModal from "./MemoModal";
 
 const MyMemo = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading } = useQuery(["myMemo", currentPage], () => getMemos(currentPage));
+  const { data, isLoading } = useQuery(["myMemos", currentPage], () => getMemos(currentPage));
 
   // 메모 목록
   const memoList = data?.content || [];
   const totalMemos = data?.totalElements || 0;
-  console.log("메모: ", memoList, "페이지네이션: ", data);
 
   // 페이지네이션 전체 페이지
   const totalPages: number = data?.totalPages || 1;
