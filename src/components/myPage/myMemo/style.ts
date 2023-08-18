@@ -1,5 +1,9 @@
 import { styled } from "styled-components";
 
+interface MemoProps {
+  $isEditing: boolean;
+}
+
 export const MyMemoBox = styled.div`
   margin: 4.1875rem 0 0 4.9375rem;
 `;
@@ -138,7 +142,7 @@ export const CloseButton = styled.button`
   color: #333;
 `;
 
-export const MemoModalHeader = styled.div`
+export const MemoModalHeader = styled.div<MemoProps>`
   width: 100%;
   height: 200px;
   padding: 72px 0 28px 0;
@@ -148,18 +152,28 @@ export const MemoModalHeader = styled.div`
     width: fit-content;
     height: 39px;
     padding: 11px 20px;
-    color: #ff6e46;
+    color: ${({ $isEditing }) => ($isEditing ? "#323232" : "#ff6e46")};
     font-size: 18px;
     font-weight: 600;
-    background-color: #ffe4dc;
+    background-color: ${({ $isEditing }) => ($isEditing ? "#EFF0F1" : "#ffe4dc")};
     border-radius: 30px;
+    margin-bottom: 19px;
   }
-
+  /* 메모 제목 조회 모드 */
   h3 {
     color: #3f3f3f;
     font-size: 35px;
     font-weight: 700;
-    margin-top: 19px;
+    padding-top: 5px;
+  }
+  /* 메모 제목 수정 모드 */
+  input {
+    font-size: 35px;
+    font-weight: 700;
+    color: #3f3f3f;
+    width: 760px;
+    border: none;
+    padding: 0;
   }
 `;
 
@@ -172,6 +186,20 @@ export const MemoModalMore = styled.div`
     background: none;
     border: none;
     cursor: pointer;
+
+    &:hover {
+      border-radius: 50%;
+      background-color: #f1f1f1;
+    }
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #939393;
+  }
+  .count {
+    color: #ff6e46;
   }
 `;
 
@@ -212,6 +240,7 @@ export const MoreDropdown = styled.div`
   }
 `;
 
+/* 메모 내용 조회 모드 */
 export const MemoModalBody = styled.p`
   margin-top: 66px;
   width: 100%;
@@ -220,6 +249,8 @@ export const MemoModalBody = styled.p`
   font-size: 18px;
   font-weight: 500;
   overflow: scroll;
+  padding-top: 5px;
+  padding-left: 2px;
 
   /* 스크롤바 설정 1. 너비 */
   &::-webkit-scrollbar {
@@ -234,5 +265,29 @@ export const MemoModalBody = styled.p`
   /* 스크롤바 설정 3. 배경 */
   &::-webkit-scrollbar-track {
     background: #ffe4dc;
+  }
+`;
+
+/* 메모 내용 수정 모드 */
+export const MemoModalBodyEdit = styled.div`
+  width: 100%;
+  height: 465px;
+  margin-top: 66px;
+
+  textarea {
+    color: #606060;
+    font-size: 18px;
+    font-weight: 500px;
+    width: 100%;
+    height: 400px;
+    border: none;
+  }
+`;
+
+export const EditBtns = styled.div`
+  text-align: end;
+
+  button:first-child {
+    margin-right: 16px;
   }
 `;

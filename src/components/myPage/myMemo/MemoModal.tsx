@@ -3,7 +3,9 @@ import * as S from "./style";
 import { MemosType } from "../../../types/user";
 import { formatDateTime2 } from "../../../utils/formattedDate";
 import { useMutation, useQueryClient } from "react-query";
-import { deleteSingleMemo } from "../../../api/api";
+import { deleteSingleMemo, editMemo } from "../../../api/api";
+import Button from "../../common/button/Button";
+import { MemoEditType } from "../../../types/types";
 
 interface MemoModalProps {
   memo: MemosType;
@@ -17,9 +19,27 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
     setShowDropDown(!showDropDown);
   };
   // 메모 수정
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedMemo, setEditedMemo] = useState({
+    id: memo.id,
+    title: memo.title,
+    content: memo.content,
+  });
   const onClickMemoEditHandler = () => {
     setShowDropDown(false);
+    setIsEditing(true);
   };
+  const editMemoMutation = useMutation((editedMemo: MemoEditType) => editMemo(editedMemo), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("myMemo");
+      setIsEditing(false);
+    },
+  });
+  const onClickMemoEditSubmitHandler = () => {
+    editMemoMutation.mutate(editedMemo);
+  };
+  // 최대 글자수
+  const maxLength = 1500;
   // 메모 삭제
   const queryClient = useQueryClient();
   const deleteMemoMutation = useMutation((memoId: number) => deleteSingleMemo(memoId), {
@@ -50,25 +70,41 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
             />
           </svg>
         </S.CloseButton>
-        <S.MemoModalHeader>
+        <S.MemoModalHeader $isEditing={isEditing}>
           <p>
             {formatDateTime2(memo.createdAt)} {memo.partnerNickname}과의 통화
           </p>
           <S.MemoModalMore>
-            <h3>{memo.title}</h3>
-            <button onClick={onClickDropDownHandler}>
-              <img src={require("../../../assets/images/mypage/kebab-btn.png")} alt="memo-more" />
-            </button>
+            {isEditing ? (
+              <>
+                <input
+                  type="text"
+                  value={editedMemo.title}
+                  onChange={(e) => setEditedMemo({ ...editedMemo, title: e.target.value })}
+                />
+                <span>
+                  <span className="count">{editedMemo.content.length}자</span> / 1500자
+                </span>
+              </>
+            ) : (
+              <>
+                <h3>{memo.title}</h3>
+                <button onClick={onClickDropDownHandler}>
+                  <img
+                    src={require("../../../assets/images/mypage/kebab-btn.png")}
+                    alt="memo-more"
+                  />
+                </button>
+              </>
+            )}
           </S.MemoModalMore>
           {showDropDown && (
             <S.MoreDropdown>
               <button onClick={onClickMemoEditHandler}>
-                {" "}
                 <img src={require("../../../assets/images/mypage/memo-edit.png")} alt="memo-edit" />
                 수정하기
               </button>
               <button onClick={onClickMemoDeleteHandler}>
-                {" "}
                 <img
                   src={require("../../../assets/images/mypage/memo-delete.png")}
                   alt="memo-delete"
@@ -78,7 +114,37 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
             </S.MoreDropdown>
           )}
         </S.MemoModalHeader>
-        <S.MemoModalBody>{memo.content}</S.MemoModalBody>
+        {isEditing ? (
+          <S.MemoModalBodyEdit>
+            <textarea
+              value={editedMemo.content}
+              onChange={(e) => setEditedMemo({ ...editedMemo, content: e.target.value })}
+              maxLength={maxLength}
+            />
+            <S.EditBtns>
+              <Button.Primary
+                size="small"
+                color="black"
+                bc="#EFF0F1"
+                fw="700"
+                onClick={() => {
+                  setIsEditing(false);
+                  setEditedMemo({
+                    id: memo.id,
+                    title: memo.title,
+                    content: memo.content,
+                  });
+                }}>
+                취소
+              </Button.Primary>
+              <Button.Primary size="small" bc="#FF6E46" onClick={onClickMemoEditSubmitHandler}>
+                수정
+              </Button.Primary>
+            </S.EditBtns>
+          </S.MemoModalBodyEdit>
+        ) : (
+          <S.MemoModalBody>{memo.content}</S.MemoModalBody>
+        )}
       </S.MemoModalBox>
     </S.MemoModalOverlay>
   );

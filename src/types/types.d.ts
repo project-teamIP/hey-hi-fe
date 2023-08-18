@@ -45,3 +45,10 @@ export type CategoriProps = {
   onClick: () => void;
   selected: boolean;
 };
+
+// 메모
+export type MemoEditType = {
+  id: number;
+  title: string;
+  content: string;
+};
