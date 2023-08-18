@@ -3,29 +3,30 @@ import styled from "styled-components";
 import * as C from "../../assets/styles/commonStyle";
 import rabbitSvg from "../../assets/images/profileImg/rabbit1.svg";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
-import { userKakaoLogin } from "../../api/api";
+import { useNavigate } from "react-router";
+import { userGoogleLogin } from "../../api/api";
 import { useMutation } from "react-query";
 import { logIn } from "../../redux/modules/userAuth";
 
-const KakaoRedirect = () => {
+const GoogleRedirect = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const loginMutation = useMutation(userKakaoLogin, {
+  const loginMutation = useMutation(userGoogleLogin, {
     onSuccess: () => {
       dispatch(logIn());
       navigate("/dashboard");
     },
   });
 
-  // 카카오 인가코드
-  const KAKAO_CODE = location.search.split("=")[1];
+  // 구글 인가코드
+  const queryParams = new URLSearchParams(window.location.search);
+
+  const GOOGLE_CODE = queryParams.get("code");
 
   useEffect(() => {
-    if (KAKAO_CODE) {
-      loginMutation.mutate(KAKAO_CODE);
+    if (GOOGLE_CODE) {
+      loginMutation.mutate(GOOGLE_CODE);
     }
   }, []);
 
@@ -40,7 +41,7 @@ const KakaoRedirect = () => {
   );
 };
 
-export default KakaoRedirect;
+export default GoogleRedirect;
 
 const Wrap = styled.div`
   margin-top: 70px;
