@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./style";
+import * as C from "../../../assets/styles/commonStyle";
+import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
 import { MemosType } from "../../../types/user";
 import { formatDateTime2 } from "../../../utils/formattedDate";
-import { useMutation, useQueryClient } from "react-query";
-import { deleteSingleMemo, editMemo } from "../../../api/api";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { deleteSingleMemo, editMemo, getSingleMemo } from "../../../api/api";
 import Button from "../../common/button/Button";
 import { MemoEditType } from "../../../types/types";
 
@@ -13,11 +15,16 @@ interface MemoModalProps {
 }
 
 const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
+  // 해당 메모 하나만 조회
+  const { data, isLoading } = useQuery(["mymemo", memo.id], () => getSingleMemo(memo.id));
+  console.log(data, memo);
+
   // 드랍다운
   const [showDropDown, setShowDropDown] = useState(false);
   const onClickDropDownHandler = () => {
     setShowDropDown(!showDropDown);
   };
+
   // 메모 수정
   const [isEditing, setIsEditing] = useState(false);
   const [editedMemo, setEditedMemo] = useState({
@@ -33,13 +40,20 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
     onSuccess: () => {
       queryClient.invalidateQueries("myMemo");
       setIsEditing(false);
+      setEditedMemo({
+        id: memo.id,
+        title: data.title,
+        content: data.content,
+      });
     },
   });
   const onClickMemoEditSubmitHandler = () => {
     editMemoMutation.mutate(editedMemo);
   };
+
   // 최대 글자수
   const maxLength = 1500;
+
   // 메모 삭제
   const queryClient = useQueryClient();
   const deleteMemoMutation = useMutation((memoId: number) => deleteSingleMemo(memoId), {
@@ -54,6 +68,21 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
     onCloseModalHandler();
   };
 
+  // 수정 완료 시 모달 리렌더링
+  useEffect(() => {
+    console.log("useEffect", isEditing);
+  }, [isEditing]);
+
+  // 로딩중 스피너 설정
+  if (isLoading) {
+    return (
+      <C.SpinnerBox>
+        <C.LoadingSpinner>
+          <img src={rabbitSvg} alt="isLoading" />
+        </C.LoadingSpinner>
+      </C.SpinnerBox>
+    );
+  }
   return (
     <S.MemoModalOverlay>
       <S.MemoModalBox>
@@ -88,7 +117,7 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
               </>
             ) : (
               <>
-                <h3>{memo.title}</h3>
+                <h3>{data.title}</h3>
                 <button onClick={onClickDropDownHandler}>
                   <img
                     src={require("../../../assets/images/mypage/kebab-btn.png")}
@@ -131,8 +160,8 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
                   setIsEditing(false);
                   setEditedMemo({
                     id: memo.id,
-                    title: memo.title,
-                    content: memo.content,
+                    title: data.title,
+                    content: data.content,
                   });
                 }}>
                 취소
@@ -143,7 +172,7 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
             </S.EditBtns>
           </S.MemoModalBodyEdit>
         ) : (
-          <S.MemoModalBody>{memo.content}</S.MemoModalBody>
+          <S.MemoModalBody>{data.content}</S.MemoModalBody>
         )}
       </S.MemoModalBox>
     </S.MemoModalOverlay>
