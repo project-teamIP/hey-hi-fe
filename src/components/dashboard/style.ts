@@ -7,7 +7,7 @@ export interface DashBoardStyleProps {
 }
 
 export const StyledContainer = styled.div<DashBoardStyleProps>`
-  border: none;
+  border: 1px solid #d8dee9;
   border-radius: 30px;
   background-color: #ffffff;
   box-shadow: 0px 4px 25px 0px #e2e8f2;

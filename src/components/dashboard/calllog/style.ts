@@ -22,6 +22,7 @@ export const CallList = styled.div`
   width: 100%;
   height: 61px;
   border-radius: 20px;
+  border: 1px solid #d8dee9;
 `;
 
 export const ButtonGroup = styled.div`
@@ -77,18 +78,17 @@ export const CallListBtn = styled.button`
 `;
 
 export const CallLogContainer = styled.div`
+  margin-top: 46px;
   display: flex;
   flex-direction: column;
   width: 93%;
   align-items: stretch;
-  flex-wrap: nowrap;
-  margin: 20px;
-  gap: 20px;
+  gap: 7px;
 `;
 
 export const CallLogWrapper = styled.div`
-  margin: 40px 20px 40px 20px;
   display: flex;
   flex-direction: column;
-  align-items: baseline;
+  align-items: center;
+  height: 100%;
 `;

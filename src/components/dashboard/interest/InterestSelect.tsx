@@ -4,7 +4,7 @@ import * as S from "./style";
 
 const InterestSelect = () => {
   return (
-    <div>
+    <S.InterestWrapper>
       <h3>나의 관심사</h3>
       <S.InterestBoxContainer>
         <S.InterestBox>
@@ -32,7 +32,7 @@ const InterestSelect = () => {
           <p>텍스트</p>
         </S.InterestBox>
       </S.InterestBoxContainer>
-    </div>
+    </S.InterestWrapper>
   );
 };
 

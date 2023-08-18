@@ -9,29 +9,33 @@ import styled from "styled-components";
 const DashBoard = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <DashBoardWrapper>
-        <div style={{ display: "flex", flexDirection: "column", gap: "33px" }}>
-          <div style={{ display: "flex", gap: "33px" }}>
-            <DiallogBox />
-            <CallLog />
+        <DashBoardContainer>
+          <div style={{ display: "flex", flexDirection: "column", gap: "33px" }}>
+            <div style={{ display: "flex", gap: "33px" }}>
+              <DiallogBox />
+              <CallLog />
+            </div>
+            <Memo />
           </div>
-          <Memo />
-        </div>
-        <Interest />
+          <Interest />
+        </DashBoardContainer>
       </DashBoardWrapper>
     </>
   );
 };
 
 const DashBoardWrapper = styled.div`
+  margin: 0 auto;
+  margin-top: 169px;
+  width: 100vw;
   display: flex;
-  margin-top: 103px;
-  gap: 33px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
 `;
-
+const DashBoardContainer = styled.div`
+  display: flex;
+  gap: 33px;
+`;
 export default DashBoard;
