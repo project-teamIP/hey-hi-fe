@@ -38,6 +38,10 @@ const Login = () => {
       dispatch(logIn());
       navigate("/dashboard");
     },
+    onError: () => {
+      // 아이디나 비밀번호가 올바르지 않을때.
+      alert("아이디나 비밀번호가 올바르지 않습니다.");
+    },
   });
 
   // Handler
