@@ -63,7 +63,12 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
   };
 
   // 모든 입력 항목이 유효한지 검사
-  const isFormValid = isloginIdValid && passwordMatch && passwordCheck !== "";
+  const isFormValid =
+    isloginIdValid &&
+    userIdCheckMutation.isSuccess &&
+    isMessage !== "이미 가입된 이메일입니다." &&
+    passwordMatch &&
+    passwordCheck !== "";
 
   return (
     <S.Wrap>

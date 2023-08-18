@@ -11,6 +11,7 @@ import Review from "./pages/Review";
 import Header from "./components/common/header/Header";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import KakaoRedirect from "./pages/login/KakaoRedirect";
+import GoogleRedirect from "./pages/login/GoogleRedirect";
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
           <Route path="/review" element={<Review />} />
           <Route path="/matching" element={<Matching />} />
           <Route path="/calling" element={<Calling />} />
-          <Route path="/oauth/" element={<KakaoRedirect />} />
+          <Route path="/oauth/kakao" element={<KakaoRedirect />} />
+          <Route path="/oauth/google" element={<GoogleRedirect />} />
         </Routes>
       </BrowserRouter>
     </div>
