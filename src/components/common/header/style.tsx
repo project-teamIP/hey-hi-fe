@@ -48,6 +48,20 @@ export const Nav = styled.div`
 `;
 
 export const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
   text-decoration: none;
   color: black;
+  gap: 14px;
+`;
+
+export const UserName = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+export const Icon = styled.img`
+  width: 36px;
+  height: 36px;
+  border-radius: 30px;
 `;
