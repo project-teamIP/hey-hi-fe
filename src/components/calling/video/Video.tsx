@@ -102,7 +102,7 @@ const Video: React.FC<{}> = () => {
   useEffect(() => {
     console.log("socketUrl", socketUrl);
     if (socketUrl) {
-      socketRef.current = io(socketUrl);
+      socketRef.current = io("https://teamip-server.site");
       socketRef.current.on("success", async (data: any) => {
         console.log("서버로부터 메시지 success 메시지 수신:", data);
         if (myPeerRef.current && socketRef.current) {
@@ -236,7 +236,6 @@ const Video: React.FC<{}> = () => {
                   bc="#EFF0F1"
                   color="#000"
                   activebc="#FF6E46"
-                  id="matchButton"
                   onClick={onClickMatchMessageBtn}>
                   매칭 시작!
                 </Button.Primary>
@@ -245,7 +244,6 @@ const Video: React.FC<{}> = () => {
                   bc="#EFF0F1"
                   color="#000"
                   activebc="#FF6E46"
-                  id="matchStopButton"
                   onClick={onClickDisconnectionBtn}>
                   매칭 종료
                 </Button.Primary>
