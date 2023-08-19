@@ -1,5 +1,13 @@
 import styled, { css } from "styled-components";
 
+export type CallLogInfo = {
+  image: string;
+  nickname: string;
+  country: string;
+  time: string;
+  date: string;
+};
+
 export interface ProfileDivProps {
   image?: string; // image prop을 정의
 }
@@ -8,9 +16,9 @@ export const ProfileDiv = styled.div<ProfileDivProps>`
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background-image: ${(props) => (props.image ? `url(${props.image})` : "none")};
+  background-image: ${(props) => (props.image !== null ? `url(${props.image})` : "none")};
   background-size: cover;
-  background-color: ${(props) => (props.image ? "transparent" : "rgba(152, 152, 152, 1)")};
+  background-color: ${(props) => (props.image !== null ? "transparent" : "rgba(152, 152, 152, 1)")};
 `;
 
 export const CallList = styled.div`
@@ -22,6 +30,7 @@ export const CallList = styled.div`
   width: 100%;
   height: 61px;
   border-radius: 20px;
+  border: 1px solid #d8dee9;
 `;
 
 export const ButtonGroup = styled.div`
@@ -50,11 +59,11 @@ export const CallListBtn = styled.button`
             background-color: #e7cdc5;
           }
         `;
-      case "call":
+      case "more":
         return css`
-          background-color: #ff6e46;
+          background-color: transparent;
           &:active {
-            background-color: #c95434;
+            background-color: #d8dee9;
           }
         `;
       default:
@@ -83,12 +92,40 @@ export const CallLogContainer = styled.div`
   align-items: stretch;
   flex-wrap: nowrap;
   margin: 20px;
-  gap: 20px;
+  gap: 7px;
 `;
 
 export const CallLogWrapper = styled.div`
-  margin: 40px 20px 40px 20px;
+  /* margin: 40px 20px 40px 20px; */
   display: flex;
   flex-direction: column;
   align-items: baseline;
+  justify-content: center;
+  align-content: center;
+  margin-top: 40px;
+  h2 {
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.4px;
+  }
+`;
+
+export const CallLogMatchingUserInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 36px;
+
+  p {
+    width: 141px;
+    white-space: nowrap; // 텍스트를 한 줄로 표시
+    overflow: hidden; // 넘치는 내용 숨김
+    text-overflow: ellipsis; // 생략 부호 표시
+    color: #000;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 140%;
+  }
 `;

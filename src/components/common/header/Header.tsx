@@ -72,10 +72,13 @@ const Header = () => {
               <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
               <S.Icon src={userInfo?.image} alt="유저 이미지" />
             </S.StyledLink>
+            <Button.Primary size="loginbtn" onClick={onClickLogoutHandler} outlined>
+              로그아웃
+            </Button.Primary>
           </div>
         ) : (
           <S.StyledLink to="/login">
-            <Button.Primary size="loginbtn" outlined>
+            <Button.Primary size="loginbtn" outlined="true">
               로그인 / 회원가입
             </Button.Primary>
           </S.StyledLink>

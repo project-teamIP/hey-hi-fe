@@ -9,8 +9,8 @@ export interface PrimitiveButtonProps {
   size?: "large" | "middle" | "small" | "the smallest" | "loginbtn";
   width?: string;
   height?: string;
-  activeBc?: string;
-  outlined?: boolean;
+  activebc?: string;
+  outlined?: "true" | "false";
   onClick?: () => void;
   style?: React.CSSProperties; // style 속성 추가
 }
@@ -25,7 +25,7 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
   font-weight: ${({ fw }) => fw};
 
   &:active {
-    background-color: ${({ activeBc }) => activeBc};
+    background-color: ${({ activebc }) => activebc};
   }
 
   ${({ size }) => {
