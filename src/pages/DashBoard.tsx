@@ -59,4 +59,5 @@ const DashboardContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+
 export default DashBoard;

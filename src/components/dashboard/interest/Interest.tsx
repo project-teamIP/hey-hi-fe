@@ -34,7 +34,7 @@ const Interest: React.FC = () => {
     "onlineUsers",
     fetchOnlineUsers,
     {
-      refetchInterval: 60000, // 1분마다 데이터 갱신
+      refetchInterval: 60000, // 1분마다 데이터갱신
     }
   );
   const [chartData, setChartData] = useState({

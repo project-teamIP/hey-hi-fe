@@ -11,28 +11,40 @@ import {
   BsBoxArrowRight,
 } from "react-icons/bs";
 import Button from "../../common/button/Button";
+import { getUserInfo } from "../../../api/api";
+import { useQuery } from "react-query";
 
-type LanguageData = {
-  id: number;
-  language: string;
+type userInfoData = {
+  loginId: string;
+  nickname: string;
+  country: string;
+  interest: string;
 };
 
-const data: LanguageData[] = [
-  { id: 1, language: "KOREAN" },
-  { id: 2, language: "ENGLISH" },
-  { id: 3, language: "KOREAN" },
-  { id: 4, language: "ENGLISH" },
-  { id: 5, language: "ENGLISH" },
-  { id: 6, language: "KOREAN" },
-  { id: 7, language: "KOREAN" },
-];
-
 const Video: React.FC<{}> = () => {
+  const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
+  const [userInfo, setUserInfo] = useState<userInfoData>({
+    loginId: "",
+    nickname: "",
+    country: "",
+    interest: "",
+  });
+  useEffect(() => {
+    if (!isLoading && data) {
+      setUserInfo({
+        loginId: data.loginId,
+        nickname: data.nickname,
+        country: data.country,
+        interest: data.interest,
+      });
+    }
+  }, [isLoading, data]);
+  console.log("userInfo", userInfo);
+
+  // console.log("message는:", message);
   const navigate = useNavigate();
   const socketUrl = process.env.REACT_APP_WEBSOCKET_SERVER_URL;
   const socketRef = useRef<Socket>();
-  const [savedUserId, setSavedUserId] = useState<string | null>("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [isAudioOn, setIsAudioOn] = useState(true);
   const streamRef = useRef<MediaStream | null>(null);
@@ -59,9 +71,7 @@ const Video: React.FC<{}> = () => {
       console.log(e);
     }
   }
-  const handleUserIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSavedUserId(event.target.value);
-  };
+
   function onClickCameraOffHandler() {
     if (streamRef.current) {
       streamRef.current.getVideoTracks().forEach((track) => {
@@ -82,8 +92,6 @@ const Video: React.FC<{}> = () => {
     setIsAudioOn((prevState) => !prevState);
   }
 
-  console.log(savedUserId);
-
   const PeerFaceRef = useRef<HTMLVideoElement | null>(null);
   const onClickDisconnectionBtn = () => {
     if (socketRef.current) socketRef.current.disconnect();
@@ -91,7 +99,7 @@ const Video: React.FC<{}> = () => {
   };
   const onClickMatchMessageBtn = async () => {
     const message = {
-      userId: savedUserId,
+      loginId: userInfo.loginId,
     };
     setIsWelcomeHidden(true);
     setIsCallHidden(false);
@@ -102,7 +110,7 @@ const Video: React.FC<{}> = () => {
   useEffect(() => {
     console.log("socketUrl", socketUrl);
     if (socketUrl) {
-      socketRef.current = io("https://teamip-server.site");
+      socketRef.current = io(socketUrl);
       socketRef.current.on("success", async (data: any) => {
         console.log("서버로부터 메시지 success 메시지 수신:", data);
         if (myPeerRef.current && socketRef.current) {
@@ -139,12 +147,15 @@ const Video: React.FC<{}> = () => {
         if (myPeerRef.current) {
           try {
             await myPeerRef.current.setRemoteDescription(data);
-            console.log("myPeerRef.current.remoteDescription", myPeerRef.current.remoteDescription);
           } catch (e) {
             console.log("앤서", e);
           }
         }
       });
+      socketRef.current.on("matchUserInfo", (data: any) => {
+        console.log("서버로부터 온 상대방 정보:", data);
+      });
+
       socketRef.current.on("ice", async (data: any) => {
         if (myPeerRef.current) {
           try {
@@ -204,6 +215,22 @@ const Video: React.FC<{}> = () => {
   function handleAddStream(data: any) {
     if (data.stream && PeerFaceRef.current) {
       PeerFaceRef.current.srcObject = data.stream;
+      const message = {
+        nickname: userInfo.nickname,
+        country: userInfo.country,
+        interest: userInfo.interest,
+      };
+      console.log("message", message);
+      try {
+        if (socketRef.current) {
+          const messageJSON = JSON.stringify(message);
+          socketRef.current.emit("matchUserInfo", messageJSON);
+          console.log("유저정보 주기");
+        }
+      } catch (error) {
+        // setLocalDescription()에서 발생한 오류 처리
+        console.error("Error setting local description:", error);
+      }
     } else {
       console.log("Peer's Stream is not available in the data.");
     }
@@ -220,16 +247,7 @@ const Video: React.FC<{}> = () => {
           <div>
             <h2>매칭 테스트</h2>
             <div style={{ display: "flex", gap: "10px" }}>
-              <h2>Your ID:</h2>
-              <form>
-                <input
-                  type="text"
-                  id="userId"
-                  placeholder="User ID를 입력하세요"
-                  onChange={handleUserIdChange}
-                />
-              </form>
-
+              <h2>Your ID:{userInfo.loginId}</h2>
               <div style={{ display: "flex", gap: "20px" }}>
                 <Button.Primary
                   size="loginbtn"
@@ -249,21 +267,7 @@ const Video: React.FC<{}> = () => {
                 </Button.Primary>
               </div>
             </div>
-            <div>
-              <div>
-                <h4>내 아이디:</h4>
-                <ul>
-                  <h4>userTable</h4>
-                  {data.map((item) => (
-                    <li key={item.id}>
-                      <h4>
-                        {item.id} : {item.language}
-                      </h4>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            <div></div>
           </div>
         </MatchingBox>
       </MediaBox>
