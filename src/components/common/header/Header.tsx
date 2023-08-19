@@ -59,10 +59,10 @@ const Header = () => {
               <S.StyledLink to="/dashboard">home</S.StyledLink>
             </li>
             <li>
-              <S.StyledLink to="/">FAQ</S.StyledLink>
+              <S.StyledLink to="/mypage">my page</S.StyledLink>
             </li>
             <li>
-              <S.StyledLink to="/">뭐넣지</S.StyledLink>
+              <S.StyledLink to="/">FAQ</S.StyledLink>
             </li>
           </ul>
         </S.Nav>
