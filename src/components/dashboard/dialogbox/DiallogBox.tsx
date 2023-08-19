@@ -8,6 +8,7 @@ import * as S from "./style";
 import svgPath from "../../../assets/images/noticeModal_bang.svg";
 import facePath from "../../../assets/images/dissatisfied_Face.svg";
 import handPath from "../../../assets/images/sign_language.svg";
+import instance from "../../../api/api";
 
 const DiallogBox = () => {
   const navigate = useNavigate();

@@ -30,10 +30,12 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-  margin-top: -22px;
-  margin-left: -25px;
-  width: 450px;
-  height: 392px;
+  margin-top: -21px;
+  margin-left: -26px;
+  width: 100%;
+  height: 100%;
+  /* width: 450px;
+  height: 392px; */
   img {
     top: 0;
     left: 0;

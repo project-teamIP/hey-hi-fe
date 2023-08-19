@@ -5,7 +5,6 @@ import InterestSelect from "./InterestSelect";
 import { format } from "date-fns";
 import { useQuery } from "react-query";
 import { Line } from "react-chartjs-2";
-import axios from "axios";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,7 +16,6 @@ import {
   Legend,
   TimeScale,
 } from "chart.js";
-import "chartjs-adapter-date-fns";
 import { fetchOnlineUsers } from "../../../api/api";
 
 ChartJS.register(
@@ -36,11 +34,10 @@ const Interest: React.FC = () => {
     "onlineUsers",
     fetchOnlineUsers,
     {
-      refetchInterval: 60000, // 1분마다 데이터 갱신
+      refetchInterval: 60000, // 1분마다 데이터갱신
     }
   );
-
-  const chartData = {
+  const [chartData, setChartData] = useState({
     labels: Array.from({ length: 24 }, (_, index) => index.toString()),
     datasets: [
       {
@@ -53,9 +50,8 @@ const Interest: React.FC = () => {
         data: Array(24).fill(0),
       },
     ],
-  };
-
-  const minuteChartData = {
+  });
+  const [minuteChartData, setMinuteChartData] = useState({
     labels: Array.from({ length: 60 }, (_, index) => index.toString()),
     datasets: [
       {
@@ -68,37 +64,48 @@ const Interest: React.FC = () => {
         data: Array(60).fill(0),
       },
     ],
-  };
+  });
 
-  if (onlineUsersError) {
-    console.log("Error fetching online users:", onlineUsersError);
-  }
+  // 데이터가 업데이트될 때마다 데이터를 업데이트
+  useEffect(() => {
+    if (onlineUsersData) {
+      const activeUser = onlineUsersData.activeUser;
+      const currentTime = new Date();
+      const hours = currentTime.getHours();
+      const minutes = currentTime.getMinutes();
 
-  if (onlineUsersData) {
-    const activeUser = onlineUsersData.activeUser;
-    const currentTime = new Date();
+      setChartData((prevChartData) => {
+        const newData = [...prevChartData.datasets[0].data];
+        newData[hours] = (newData[hours] || 0) + activeUser;
 
-    // updateChartData 함수의 역할을 여기에 수행
-    const hours = currentTime.getHours();
-    const minutes = currentTime.getMinutes();
-    chartData.datasets[0].data[hours] = (chartData.datasets[0].data[hours] || 0) + activeUser;
-    minuteChartData.datasets[0].data[minutes] =
-      (minuteChartData.datasets[0].data[minutes] || 0) + activeUser;
-  }
+        return {
+          ...prevChartData,
+          datasets: [{ ...prevChartData.datasets[0], data: newData }],
+        };
+      });
+
+      setMinuteChartData((prevMinuteChartData) => {
+        const newData = [...prevMinuteChartData.datasets[0].data];
+        newData[minutes] = (newData[minutes] || 0) + activeUser;
+
+        return {
+          ...prevMinuteChartData,
+          datasets: [{ ...prevMinuteChartData.datasets[0], data: newData }],
+        };
+      });
+    }
+  }, [onlineUsersData]);
 
   return (
     <DashBoardBox size="interest">
       <InterestSelect />
       <S.InterestWrapper>
         <S.ChartBox>
-          <h3>지금 접속한 인원</h3>
-          <div>
-            {onlineUsersData ? (
-              <p>현재 접속 인원: {onlineUsersData.activeUser ?? "로딩 중..."}</p>
-            ) : (
-              <p>에러 발생</p>
-            )}
-          </div>
+          {onlineUsersData ? (
+            <h3>지금 접속한 인원: {onlineUsersData.activeUser ?? "로딩 중..."}명</h3>
+          ) : (
+            <p>에러 발생</p>
+          )}
           <div>
             <Line
               data={chartData}

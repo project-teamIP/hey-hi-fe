@@ -28,6 +28,16 @@ const DashBoard = () => {
 };
 
 const DashBoardWrapper = styled.div`
+  margin: 0 auto;
+  margin-top: 169px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const DashBoardContainer = styled.div`
+  display: flex;
+  gap: 33px;
   margin-top: 99px;
   position: relative;
   width: 100vw;

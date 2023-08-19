@@ -81,24 +81,22 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
     }
   }}
 
-  ${({ outlined }) => {
-    if (outlined) {
-      return css`
-        border: 1px solid rgba(0, 0, 0, 1);
-        border-radius: 50px;
-        background: transparent;
-        color: rgba(0, 0, 0, 1);
+  ${({ outlined }) =>
+    outlined &&
+    css`
+      border: 1px solid rgba(0, 0, 0, 1);
+      border-radius: 50px;
+      background: transparent;
+      color: rgba(0, 0, 0, 1);
 
-        &:active {
-          border: none;
-          background-color: rgba(50, 50, 50, 1);
-          font-weight: 600;
-          font-size: 16px;
-          color: rgba(255, 255, 255, 1);
-        }
-      `;
-    }
-  }}
+      &:active {
+        border: none;
+        background-color: rgba(50, 50, 50, 1);
+        font-weight: 600;
+        font-size: 16px;
+        color: rgba(255, 255, 255, 1);
+      }
+    `}
 `;
 
 export const ButtonInner = styled.div`
