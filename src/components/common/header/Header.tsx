@@ -72,7 +72,7 @@ const Header = () => {
               <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
               <S.Icon src={userInfo?.image} alt="유저 이미지" />
             </S.StyledLink>
-            <Button.Primary size="loginbtn" onClick={onClickLogoutHandler} outlined>
+            <Button.Primary size="loginbtn" onClick={onClickLogoutHandler} outlined="true">
               로그아웃
             </Button.Primary>
           </div>
