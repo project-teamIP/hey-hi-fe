@@ -4,11 +4,16 @@ import * as S from "./style";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { RootState } from "../../../types/user";
-import { useMutation } from "react-query";
-import { userLogout } from "../../../api/api";
+import { useMutation, useQuery } from "react-query";
+import { getUserInfo, userLogout } from "../../../api/api";
 import { logOut } from "../../../redux/modules/userAuth";
 
 const Header = () => {
+  //유저 정보
+  const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
+
+  const userInfo = data;
+  console.log(userInfo);
   //메인헤더만 오렌지컬러
   const location = useLocation();
   const isMainPage = location.pathname === "/";
@@ -54,19 +59,18 @@ const Header = () => {
               <S.StyledLink to="/dashboard">home</S.StyledLink>
             </li>
             <li>
-              <S.StyledLink to="/">FAQ</S.StyledLink>
+              <S.StyledLink to="/mypage">my page</S.StyledLink>
             </li>
             <li>
-              <S.StyledLink to="/">뭐넣지</S.StyledLink>
+              <S.StyledLink to="/">FAQ</S.StyledLink>
             </li>
           </ul>
         </S.Nav>
         {state ? (
           <div>
             <S.StyledLink to="/mypage">
-              <Button.Primary size="loginbtn" outlined="true">
-                마이페이지
-              </Button.Primary>
+              <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
+              <S.Icon src={userInfo?.image} alt="유저 이미지" />
             </S.StyledLink>
             <Button.Primary size="loginbtn" onClick={onClickLogoutHandler} outlined="true">
               로그아웃

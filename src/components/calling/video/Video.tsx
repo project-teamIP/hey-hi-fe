@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router";
 import { io, Socket } from "socket.io-client";
 import styled from "styled-components";
 import {
@@ -9,11 +10,7 @@ import {
   BsFillXOctagonFill,
   BsBoxArrowRight,
 } from "react-icons/bs";
-//BiSolidVideo, BiSolidVideoOff BsFillCameraVideoFill BsFillCameraVideoOffFill
-//비디오
-//BsFillMicFill, BsFillMicMuteFill //마이크
-//BsFillXOctagonFill 신고
-//BsBoxArrowRight
+import Button from "../../common/button/Button";
 
 type LanguageData = {
   id: number;
@@ -31,6 +28,7 @@ const data: LanguageData[] = [
 ];
 
 const Video: React.FC<{}> = () => {
+  const navigate = useNavigate();
   const socketUrl = process.env.REACT_APP_WEBSOCKET_SERVER_URL;
   const socketRef = useRef<Socket>();
   const [savedUserId, setSavedUserId] = useState<string | null>("");
@@ -40,6 +38,8 @@ const Video: React.FC<{}> = () => {
   const streamRef = useRef<MediaStream | null>(null);
   const myPeerRef = useRef<RTCPeerConnection>();
   const myVideoRef = useRef<HTMLVideoElement | null>(null);
+  const [isWelcomeHidden, setIsWelcomeHidden] = useState(false);
+  const [isCallHidden, setIsCallHidden] = useState(true);
 
   useEffect(() => {
     getMedia();
@@ -89,10 +89,12 @@ const Video: React.FC<{}> = () => {
     if (socketRef.current) socketRef.current.disconnect();
     console.log("연결 해제");
   };
-  const onClickMatchMessageBtn = () => {
+  const onClickMatchMessageBtn = async () => {
     const message = {
       userId: savedUserId,
     };
+    setIsWelcomeHidden(true);
+    setIsCallHidden(false);
     if (socketRef.current) socketRef.current.emit("match", JSON.stringify(message));
     console.log("매칭 테스트");
   };
@@ -100,7 +102,7 @@ const Video: React.FC<{}> = () => {
   useEffect(() => {
     console.log("socketUrl", socketUrl);
     if (socketUrl) {
-      socketRef.current = io(socketUrl);
+      socketRef.current = io("https://teamip-server.site");
       socketRef.current.on("success", async (data: any) => {
         console.log("서버로부터 메시지 success 메시지 수신:", data);
         if (myPeerRef.current && socketRef.current) {
@@ -207,97 +209,152 @@ const Video: React.FC<{}> = () => {
     }
   }
 
+  const onClickEndCalling = () => {
+    navigate("/dashboard");
+  };
+
   return (
-    <div>
-      <h1>WebSocket Test</h1>
-      <p>Check the browser console for incoming messages.</p>
-      <h2>Your ID:</h2>
-      <form>
-        <input
-          type="text"
-          id="userId"
-          placeholder="User ID를 입력하세요"
-          onChange={handleUserIdChange}
-        />
-      </form>
-      <div>내 아이디:</div>
-      <ul>
-        <h2>UserTable</h2>
-        {data.map((item) => (
-          <li key={item.id}>
-            {item.id} : {item.language}
-          </li>
-        ))}
-      </ul>
-      <div>
-        <h2>매칭을 시작할까요?</h2>
-        <button id="matchButton" onClick={onClickMatchMessageBtn}>
-          매칭 시작!
-        </button>
-      </div>
-      <div>
-        <h2>매칭을 취소할까요?</h2>
-        <button id="matchStopButton" onClick={onClickDisconnectionBtn}>
-          매칭 종료
-        </button>
+    <>
+      <MediaBox hidden={isWelcomeHidden}>
+        <MatchingBox>
+          <div>
+            <h2>매칭 테스트</h2>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <h2>Your ID:</h2>
+              <form>
+                <input
+                  type="text"
+                  id="userId"
+                  placeholder="User ID를 입력하세요"
+                  onChange={handleUserIdChange}
+                />
+              </form>
+
+              <div style={{ display: "flex", gap: "20px" }}>
+                <Button.Primary
+                  size="loginbtn"
+                  bc="#EFF0F1"
+                  color="#000"
+                  activebc="#FF6E46"
+                  onClick={onClickMatchMessageBtn}>
+                  매칭 시작!
+                </Button.Primary>
+                <Button.Primary
+                  size="loginbtn"
+                  bc="#EFF0F1"
+                  color="#000"
+                  activebc="#FF6E46"
+                  onClick={onClickDisconnectionBtn}>
+                  매칭 종료
+                </Button.Primary>
+              </div>
+            </div>
+            <div>
+              <div>
+                <h4>내 아이디:</h4>
+                <ul>
+                  <h4>userTable</h4>
+                  {data.map((item) => (
+                    <li key={item.id}>
+                      <h4>
+                        {item.id} : {item.language}
+                      </h4>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </MatchingBox>
+      </MediaBox>
+      <MediaBox hidden={isCallHidden}>
+        <div style={{ display: "flex", gap: "20px" }}>
+          <CallingTextGroup>
+            <h4>서울에 거주중인</h4>
+            <h2>서울 홍길동 님과 통화 중</h2>
+          </CallingTextGroup>
+          <CallTimer>00:00:00</CallTimer>
+        </div>
         <VideoWrapper>
           <VideoContainer>
-            <div>홍길동(나)</div>
-            <VideoBox>
-              <video id="myFace" ref={myVideoRef} autoPlay playsInline />
-            </VideoBox>
-            <ButtonGroup>
-              <ButtonStyle onClick={onClickCameraOffHandler}>
-                {isCameraOn ? (
-                  <div>
-                    <ButtonInnerStyle>
-                      <BsFillCameraVideoOffFill size={4.5 * 4.5} />
-                      <p>비디오 끄기</p>
-                    </ButtonInnerStyle>
-                  </div>
-                ) : (
-                  <div>
-                    <ButtonInnerStyle>
-                      <BsFillCameraVideoFill size={4.5 * 4.5} />
-                      <p>비디오 켜기</p>
-                    </ButtonInnerStyle>
-                  </div>
-                )}
-              </ButtonStyle>
-              <ButtonStyle onClick={onClickAudioOffHandler}>
-                {isAudioOn ? (
-                  <div>
-                    <ButtonInnerStyle>
-                      <BsFillMicMuteFill size={4.5 * 4.5} />
-                      <p>마이크 끄기</p>
-                    </ButtonInnerStyle>
-                  </div>
-                ) : (
-                  <div>
-                    <ButtonInnerStyle>
-                      <BsFillMicFill size={4.5 * 4.5} />
-                      <p>마이크 켜기</p>
-                    </ButtonInnerStyle>
-                  </div>
-                )}
-              </ButtonStyle>
-              <ButtonStyle>
-                <ButtonInnerStyle>
-                  <BsFillXOctagonFill size={4.5 * 4.5} />
-                  <p>신고하기</p>
-                </ButtonInnerStyle>
-              </ButtonStyle>
-            </ButtonGroup>
+            <WithVedioTag>
+              <VideoBox>
+                <video id="myFace" ref={myVideoRef} autoPlay playsInline />
+                <h4>홍길동(나)</h4>
+              </VideoBox>
+            </WithVedioTag>
           </VideoContainer>
-          <h3>김땡땡(상대방)</h3>
-          <VideoBox>
-            <video id="PeerFace" ref={PeerFaceRef} autoPlay playsInline />
-          </VideoBox>
+          <WithVedioTag>
+            <VideoBox>
+              <video id="PeerFace" ref={PeerFaceRef} autoPlay playsInline />
+              <h4>김땡땡(상태방)</h4>
+            </VideoBox>
+          </WithVedioTag>
         </VideoWrapper>
-      </div>
-    </div>
+        <ButtonGroup>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <ButtonStyle onClick={onClickCameraOffHandler}>
+              {isCameraOn ? (
+                <div>
+                  <ButtonInnerStyle>
+                    <BsFillCameraVideoOffFill size={4.5 * 4.5} />
+                    <p>비디오 끄기</p>
+                  </ButtonInnerStyle>
+                </div>
+              ) : (
+                <div>
+                  <ButtonInnerStyle>
+                    <BsFillCameraVideoFill size={4.5 * 4.5} />
+                    <p>비디오 켜기</p>
+                  </ButtonInnerStyle>
+                </div>
+              )}
+            </ButtonStyle>
+            <ButtonStyle onClick={onClickAudioOffHandler}>
+              {isAudioOn ? (
+                <div>
+                  <ButtonInnerStyle>
+                    <BsFillMicMuteFill size={4.5 * 4.5} />
+                    <p>마이크 끄기</p>
+                  </ButtonInnerStyle>
+                </div>
+              ) : (
+                <div>
+                  <ButtonInnerStyle>
+                    <BsFillMicFill size={4.5 * 4.5} />
+                    <p>마이크 켜기</p>
+                  </ButtonInnerStyle>
+                </div>
+              )}
+            </ButtonStyle>
+            <ButtonStyle>
+              <ButtonInnerStyle>
+                <BsFillXOctagonFill size={4.5 * 4.5} />
+                <p>신고하기</p>
+              </ButtonInnerStyle>
+            </ButtonStyle>
+          </div>
+          <ButtonStyle onClick={onClickEndCalling}>
+            <ButtonInnerStyle>
+              <BsBoxArrowRight size={4.5 * 4.5} />
+              <p>나가기</p>
+            </ButtonInnerStyle>
+          </ButtonStyle>
+        </ButtonGroup>
+      </MediaBox>
+    </>
   );
 };
+
+const MatchingBox = styled.div`
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  border: 1px solid #f0f2f4;
+`;
 
 const VideoWrapper = styled.div`
   display: flex;
@@ -313,7 +370,6 @@ const VideoContainer = styled.div`
 const VideoBox = styled.div`
   width: 519px;
   height: 742px;
-  background-color: green;
   box-sizing: border-box; /* 이 부분 추가 */
   border-radius: 30px;
   video {
@@ -325,9 +381,11 @@ const VideoBox = styled.div`
 `;
 
 const ButtonGroup = styled.div`
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  justify-content: space-between;
+  width: 92%;
 `;
 
 const ButtonStyle = styled.button`
@@ -352,6 +410,78 @@ const ButtonInnerStyle = styled.div`
   align-items: center;
   justify-content: center;
   gap: 7px;
+`;
+
+const CallingTextGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+  }
+  h4 {
+    font-size: 17px;
+    font-weight: 500;
+    color: #5a5a5a;
+  }
+`;
+
+const CallTimer = styled.div`
+  background-color: #ff6e46;
+  width: 141px;
+  height: 49px;
+  border-radius: 40px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 600;
+`;
+
+const MediaBox = styled.div`
+  padding: 50px 30px 20px 30px;
+  width: 100%;
+  max-width: 1200px;
+  z-index: 1;
+  h2 {
+    color: #000;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  h4 {
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: normal;
+  }
+`;
+
+const WithVedioTag = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  h4 {
+    margin-top: -60px;
+    margin-left: 10px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    background: #000;
+    width: 121px;
+    height: 47px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: normal;
+  }
 `;
 
 export default Video;

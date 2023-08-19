@@ -27,8 +27,9 @@ export const InterestBoxContainer = styled.div`
 `;
 
 export const InterestWrapper = styled.div`
-  margin: 46px 20px 10px 20px;
-  margin-left: 30px;
+  margin: 46px 30px 10px 30px;
+  /* margin-left: 30px; */
+  gap: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -36,7 +37,7 @@ export const InterestWrapper = styled.div`
   h3 {
     font-size: 20px;
     font-weight: 600;
-    /* margin-bottom: 30px; */
+    margin-bottom: 30px;
     line-height: 23.87px;
   }
 `;
@@ -55,6 +56,7 @@ export const ImageBox = styled.div`
 `;
 
 export const ChartBox = styled.div`
+  height: 100%;
   h3 {
     font-size: 20px;
     font-weight: 600;
