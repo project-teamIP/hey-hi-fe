@@ -47,9 +47,10 @@ export const ImgBox = styled.div`
 
 export const SvgBox = styled.div`
   text-align: end;
-  transform: translateX(18.75rem);
+  transform: translateX(12.5rem);
 `;
 
+//띠
 export const SvgBox2 = styled.div`
   height: 55px;
   width: 100%;
