@@ -1,30 +1,65 @@
-import React, { useState } from "react";
-import * as S from "./style"; // 모달 스타일 파일을 import합니다.
+import React, { useEffect, useState } from "react";
+import * as S from "./style";
+import * as C from "../../../assets/styles/commonStyle";
+import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
 import { MemosType } from "../../../types/user";
 import { formatDateTime2 } from "../../../utils/formattedDate";
-import { useMutation, useQueryClient } from "react-query";
-import { deleteSingleMemo } from "../../../api/api";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { deleteSingleMemo, editMemo, getSingleMemo } from "../../../api/api";
+import Button from "../../common/button/Button";
+import { MemoEditType } from "../../../types/types";
 
 interface MemoModalProps {
-  memo: MemosType; // 클릭한 메모의 데이터를 받아옵니다.
-  onCloseModalHandler: () => void; // 모달을 닫는 함수를 받아옵니다.
+  memo: MemosType;
+  onCloseModalHandler: () => void;
 }
 
 const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
+  // 해당 메모 하나만 조회
+  const { data, isLoading } = useQuery(["mymemo", memo.id], () => getSingleMemo(memo.id));
+  console.log(data, memo);
+
   // 드랍다운
   const [showDropDown, setShowDropDown] = useState(false);
   const onClickDropDownHandler = () => {
     setShowDropDown(!showDropDown);
   };
+
   // 메모 수정
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedMemo, setEditedMemo] = useState({
+    id: memo.id,
+    title: memo.title,
+    content: memo.content,
+  });
   const onClickMemoEditHandler = () => {
-    setShowDropDown(!showDropDown);
+    setShowDropDown(false);
+    setIsEditing(true);
   };
+  const editMemoMutation = useMutation((editedMemo: MemoEditType) => editMemo(editedMemo), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("myMemo");
+      setIsEditing(false);
+      setEditedMemo({
+        id: memo.id,
+        title: data.title,
+        content: data.content,
+      });
+    },
+  });
+  const onClickMemoEditSubmitHandler = () => {
+    editMemoMutation.mutate(editedMemo);
+  };
+
+  // 최대 글자수
+  const maxLength = 1500;
+
   // 메모 삭제
   const queryClient = useQueryClient();
   const deleteMemoMutation = useMutation((memoId: number) => deleteSingleMemo(memoId), {
     onSuccess: () => {
       queryClient.invalidateQueries("myMemo");
+      alert("메모가 삭제되었습니다.");
     },
   });
   const onClickMemoDeleteHandler = () => {
@@ -33,6 +68,21 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
     onCloseModalHandler();
   };
 
+  // 수정 완료 시 모달 리렌더링
+  useEffect(() => {
+    console.log("useEffect", isEditing);
+  }, [isEditing]);
+
+  // 로딩중 스피너 설정
+  if (isLoading) {
+    return (
+      <C.SpinnerBox>
+        <C.LoadingSpinner>
+          <img src={rabbitSvg} alt="isLoading" />
+        </C.LoadingSpinner>
+      </C.SpinnerBox>
+    );
+  }
   return (
     <S.MemoModalOverlay>
       <S.MemoModalBox>
@@ -49,24 +99,81 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
             />
           </svg>
         </S.CloseButton>
-        <S.MemoModalHeader>
+        <S.MemoModalHeader $isEditing={isEditing}>
           <p>
             {formatDateTime2(memo.createdAt)} {memo.partnerNickname}과의 통화
           </p>
           <S.MemoModalMore>
-            <h3>{memo.title}</h3>
-            <button onClick={onClickDropDownHandler}>
-              <img src={require("../../../assets/images/more.png")} alt="memo-more" />
-            </button>
+            {isEditing ? (
+              <>
+                <input
+                  type="text"
+                  value={editedMemo.title}
+                  onChange={(e) => setEditedMemo({ ...editedMemo, title: e.target.value })}
+                />
+                <span>
+                  <span className="count">{editedMemo.content.length}자</span> / 1500자
+                </span>
+              </>
+            ) : (
+              <>
+                <h3>{data.title}</h3>
+                <button onClick={onClickDropDownHandler}>
+                  <img
+                    src={require("../../../assets/images/mypage/kebab-btn.png")}
+                    alt="memo-more"
+                  />
+                </button>
+              </>
+            )}
           </S.MemoModalMore>
           {showDropDown && (
             <S.MoreDropdown>
-              <button onClick={onClickMemoEditHandler}>수정</button>
-              <button onClick={onClickMemoDeleteHandler}>삭제</button>
+              <button onClick={onClickMemoEditHandler}>
+                <img src={require("../../../assets/images/mypage/memo-edit.png")} alt="memo-edit" />
+                수정하기
+              </button>
+              <button onClick={onClickMemoDeleteHandler}>
+                <img
+                  src={require("../../../assets/images/mypage/memo-delete.png")}
+                  alt="memo-delete"
+                />
+                삭제하기
+              </button>
             </S.MoreDropdown>
           )}
         </S.MemoModalHeader>
-        <S.MemoModalBody>{memo.content}</S.MemoModalBody>
+        {isEditing ? (
+          <S.MemoModalBodyEdit>
+            <textarea
+              value={editedMemo.content}
+              onChange={(e) => setEditedMemo({ ...editedMemo, content: e.target.value })}
+              maxLength={maxLength}
+            />
+            <S.EditBtns>
+              <Button.Primary
+                size="small"
+                color="black"
+                bc="#EFF0F1"
+                fw="700"
+                onClick={() => {
+                  setIsEditing(false);
+                  setEditedMemo({
+                    id: memo.id,
+                    title: data.title,
+                    content: data.content,
+                  });
+                }}>
+                취소
+              </Button.Primary>
+              <Button.Primary size="small" bc="#FF6E46" onClick={onClickMemoEditSubmitHandler}>
+                수정
+              </Button.Primary>
+            </S.EditBtns>
+          </S.MemoModalBodyEdit>
+        ) : (
+          <S.MemoModalBody>{data.content}</S.MemoModalBody>
+        )}
       </S.MemoModalBox>
     </S.MemoModalOverlay>
   );
