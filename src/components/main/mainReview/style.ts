@@ -90,3 +90,5 @@ export const UserInfo = styled.p`
   position: absolute;
   bottom: 0;
 `;
+
+/* 커스텀 화살표 */
