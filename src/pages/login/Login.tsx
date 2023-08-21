@@ -12,7 +12,6 @@ import { logIn } from "../../redux/modules/userAuth";
 import LogoImage from "../../assets/images/LogoImage.svg";
 import Google from "../../assets/images/google.svg";
 import Kakao from "../../assets/images/kakao.svg";
-import { KeyboardEvent } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
