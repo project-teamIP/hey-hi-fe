@@ -35,7 +35,7 @@ const Memo = () => {
           <p>더보기</p>
         </S.WordGroup>
         <S.TextBoxGroup>
-          {memoData.length > 0 ? (
+          {memoData && memoData.length > 0 ? (
             memoData.map((memo, index) => {
               if (index < 4) {
                 return (
