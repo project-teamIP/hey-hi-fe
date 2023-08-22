@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Button from "../button/Button";
 import * as S from "./style";
@@ -9,10 +10,14 @@ import { getUserInfo } from "../../../api/api";
 
 const Header = () => {
   //유저 정보
-  const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
+  // const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
+  const { data, isLoading, refetch } = useQuery("userInfo", () => getUserInfo(), {
+    enabled: false, // 초기 데이터 가져오기를 수동으로 트리거하도록 설정
+  });
 
   const userInfo = data;
   console.log(userInfo);
+
   //메인헤더만 오렌지컬러
   const location = useLocation();
   const isMainPage = location.pathname === "/";
@@ -20,6 +25,13 @@ const Header = () => {
   //로그인 상태 따라 버튼 변경
   const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
   console.log("로그인상태", state);
+
+  useEffect(() => {
+    if (state) {
+      // state가 true로 변경되면 (로그인한 경우) 데이터를 다시 가져오도록 트리거
+      refetch();
+    }
+  }, [state, refetch]);
 
   return (
     <S.HeaderBox ismainpage={isMainPage}>
