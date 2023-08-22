@@ -1,14 +1,6 @@
 // 회원가입 페이지 슬라이드
 export interface SlideProps {
-  userData: {
-    loginId: string;
-    password: string;
-    nickname: string;
-    country: string;
-    gender: string;
-    language: string;
-    interest: string;
-  };
+  userData: UserData;
   setUserData: React.Dispatch<
     React.SetStateAction<{
       loginId: string;
@@ -17,12 +9,22 @@ export interface SlideProps {
       country: string;
       gender: string;
       language: string;
-      interest: string;
+      interests: string[];
     }>
   >;
   slideIndex: number;
   onClickNextButtonHandler?: () => void;
   onClickUserRegisterHandler?: () => void;
+}
+
+export interface UserData {
+  loginId: string;
+  password: string;
+  nickname: string;
+  country: string;
+  gender: string;
+  language: string;
+  interests: string[];
 }
 
 // 로그인
@@ -51,4 +53,35 @@ export type MemoEditType = {
   id: number;
   title: string;
   content: string;
+};
+
+// 유저정보
+export interface UserInfoType {
+  nickname: string;
+  loginId: string;
+  language: string;
+  interests: string[];
+  image: string;
+  country: string;
+  cleanPoint: number;
+}
+
+//통화방 타입
+
+export interface MatchingUserData {
+  interests: string[];
+}
+
+export interface MatchingUserProps {
+  MatchingUserData: string[];
+  // setUserData: React.Dispatch<
+  //   React.SetStateAction<{
+  //     interests: string[];
+  //   }>
+  // >;
+}
+
+export type CallRoomCategoriProps = {
+  interest: string;
+  image: string;
 };

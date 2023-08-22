@@ -66,6 +66,7 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
         return css`
           height: 60px;
           width: 217px;
+          border: 1px solid #bababa;
           border-radius: 15px;
           font-weight: 400;
           font-size: 16px;

@@ -79,6 +79,11 @@ const Login = () => {
           value={password}
           onChangeHandler={onChangePasswordHandler}
           size="medium"
+          onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") {
+              onClickLoginHandler();
+            }
+          }}
         />
       </LoginContainer>
       {/* OR */}

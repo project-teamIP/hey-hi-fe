@@ -1,19 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import Button from "../button/Button";
 import * as S from "./style";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { RootState } from "../../../types/user";
-import { useMutation, useQuery } from "react-query";
-import { getUserInfo, userLogout } from "../../../api/api";
-import { logOut } from "../../../redux/modules/userAuth";
+import { useQuery } from "react-query";
+import { getUserInfo } from "../../../api/api";
 
 const Header = () => {
   //유저 정보
-  const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
+  // const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
+  const { data, isLoading, refetch } = useQuery("userInfo", () => getUserInfo(), {
+    enabled: false, // 초기 데이터 가져오기를 수동으로 트리거하도록 설정
+  });
 
   const userInfo = data;
   console.log(userInfo);
+
   //메인헤더만 오렌지컬러
   const location = useLocation();
   const isMainPage = location.pathname === "/";
@@ -22,20 +26,12 @@ const Header = () => {
   const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
   console.log("로그인상태", state);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  //로그아웃
-  const logoutMutation = useMutation(userLogout, {
-    onSuccess: () => {
-      dispatch(logOut());
-      navigate("/");
-    },
-  });
-
-  const onClickLogoutHandler = () => {
-    logoutMutation.mutate();
-  };
+  useEffect(() => {
+    if (state) {
+      // state가 true로 변경되면 (로그인한 경우) 데이터를 다시 가져오도록 트리거
+      refetch();
+    }
+  }, [state, refetch]);
 
   return (
     <S.HeaderBox ismainpage={isMainPage}>

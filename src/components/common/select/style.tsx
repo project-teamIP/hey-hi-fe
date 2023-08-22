@@ -54,7 +54,6 @@ export const Option = styled.ul<SelectProps>`
     height: 51px;
     padding: 16px 0px 14px 19px;
     border-radius: 10px;
-    background: #ffffff;
   }
 
   li:hover {
