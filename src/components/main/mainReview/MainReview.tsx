@@ -3,12 +3,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import reviews from "../../../utils/reviews.json";
-import { CustomNextArrow, CustomPrevArrow } from "./CustomArrow";
+// import { CustomNextArrow, CustomPrevArrow } from "./CustomArrow";
 
 const MainReview = () => {
   const settings = {
-    prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />,
+    // prevArrow: <CustomPrevArrow />,
+    // nextArrow: <CustomNextArrow />,
     centerMode: true,
     dots: false,
     infinite: true,
@@ -16,7 +16,7 @@ const MainReview = () => {
     slidesToScroll: 1,
     arrows: true,
     speed: 500,
-    autoplay: false,
+    autoplay: true,
     responsive: [
       {
         breakpoint: 600,
