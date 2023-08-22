@@ -14,7 +14,7 @@ const Timer: React.FC<TimerProps> = (props) => {
   const [isRunning, setIsRunning] = useState(running);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: NodeJS.Timeout | undefined; // 초기화를 위해 undefined로 설정
 
     if (running && time > 0) {
       interval = setInterval(() => {
@@ -25,7 +25,10 @@ const Timer: React.FC<TimerProps> = (props) => {
     }
 
     return () => {
-      clearInterval(interval);
+      if (interval !== undefined) {
+        // undefined 체크 추가
+        clearInterval(interval);
+      }
     };
   }, [running, time]);
 

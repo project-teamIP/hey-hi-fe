@@ -52,9 +52,9 @@ const Categori = ({ interest, image }: CallRoomCategoriProps) => {
 
 const MatchingUserInterest = ({ MatchingUserData }: MatchingUserProps) => {
   console.log("MatchingUserData", MatchingUserData);
-  const filteredInterests = useRef([]);
+  const filteredInterests = useRef<{ name: string; image: string }[]>([]);
 
-  if (Array.isArray(MatchingUserData) || MatchingUserData instanceof Array) {
+  if (Array.isArray(MatchingUserData)) {
     const arrayUserData = Array.from(MatchingUserData); // 유사 배열을 배열로 변환
     filteredInterests.current = interests.filter((interest) =>
       arrayUserData.includes(interest.name)
