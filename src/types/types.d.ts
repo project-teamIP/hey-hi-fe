@@ -65,3 +65,27 @@ export interface UserInfoType {
   country: string;
   cleanPoint: number;
 }
+
+//통화방 타입
+
+export interface MatchingUserData {
+  interests: string[];
+}
+
+export interface MatchingUserProps {
+  MatchingUserData: string[];
+  // setUserData: React.Dispatch<
+  //   React.SetStateAction<{
+  //     interests: string[];
+  //   }>
+  // >;
+}
+
+export type CallRoomCategoriProps = {
+  interest: string;
+  image: string;
+};
+
+export interface CleanPoint {
+  cleanPoint: string;
+}
