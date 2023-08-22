@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "../../dashboard/interest/style";
+import * as A from "../../dashboard/interest/style";
 import styled from "styled-components";
 import MatchingUserInterest from "./MatchingUserInterest";
 import { MatchingUserProps } from "../../../types/types";
@@ -9,9 +9,9 @@ const CallingPageInterestSelect = ({ MatchingUserData }: MatchingUserProps) => {
   return (
     <MatchingUserInterstWrapper>
       <h3>상대방의 관심사</h3>
-      <S.InterestBoxContainer>
+      <A.InterestBoxContainer>
         <MatchingUserInterest MatchingUserData={MatchingUserData} />
-      </S.InterestBoxContainer>
+      </A.InterestBoxContainer>
     </MatchingUserInterstWrapper>
   );
 };
