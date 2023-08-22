@@ -43,7 +43,7 @@ instance.interceptors.request.use(
     if (process.env.NODE_ENV === "development") {
       console.log("요청 완료", config);
     }
-    console.log(refresh_token);
+
     return config;
   },
   function (error: AxiosError) {
