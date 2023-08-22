@@ -13,14 +13,14 @@ const Header = () => {
   const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
 
   const userInfo = data;
-  console.log(userInfo);
+  // console.log(userInfo);
   //메인헤더만 오렌지컬러
   const location = useLocation();
   const isMainPage = location.pathname === "/";
 
   //로그인 상태 따라 버튼 변경
   const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
-  console.log("로그인상태", state);
+  // console.log("로그인상태", state);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

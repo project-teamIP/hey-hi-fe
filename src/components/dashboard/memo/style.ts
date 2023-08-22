@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const TextBox = styled.div`
   background-color: #f8f9fc;

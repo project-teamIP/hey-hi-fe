@@ -37,7 +37,6 @@ export const InterestWrapper = styled.div`
   h3 {
     font-size: 20px;
     font-weight: 600;
-    margin-bottom: 30px;
     line-height: 23.87px;
   }
 `;
