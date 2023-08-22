@@ -1,10 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import svgPath from "../../../assets/images/cleanPointImoticon.svg";
+// CleanPoint 인터페이스 정의
+interface CleanPointProps {
+  cleanPoint: string; // cleanPoint의 타입을 숫자로 지정
+}
 
-const CleanPoint = ({ cleanPoint }) => {
+const CleanPoint: React.FC<CleanPointProps> = ({ cleanPoint }) => {
   console.log("클린포인트", cleanPoint);
-  const cleanPointValue = cleanPoint;
+  const cleanPointValue: number = parseInt(cleanPoint, 10);
 
   const CleanPointBar = styled.div`
     border-radius: 6px;

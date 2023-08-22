@@ -85,7 +85,3 @@ export type CallRoomCategoriProps = {
   interest: string;
   image: string;
 };
-
-export interface CleanPoint {
-  cleanPoint: string;
-}

@@ -12,7 +12,6 @@ import {
   BsFillXOctagonFill,
   BsBoxArrowRight,
 } from "react-icons/bs";
-import Button from "../../common/button/Button";
 import { getUserInfo } from "../../../api/api";
 import { useQuery } from "react-query";
 import * as S from "./style";
