@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/common/header/Header";
-import CallingPageMemo from "../components/calling/memo/CallingPageMemo";
-import CallingPageInterestSelect from "../components/calling/interest/CallingPageInterestSelect";
 import styled from "styled-components";
 import Video from "../components/calling/video/Video";
 
@@ -10,44 +8,41 @@ const Calling: React.FC = () => {
     <div>
       <Header />
       <TotalContentWrapper>
-        <TotalContentContainer>
-          <TotalCotentBox>
-            <Video />
-            <SideBox>
-              <CallingPageMemo />
-              <CallingPageInterestSelect />
-            </SideBox>
-          </TotalCotentBox>
-        </TotalContentContainer>
+        <TotalCotentBox>
+          <Video />
+        </TotalCotentBox>
       </TotalContentWrapper>
     </div>
   );
 };
 
 const TotalContentWrapper = styled.div`
+  /* background-color: blueviolet; */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   margin: 0;
 `;
 
-const TotalContentContainer = styled.div`
-  margin-top: 300px;
-  width: 80%;
-  height: 100%;
-  /* background-color: lightgray; */
-`;
-
-const SideBox = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+// const TotalContentContainer = styled.div`
+//   margin-top: 300px;
+//   width: 100%;
+//   height: 100%;
+//   /* background-color: red; */
+//   background-color: lightgray;
+// `;
 
 const TotalCotentBox = styled.div`
+  margin-top: 5%;
+  /* background-color: blue; */
+  align-items: center;
+  justify-content: center;
+  width: 110%;
+  /* height: 100%; */
   display: flex;
   flex-direction: row;
-  gap: 50px;
 `;
 
 export default Calling;

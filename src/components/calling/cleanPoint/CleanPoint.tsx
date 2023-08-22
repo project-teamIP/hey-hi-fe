@@ -1,0 +1,79 @@
+import React from "react";
+import styled from "styled-components";
+import svgPath from "../../../assets/images/cleanPointImoticon.svg";
+
+const CleanPoint = ({ cleanPoint }) => {
+  console.log("클린포인트", cleanPoint);
+  const cleanPointValue = cleanPoint;
+
+  const CleanPointBar = styled.div`
+    border-radius: 6px;
+    height: 9px;
+    width: ${3.52 * cleanPointValue}px; /* 수학 연산을 위해 괄호로 묶어줍니다 */
+    background-color: #ff6e46;
+
+    img {
+      margin-left: ${3.52 * cleanPointValue - 25}px; /* 수학 연산을 위해 괄호로 묶어줍니다 */
+      margin-top: -15px;
+      width: 37px;
+      height: 34px;
+    }
+  `;
+  return (
+    <CleanPointContainer>
+      <CleanPointTextGroup>
+        <h4>상대방의 매너점수</h4>
+        <h2>{cleanPointValue}점</h2>
+      </CleanPointTextGroup>
+      <CleanPointBarStyle>
+        <CleanPointBar>
+          <img src={svgPath} alt="cleanPoint" />
+        </CleanPointBar>
+      </CleanPointBarStyle>
+    </CleanPointContainer>
+  );
+};
+
+const CleanPointContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 20px;
+  border: 1px solid #ced0d7;
+  background-color: #fff;
+  /* background-color: yellow; */
+  width: 420px;
+  height: 79px;
+`;
+
+const CleanPointTextGroup = styled.div`
+  margin-top: 20px;
+  /* background-color: green; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 352px;
+  h2 {
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+  }
+  h4 {
+    color: #9d9d9d;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: normal;
+  }
+`;
+
+const CleanPointBarStyle = styled.div`
+  border-radius: 6px;
+  background-color: #e7e9ef;
+  width: 352px;
+  height: 9px;
+`;
+
+export default CleanPoint;
