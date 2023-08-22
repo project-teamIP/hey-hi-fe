@@ -1,19 +1,32 @@
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Button from "../button/Button";
 import * as S from "./style";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { RootState } from "../../../types/user";
-import { useMutation, useQuery } from "react-query";
-import { getUserInfo, userLogout } from "../../../api/api";
-import { logOut } from "../../../redux/modules/userAuth";
+import { getUserInfo } from "../../../api/api";
+import { UserInfoType } from "../../../types/types";
 
 const Header = () => {
-  //유저 정보
-  const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
+  // userInfo 상태 초기화
+  const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
 
-  const userInfo = data;
-  console.log(userInfo);
+  //유저 정보
+  useEffect(() => {
+    // getUserInfo 함수를 호출하여 유저 정보 가져오기
+    const fetchUserInfo = async () => {
+      try {
+        const response = await getUserInfo();
+        setUserInfo(response); // 가져온 유저 정보로 상태 업데이트
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
   //메인헤더만 오렌지컬러
   const location = useLocation();
   const isMainPage = location.pathname === "/";
@@ -21,21 +34,6 @@ const Header = () => {
   //로그인 상태 따라 버튼 변경
   const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
   console.log("로그인상태", state);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  //로그아웃
-  const logoutMutation = useMutation(userLogout, {
-    onSuccess: () => {
-      dispatch(logOut());
-      navigate("/");
-    },
-  });
-
-  const onClickLogoutHandler = () => {
-    logoutMutation.mutate();
-  };
 
   return (
     <S.HeaderBox ismainpage={isMainPage}>
@@ -68,10 +66,14 @@ const Header = () => {
         </S.Nav>
         {state ? (
           <div>
-            <S.StyledLink to="/mypage">
-              <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
-              <S.Icon src={userInfo?.image} alt="유저 이미지" />
-            </S.StyledLink>
+            {userInfo ? (
+              <S.StyledLink to="/mypage">
+                <S.UserName>{userInfo.nickname}&nbsp;님</S.UserName>
+                <S.Icon src={userInfo.image} alt="유저 이미지" />
+              </S.StyledLink>
+            ) : (
+              <p>Loading...</p> // 또는 아무 내용을 렌더링하지 않음
+            )}
           </div>
         ) : (
           <S.StyledLink to="/login">
