@@ -7,8 +7,8 @@ import { CustomNextArrow, CustomPrevArrow } from "./CustomArrow";
 
 const MainReview = () => {
   const settings = {
-    // prevArrow: <CustomPrevArrow />,
-    // nextArrow: <CustomNextArrow />,
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />,
     centerMode: true,
     dots: false,
     infinite: true,
@@ -16,7 +16,7 @@ const MainReview = () => {
     slidesToScroll: 1,
     arrows: true,
     speed: 500,
-    autoplay: true,
+    autoplay: false,
     responsive: [
       {
         breakpoint: 600,
@@ -37,16 +37,16 @@ const MainReview = () => {
   };
   return (
     <S.MainReviewBox>
-      <S.SectionNum>03</S.SectionNum>
+      <S.SectionNum>SAY</S.SectionNum>
       <h1>생생한 유저들의 후기!</h1>
-      <p>계속 한줄로 텍스트를 입력해 문장을 완성해주세요.</p>
+      <p className="subtitle">계속 한줄로 텍스트를 입력해 문장을 완성해주세요.</p>
       <S.ReviewWrapper>
         <S.Cards>
           <Slider {...settings}>
             {reviews.map((review, index) => (
               <S.ReviewCard key={index}>
                 <img
-                  src={require(`../../../assets/images/main/review-img1.png`)}
+                  src={require(`../../../assets/images/main/${review.image}.png`)}
                   alt={review.image}
                 />
                 <S.CardContent>

@@ -65,15 +65,16 @@ instance.interceptors.response.use(
       (error.response.data as any)?.message === "토큰이 만료되었습니다."
     ) {
       const cookies = getCookies();
-      const { refresh_token } = cookies;
+      const { refresh_token, access_token } = cookies;
 
       // 리프레시 토큰이 존재할 경우에만 실행
       if (refresh_token) {
         try {
           const refreshResponse = await instance.post("/auth/re-access", {
             refresh_token,
+            access_token,
           });
-          const newAccessToken = refreshResponse.headers.access_token;
+          const newAccessToken = refreshResponse.headers.AccessToken;
           console.log(newAccessToken);
           console.log(refreshResponse);
 

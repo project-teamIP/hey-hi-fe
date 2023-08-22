@@ -4,7 +4,6 @@ import mainTextSvg from "../../../assets/images/main/maintext.svg";
 
 export const MainBox = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 70px;
@@ -37,7 +36,7 @@ export const MainInner = styled.div`
 export const ImgBox = styled.div`
   width: 53.5rem;
   height: 41.5625rem;
-  margin-right: 92px;
+  margin-right: 5.75rem;
 
   img {
     height: 100%;
@@ -47,7 +46,7 @@ export const ImgBox = styled.div`
 
 export const SvgBox = styled.div`
   text-align: end;
-  transform: translateX(12.5rem);
+  transform: translateX(8.0625rem);
 `;
 
 //띠
