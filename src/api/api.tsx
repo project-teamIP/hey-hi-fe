@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
 import { MemoEditType, SignupInformationData } from "../types/types";
 import { LoginInformationData } from "../types/types";
 import { UserInfoType } from "../types/user";
+import { deleteToken } from "../utils/deleteToken";
 
 // Axios 인스턴스 생성
 export const instance: AxiosInstance = axios.create({
@@ -42,7 +43,7 @@ instance.interceptors.request.use(
     if (process.env.NODE_ENV === "development") {
       console.log("요청 완료", config);
     }
-
+    console.log(refresh_token);
     return config;
   },
   function (error: AxiosError) {
@@ -74,15 +75,19 @@ instance.interceptors.response.use(
             refresh_token,
             access_token,
           });
-          const newAccessToken = refreshResponse.headers.accesstoken;
-          console.log(newAccessToken);
-          console.log(refreshResponse);
 
-          if (error.config) {
-            const newConfig = { ...error.config };
-            addTokenToHeaders(newConfig, newAccessToken, "AccessToken");
-            return instance.request(newConfig);
-          }
+          const newAccessToken = refreshResponse.headers.accesstoken;
+
+          // 기존의 만료된 액세스 토큰을 삭제
+          deleteToken("access_token");
+
+          // 새로운 액세스 토큰을 쿠키에 저장
+          document.cookie = `access_token=${newAccessToken}; path=/;`;
+
+          const newConfig = { ...error.config };
+          addTokenToHeaders(newConfig, newAccessToken, "AccessToken");
+
+          return instance.request(newConfig);
         } catch (refreshError) {
           console.log("액세스 토큰 재발급 실패", refreshError);
         }
