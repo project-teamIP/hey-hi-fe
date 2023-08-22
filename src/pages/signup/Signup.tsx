@@ -6,19 +6,21 @@ import SlideThree from "../../components/common/signup/SlideThree";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { userRegister } from "../../api/api";
+import { UserData } from "../../types/types";
 
 const Signup = () => {
   // useState
   const [slideIndex, setSlideIndex] = useState<number>(0);
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<UserData>({
     loginId: "",
     password: "",
     nickname: "",
     country: "",
     gender: "",
     language: "",
-    interest: "",
+    interests: [],
   });
+
   // Mutation
   const userRegisterMutation = useMutation(userRegister);
 
@@ -59,6 +61,7 @@ const Signup = () => {
     userRegisterMutation.mutate(userData);
     navigate("/login");
   };
+
   return (
     <S.Wrap>
       {/* 회원가입 스탭 */}

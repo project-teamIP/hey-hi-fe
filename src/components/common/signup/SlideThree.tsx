@@ -7,26 +7,34 @@ import interests from "../../../utils/interests.json";
 
 const SlideThree = ({ userData, setUserData, onClickUserRegisterHandler }: SlideProps) => {
   // useState
-  const [selectedInterest, setSelectedInterest] = useState("");
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
   // handler
   const handleInterestClick = (selectedInterest: string) => {
-    // 관심사 선택 시 호출되는 핸들러 함수
+    const updatedInterests = selectedInterests.includes(selectedInterest)
+      ? selectedInterests.filter((interest) => interest !== selectedInterest)
+      : selectedInterests.length < 4 // 최대 4개까지 선택 가능
+      ? [...selectedInterests, selectedInterest]
+      : selectedInterests; // 4개 초과 선택 방지
+
+    setSelectedInterests(updatedInterests);
+    // 선택된 관심사로 사용자 데이터 업데이트
     setUserData((prevUserData) => ({
       ...prevUserData,
-      interest: selectedInterest,
+      interests: updatedInterests,
     }));
-    setSelectedInterest(selectedInterest);
   };
 
   // 관심사 선택시 버튼 활성화
-  const isFormValid = selectedInterest !== "";
+  const isFormValid = selectedInterests.length === 4;
 
+  console.log(selectedInterests);
   return (
     <S.Wrap>
       {/* 관심사 */}
       <S.NameContainer>
         <S.Title>관심사</S.Title>
-        <S.Count>1/4</S.Count>
+        <S.Count>{selectedInterests.length}/4</S.Count>
       </S.NameContainer>
 
       {/* 관심사 컨테이너 */}
@@ -38,7 +46,7 @@ const SlideThree = ({ userData, setUserData, onClickUserRegisterHandler }: Slide
             interest={interest.name}
             image={interest.image}
             onClick={() => handleInterestClick(interest.name)}
-            selected={selectedInterest === interest.name}
+            selected={selectedInterests.includes(interest.name)}
           />
         ))}
       </S.CategoriContainer>
