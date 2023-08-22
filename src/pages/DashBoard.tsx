@@ -54,7 +54,6 @@ const DashboardContainer = styled.div`
   align-items: start;
   display: flex;
   position: absolute;
-  height: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
