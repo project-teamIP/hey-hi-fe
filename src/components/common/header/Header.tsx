@@ -33,7 +33,7 @@ const Header = () => {
 
   //로그인 상태 따라 버튼 변경
   const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
-  console.log("로그인상태", state);
+  // console.log("로그인상태", state);
 
   return (
     <S.HeaderBox ismainpage={isMainPage}>

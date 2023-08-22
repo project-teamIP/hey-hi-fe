@@ -6,15 +6,15 @@ interface CustomArrowProps {
 }
 
 const CustomPrevArrow: React.FC<CustomArrowProps> = () => (
-  <div className="custom-prev-arrow">
+  <S.CustomArrow style={{ left: "0" }}>
     <img src={require(`../../../assets/images/main/chevron_left.png`)} alt="left-arrow" />
-  </div>
+  </S.CustomArrow>
 );
 
 const CustomNextArrow: React.FC<CustomArrowProps> = () => (
-  <div className="custom-next-arrow">
+  <S.CustomArrow style={{ right: "0" }}>
     <img src={require(`../../../assets/images/main/chevron_right.png`)} alt="right-arrow" />
-  </div>
+  </S.CustomArrow>
 );
 
 export { CustomPrevArrow, CustomNextArrow };

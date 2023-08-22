@@ -6,16 +6,17 @@ interface IconProps {
 
 // 전체 레이아웃
 export const Wrap = styled.div`
-  top: -12%;
-  left: -12%;
-  width: 2000px;
-  height: 1000px;
+  top: -10%;
+  left: -10%;
+  width: 120vw;
+  height: 120vh;
   /* 급하게 바꿈 */
   display: flex;
   position: fixed;
   align-items: center;
-  /* width: 100vw; */
-  /* height: 100vh; */
+  justify-content: center;
+  /* width: 100vw;
+  height: 100vh; */
 
   background: rgb(160, 160, 160, 0.8);
   z-index: 2;
@@ -28,7 +29,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 540px;
-  margin: 0 auto;
+  margin: 0px auto;
   padding: 50px 23px 42px;
   border-radius: 30px;
   background: #ffffff;

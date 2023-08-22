@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import * as S from "./style";
 import DashBoardBox from "../DashBoardBox";
 import InterestSelect from "./InterestSelect";
-import { format } from "date-fns";
 import { useQuery } from "react-query";
 import { Line } from "react-chartjs-2";
 import {
@@ -30,13 +29,9 @@ ChartJS.register(
 );
 
 const Interest: React.FC = () => {
-  const { data: onlineUsersData, error: onlineUsersError } = useQuery(
-    "onlineUsers",
-    fetchOnlineUsers,
-    {
-      refetchInterval: 60000, // 1분마다 데이터갱신
-    }
-  );
+  const { data: onlineUsersData } = useQuery("onlineUsers", fetchOnlineUsers, {
+    refetchInterval: 60000, // 1분마다 데이터갱신
+  });
   const [chartData, setChartData] = useState({
     labels: Array.from({ length: 24 }, (_, index) => index.toString()),
     datasets: [
