@@ -74,7 +74,7 @@ instance.interceptors.response.use(
             refresh_token,
             access_token,
           });
-          const newAccessToken = refreshResponse.headers.AccessToken;
+          const newAccessToken = refreshResponse.headers.accesstoken;
           console.log(newAccessToken);
           console.log(refreshResponse);
 
