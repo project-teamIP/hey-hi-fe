@@ -54,3 +54,14 @@ export type MemoEditType = {
   title: string;
   content: string;
 };
+
+// 유저정보
+export interface UserInfoType {
+  nickname: string;
+  loginId: string;
+  language: string;
+  interests: string[];
+  image: string;
+  country: string;
+  cleanPoint: number;
+}
