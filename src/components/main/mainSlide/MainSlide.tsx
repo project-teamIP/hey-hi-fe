@@ -53,7 +53,7 @@ const MainSlide = () => {
 
   return (
     <S.MainSlideBox>
-      <S.SectionNum>02</S.SectionNum>
+      <S.SectionNum>HOW</S.SectionNum>
       <h2>헤이,안녕 이용방법</h2>
       <S.MainSlideInner>
         <S.ProgressBar>

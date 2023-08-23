@@ -3,34 +3,35 @@ import { colors } from "../../../assets/styles/colors";
 
 export const MainSlideBox = styled.div`
   width: 100%;
-  height: 1291px;
+  height: 1131px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: ${colors.blue};
 
   h2 {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 700;
     width: fit-content;
-    height: 171px;
     line-height: 53px;
     text-align: center;
-    margin: 21px 0 69px 0;
+    margin: 21px 0 76px 0;
     color: white;
   }
 `;
 
 export const SectionNum = styled.div`
-  width: 36px;
-  height: 23px;
-  border-radius: 11.5px;
-  background-color: black;
+  width: 70px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: #000;
+  color: #fff;
+  font-size: 13px;
   text-align: center;
-  line-height: 26px;
-  font-weight: 400;
-  margin-top: 101px;
-  color: white;
+  letter-spacing: 0.52px;
+  font-weight: 700;
+  padding: 10px 0;
+  margin-top: 82px;
 `;
 
 export const MainSlideInner = styled.div`

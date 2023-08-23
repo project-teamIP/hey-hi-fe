@@ -37,12 +37,13 @@ export const SectionNum = styled.div`
   height: 30px;
   border-radius: 50px;
   background-color: #ff6e46;
-  text-align: center;
+  color: #fff;
   font-size: 13px;
+  text-align: center;
+  letter-spacing: 0.52px;
   font-weight: 700;
-  margin-top: 87px;
-  color: white;
-  padding: 8px 0;
+  padding: 11px 0;
+  margin-top: 91px;
 `;
 
 export const ReviewWrapper = styled.div`

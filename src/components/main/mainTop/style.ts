@@ -21,21 +21,22 @@ export const MainInner = styled.div`
 
   h1 {
     font-size: 60px;
-    font-weight: 600;
+    font-weight: 800;
+    margin-bottom: 62px;
   }
 
   p {
-    margin-top: 68px;
     font-size: 18px;
-    font-weight: 400;
-    width: 400px;
-    height: 148px;
+    font-weight: 500;
+    letter-spacing: -0.36px;
+    line-height: 140%;
+    margin-bottom: 68px;
   }
 `;
 
 export const ImgBox = styled.div`
-  width: 53.5rem;
-  height: 41.5625rem;
+  width: 63.3125rem;
+  height: 53.75rem;
   margin-right: 5.75rem;
 
   img {
