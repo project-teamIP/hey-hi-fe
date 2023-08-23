@@ -50,17 +50,19 @@ const Header = () => {
               />
             </svg>
           </Link>
-          <ul>
-            <li>
-              <S.StyledLink to="/dashboard">home</S.StyledLink>
-            </li>
-            <li>
-              <S.StyledLink to="/mypage">my page</S.StyledLink>
-            </li>
-            <li>
-              <S.StyledLink to="/">FAQ</S.StyledLink>
-            </li>
-          </ul>
+          {state ? (
+            <ul>
+              <li>
+                <S.StyledLink to="/dashboard">home</S.StyledLink>
+              </li>
+              <li>
+                <S.StyledLink to="/mypage">my page</S.StyledLink>
+              </li>
+              <li>
+                <S.StyledLink to="/">FAQ</S.StyledLink>
+              </li>
+            </ul>
+          ) : null}
         </S.Nav>
         {state ? (
           <div>
