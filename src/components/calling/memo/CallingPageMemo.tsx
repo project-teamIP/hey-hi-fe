@@ -21,7 +21,7 @@ const CallingPageMemo: React.FC<MemoProps> = ({ nickname, shouldSubmit }) => {
   const [titleLength, setTitleLength] = useState(0);
   const [contentLength, setContentLength] = useState(0); // 글자 수 상태
 
-  const memoTitleChangeHandler = useCallback((e) => {
+  const memoTitleChangeHandler = useCallback((e: any) => {
     setTitle(e.target.value);
     if (e.target.value.length > 20) {
       setTitleError("제목은 20자 이내로 입력 가능합니다.");
@@ -34,7 +34,7 @@ const CallingPageMemo: React.FC<MemoProps> = ({ nickname, shouldSubmit }) => {
     }
   }, []);
 
-  const memoContentChangeHandler = useCallback((e) => {
+  const memoContentChangeHandler = useCallback((e: any) => {
     setContent(e.target.value);
     if (e.target.value.length > 1500) {
       setContentError("내용은 1500자 이내로 입력 가능합니다.");
@@ -83,6 +83,7 @@ const CallingPageMemo: React.FC<MemoProps> = ({ nickname, shouldSubmit }) => {
 
   useEffect(() => {
     if (shouldSubmit) {
+      // @ts-ignore
       handleSubmit();
     }
   }, [shouldSubmit]);
