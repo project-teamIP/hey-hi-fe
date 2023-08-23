@@ -25,7 +25,7 @@ const MyInterestSelect = ({ MatchingUserData }: MatchingUserProps) => {
           interest={interest.name} // interest 값 전달
           image={interest.image} // image 값 전달
           className={`box-color-${index % 4}`}
-          customSize="callroom"
+          customSize="dashboard"
         />
       ))}
     </>
