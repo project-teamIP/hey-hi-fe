@@ -124,3 +124,38 @@ export const BtnPosition = styled.div`
   text-align: end;
   margin-top: -40px;
 `;
+
+/* checkbox */
+export const CheckboxWrapper = styled.label`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    margin-right: 8px;
+    cursor: pointer;
+
+    &:checked {
+      background-color: #007bff;
+      border: 2px solid #007bff;
+    }
+
+    &:checked::before {
+      content: "\u2713"; /* 체크 마크 표시 (유니코드) */
+      display: block;
+      text-align: center;
+      font-size: 20px;
+      color: white;
+    }
+  }
+`;

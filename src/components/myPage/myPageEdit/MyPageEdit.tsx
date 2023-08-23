@@ -19,7 +19,7 @@ const MyPageEdit = () => {
     nickname: "",
     country: "",
     language: "",
-    interest: "",
+    interests: [] as string[],
   });
 
   //0. 로그인된 사용자 정보 조회
@@ -31,11 +31,30 @@ const MyPageEdit = () => {
         nickname: user.nickname,
         country: user.country,
         language: user.language,
-        interest: user.interest,
+        interests: user.interests,
       });
+      setSelectedInterests(user.interests);
     }
   }, [user]);
 
+  // 관심사 다중 선택
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
+  // 관심사 핸들러
+  const onChangeInterestsHandler = (interest: string) => {
+    if (selectedInterests.includes(interest)) {
+      // 이미 선택된 경우 -> 선택 해제
+      setSelectedInterests((prevInterests) => prevInterests.filter((item) => item !== interest));
+    } else {
+      // 선택되지 않은 경우 -> 선택 (최대 4개까지)
+      if (selectedInterests.length < 4) {
+        setSelectedInterests((prevInterests) => [...prevInterests, interest]);
+      } else {
+        // 이미 4개를 선택한 경우
+        alert("관심사는 최대 4개까지 선택할 수 있습니다.");
+      }
+    }
+  };
   //1. 프로필 이미지 뮤테이션
   const imgChangeMutation = useMutation(changeProfileImg, {
     onSuccess: (data) => {
@@ -102,7 +121,17 @@ const MyPageEdit = () => {
 
   // 수정
   const onSubmitUserInfo = () => {
-    userInfoChangeMutation.mutate(userInfo);
+    if (selectedInterests.length === 0) {
+      alert("1개 이상의 관심사를 선택해주세요.");
+      return;
+    }
+
+    const updatedUserInfo = {
+      ...userInfo,
+      interests: selectedInterests,
+    };
+
+    userInfoChangeMutation.mutate(updatedUserInfo);
   };
 
   // 로딩중 스피너 설정
@@ -195,16 +224,15 @@ const MyPageEdit = () => {
               <label htmlFor="interests">관심사</label>
               <S.RadioGroup>
                 {interests.map((interest) => (
-                  <S.RadioButton key={interest.name} isselected={user.interest === interest.name}>
+                  <S.CheckboxWrapper key={interest.name}>
                     <input
-                      type="radio"
-                      name="interest"
-                      value={interest.name}
-                      checked={userInfo.interest === interest.name}
-                      onChange={() => setUserInfo({ ...userInfo, interest: interest.name })}
+                      type="checkbox"
+                      id={interest.name}
+                      checked={selectedInterests.includes(interest.name)}
+                      onChange={() => onChangeInterestsHandler(interest.name)}
                     />
-                    {interest.name}
-                  </S.RadioButton>
+                    <label htmlFor={interest.name}>{interest.name}</label>
+                  </S.CheckboxWrapper>
                 ))}
               </S.RadioGroup>
             </S.FormGroup>
