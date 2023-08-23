@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const CategoriContainer = styled.div`
   display: flex;
@@ -57,24 +57,6 @@ export const Name = styled.div`
   font-weight: 500;
 `;
 
-// export const InterestBox = styled.div`
-//   border: 1px solid #d8dee9;
-//   background-color: #f8f9fc;
-//   width: 177px;
-//   height: 134px;
-//   border-radius: 30px;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   gap: 10px;
-//   align-items: center;
-
-//   p {
-//     font-size: 15px;
-//     font-weight: 600;
-//   }
-// `;
-
 export const InterestBoxContainer = styled.div`
   /* background-color: green; */
   margin-top: 30px;
@@ -85,34 +67,23 @@ export const InterestBoxContainer = styled.div`
 `;
 
 export const InterestWrapper = styled.div`
-  margin: 46px 30px 10px 30px;
-  /* margin-left: 30px; */
+  margin: 46px auto;
   gap: 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  /* background-color: green; */
+  align-items: center;
+  width: 100%;
+  height: 45%;
   h3 {
     font-size: 20px;
     font-weight: 600;
+    text-align: left;
     line-height: 23.87px;
+    width: 82%;
   }
 `;
 
-// export const ImageBox = styled.div`
-//   width: 54px;
-//   height: 54px;
-
-//   img {
-//     max-width: 100%;
-//     height: auto;
-//     size: cover;
-//     top: 0;
-//     left: 0;
-//   }
-// `;
-
-export const ChartBox = styled.div`
+export const ChartContainer = styled.div`
   height: 100%;
   h3 {
     font-size: 20px;
@@ -120,4 +91,23 @@ export const ChartBox = styled.div`
     margin-bottom: 40px;
     line-height: 23.87px;
   }
+`;
+
+export const ChartBox = styled.div`
+  display: flex;
+  width: 389px;
+  height: 268px;
+  border-radius: 30px;
+  border: 1px solid #d8dee9;
+  background: #f8f9fc;
+  align-items: center;
+`;
+
+export const InterestArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0px auto;
+  width: 100%;
 `;
