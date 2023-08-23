@@ -17,32 +17,23 @@ export const CategoriStyle = styled.div`
   background: #ffffff;
   cursor: pointer;
   /* 클래스 이름에 따라서 배경색을 설정하기 위한 mixin */
-  ${(props) =>
-    props.className === "box-color-0" &&
-    css`
-      background-color: #f8f9fc; /* 예시 색상 1 */
-    `}
+  &.box-color-0 {
+    background-color: #f8f9fc; /* 예시 색상 1 */
+  }
 
-  ${(props) =>
-    props.className === "box-color-1" &&
-    css`
-      background-color: #004bc8; /* 예시 색상 2 */
-      color: #fff;
-    `}
+  &.box-color-1 {
+    background-color: #004bc8; /* 예시 색상 2 */
+    color: #fff;
+  }
 
-  ${(props) =>
-    props.className === "box-color-2" &&
-    css`
-      background-color: #000000; /* 예시 색상 3 */
-      color: #fff;
-    `}
+  &.box-color-2 {
+    background-color: #000000; /* 예시 색상 3 */
+    color: #fff;
+  }
 
-  ${(props) =>
-    props.className === "box-color-3" &&
-    css`
-      background-color: #ff6e46; /* 예시 색상 4 */
-    `}
-
+  &.box-color-3 {
+    background-color: #ff6e46; /* 예시 색상 4 */
+  }
   &.dashboard {
     width: 169px;
     height: 121px;
