@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const CategoriContainer = styled.div`
   display: flex;
@@ -14,10 +14,36 @@ export const CategoriStyle = styled.div`
   justify-content: center;
   width: 198px;
   height: 101px;
-  border: none;
+  border: 1px solid #d8dee9;
   border-radius: 15px;
   background: #ffffff;
   cursor: pointer;
+
+  ${(props) =>
+    props.className === "box-color-0" &&
+    css`
+      background-color: #f8f9fc; /* 예시 색상 1 */
+    `}
+
+  ${(props) =>
+    props.className === "box-color-1" &&
+    css`
+      background-color: #004bc8; /* 예시 색상 2 */
+      color: #fff;
+    `}
+
+  ${(props) =>
+    props.className === "box-color-2" &&
+    css`
+      background-color: #000000; /* 예시 색상 3 */
+      color: #fff;
+    `}
+
+  ${(props) =>
+    props.className === "box-color-3" &&
+    css`
+      background-color: #ff6e46; /* 예시 색상 4 */
+    `}
 `;
 
 export const Image = styled.div`

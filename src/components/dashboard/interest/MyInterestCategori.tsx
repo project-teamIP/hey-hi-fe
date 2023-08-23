@@ -1,12 +1,7 @@
-import * as S from "../../dashboard/interest/style";
+import * as S from "./style";
 import { CallRoomCategoriProps } from "../../../types/types";
 
-const MatchingUserCategori = ({
-  interest,
-  image,
-  className,
-  customSize,
-}: CallRoomCategoriProps) => {
+const MyInterestCategori = ({ interest, image, className, customSize }: CallRoomCategoriProps) => {
   const combinedClassName = `${className} ${customSize}`;
   return (
     <S.CategoriStyle className={combinedClassName}>
@@ -18,4 +13,4 @@ const MatchingUserCategori = ({
   );
 };
 
-export default MatchingUserCategori;
+export default MyInterestCategori;
