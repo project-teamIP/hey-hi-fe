@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import * as S from "./style";
-import styled from "styled-components";
 import instance from "../../../api/api";
-import axios from "axios";
-import { useQuery } from "react-query";
 
 interface MemoProps {
   // onSubmit: () => void;

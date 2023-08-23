@@ -84,4 +84,6 @@ export interface MatchingUserProps {
 export type CallRoomCategoriProps = {
   interest: string;
   image: string;
+  className?: string;
+  size?: "dashboard" | "callroom";
 };

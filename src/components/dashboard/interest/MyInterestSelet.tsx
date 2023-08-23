@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { MatchingUserProps } from "../../../types/types";
 import interests from "../../../utils/interests.json";
-import MatchingUserCategori from "./MatchingUserCategori";
+import MyInterestCategori from "./MyInterestCategori";
 
-const MatchingUserInterest = ({ MatchingUserData }: MatchingUserProps) => {
+const MyInterestSelect = ({ MatchingUserData }: MatchingUserProps) => {
   console.log("MatchingUserData", MatchingUserData);
   const filteredInterests = useRef<{ name: string; image: string }[]>([]);
 
@@ -20,14 +20,14 @@ const MatchingUserInterest = ({ MatchingUserData }: MatchingUserProps) => {
   return (
     <>
       {filteredInterests.current.map((interest, index) => (
-        <MatchingUserCategori
+        <MyInterestCategori
           key={index}
           interest={interest.name} // interest 값 전달
           image={interest.image} // image 값 전달
-          className={`box-color-${index % 4}`}
+          className={`box-color-${index % 4}`} // 클래스 이름을 동적으로 설정
         />
       ))}
     </>
   );
 };
-export default MatchingUserInterest;
+export default MyInterestSelect;
