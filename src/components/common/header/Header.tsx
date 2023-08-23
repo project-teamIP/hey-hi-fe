@@ -11,7 +11,7 @@ import { getUserInfo } from "../../../api/api";
 const Header = () => {
   //유저 정보
   // const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
-  const { data, isLoading, refetch } = useQuery("userInfo", () => getUserInfo(), {
+  const { data, refetch } = useQuery("userInfo", () => getUserInfo(), {
     enabled: false, // 초기 데이터 가져오기를 수동으로 트리거하도록 설정
   });
 
