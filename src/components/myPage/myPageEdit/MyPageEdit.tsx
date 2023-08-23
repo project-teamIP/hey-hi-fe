@@ -19,8 +19,11 @@ const MyPageEdit = () => {
     nickname: "",
     country: "",
     language: "",
-    interest: "",
+    interests: [] as string[],
   });
+
+  // 관심사 다중 선택
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
   //0. 로그인된 사용자 정보 조회
   const { data: user, isLoading } = useQuery("myInfo", getUserInfo);
@@ -31,10 +34,27 @@ const MyPageEdit = () => {
         nickname: user.nickname,
         country: user.country,
         language: user.language,
-        interest: user.interest,
+        interests: user.interests,
       });
+      setSelectedInterests(user.interests);
     }
   }, [user]);
+
+  // 관심사 핸들러
+  const onChangeInterestsHandler = (interest: string) => {
+    if (selectedInterests.includes(interest)) {
+      // 이미 선택된 경우 -> 선택 해제
+      setSelectedInterests((prevInterests) => prevInterests.filter((item) => item !== interest));
+    } else {
+      // 선택되지 않은 경우 -> 선택 (최대 4개까지)
+      if (selectedInterests.length < 4) {
+        setSelectedInterests((prevInterests) => [...prevInterests, interest]);
+      } else {
+        // 이미 4개를 선택한 경우
+        alert("관심사는 최대 4개까지 선택할 수 있습니다.");
+      }
+    }
+  };
 
   //1. 프로필 이미지 뮤테이션
   const imgChangeMutation = useMutation(changeProfileImg, {
@@ -100,9 +120,19 @@ const MyPageEdit = () => {
     }
   };
 
-  // 수정
+  // 3-1. 계정 정보 수정 submit
   const onSubmitUserInfo = () => {
-    userInfoChangeMutation.mutate(userInfo);
+    if (selectedInterests.length === 0) {
+      alert("1개 이상의 관심사를 선택해주세요.");
+      return;
+    }
+
+    const updatedUserInfo = {
+      ...userInfo,
+      interests: selectedInterests,
+    };
+    console.log("관심사", userInfo, selectedInterests, updatedUserInfo);
+    userInfoChangeMutation.mutate(updatedUserInfo);
   };
 
   // 로딩중 스피너 설정
@@ -149,9 +179,9 @@ const MyPageEdit = () => {
           </S.ProfileTop>
           <form>
             <S.FormGroup>
-              <label htmlFor="nickname">
+              <S.FormLabel htmlFor="nickname">
                 닉네임 {nickNameCheckMutation.isSuccess && <span>사용 가능한 닉네임입니다.</span>}
-              </label>
+              </S.FormLabel>
               <S.Gap>
                 <Input
                   value={userInfo.nickname}
@@ -168,11 +198,11 @@ const MyPageEdit = () => {
               </S.Gap>
             </S.FormGroup>
             <S.FormGroup>
-              <label htmlFor="email">이메일</label>
+              <S.FormLabel htmlFor="email">이메일</S.FormLabel>
               <S.EmailReadOnly>{user.loginId}</S.EmailReadOnly>
             </S.FormGroup>
             <S.FormGroup>
-              <label htmlFor="country">거주국가</label>
+              <S.FormLabel htmlFor="country">거주국가</S.FormLabel>
               <Select
                 label={user.country}
                 options={countries}
@@ -182,7 +212,7 @@ const MyPageEdit = () => {
               />
             </S.FormGroup>
             <S.FormGroup>
-              <label htmlFor="country">사용언어</label>
+              <S.FormLabel htmlFor="country">사용언어</S.FormLabel>
               <Select
                 label={user.language}
                 options={["한국어", "English"]}
@@ -192,21 +222,24 @@ const MyPageEdit = () => {
               />
             </S.FormGroup>
             <S.FormGroup>
-              <label htmlFor="interests">관심사</label>
-              <S.RadioGroup>
+              <S.FormLabel htmlFor="interests">관심사</S.FormLabel>
+              <S.CheckBoxGroup>
                 {interests.map((interest) => (
-                  <S.RadioButton key={interest.name} isselected={user.interest === interest.name}>
+                  <S.SingleCheckbox key={interest.name}>
                     <input
-                      type="radio"
-                      name="interest"
-                      value={interest.name}
-                      checked={userInfo.interest === interest.name}
-                      onChange={() => setUserInfo({ ...userInfo, interest: interest.name })}
+                      type="checkbox"
+                      id={interest.name}
+                      checked={selectedInterests.includes(interest.name)}
+                      onChange={() => onChangeInterestsHandler(interest.name)}
                     />
-                    {interest.name}
-                  </S.RadioButton>
+                    <label
+                      className={selectedInterests.includes(interest.name) ? "selected" : ""}
+                      htmlFor={interest.name}>
+                      {interest.name}
+                    </label>
+                  </S.SingleCheckbox>
                 ))}
-              </S.RadioGroup>
+              </S.CheckBoxGroup>
             </S.FormGroup>
             <S.BtnPosition>
               <Button.Primary size="the smallest" bc="#FF6E46" onClick={onSubmitUserInfo}>
