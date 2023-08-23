@@ -24,7 +24,8 @@ const MyInterestSelect = ({ MatchingUserData }: MatchingUserProps) => {
           key={index}
           interest={interest.name} // interest 값 전달
           image={interest.image} // image 값 전달
-          className={`box-color-${index % 4}`} // 클래스 이름을 동적으로 설정
+          className={`box-color-${index % 4}`}
+          customSize="callroom"
         />
       ))}
     </>

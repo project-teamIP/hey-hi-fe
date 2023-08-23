@@ -43,25 +43,14 @@ export const CategoriStyle = styled.div`
       background-color: #ff6e46; /* 예시 색상 4 */
     `}
 
-  ${({ size }) => {
-    switch (size) {
-      case "dashboard":
-        return css`
-          width: 169px;
-          height: 121px;
-        `;
-      case "callroom":
-        return css`
-          width: 198px;
-          height: 101px;
-        `;
-      default:
-        return css`
-          width: 198px;
-          height: 101px;
-        `;
-    }
-  }}
+  &.dashboard {
+    width: 169px;
+    height: 121px;
+  }
+  &.callroom {
+    width: 198px;
+    height: 101px;
+  }
 `;
 
 export const Image = styled.div`
