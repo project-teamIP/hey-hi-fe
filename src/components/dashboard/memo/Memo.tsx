@@ -4,6 +4,7 @@ import instance from "../../../api/api";
 import { useQuery } from "react-query";
 import { DashboardMemosType } from "../../../types/user";
 import * as S from "./style";
+import noMemoPath from "../../../assets/images/noMemo.svg";
 
 const Memo = () => {
   const { data: memoData, error } = useQuery<DashboardMemosType[], Error>(
@@ -54,7 +55,12 @@ const Memo = () => {
               return null; // 3보다 큰 인덱스는 렌더링하지 않음
             })
           ) : (
-            <p>메모 데이터가 없습니다.</p>
+            <S.NoMemoWrapper>
+              <S.NoMemoBox>
+                <img style={{ width: "100%" }} src={noMemoPath} alt="noMemo" />
+                <p>아직 작성된 메모가 없어요</p>
+              </S.NoMemoBox>
+            </S.NoMemoWrapper>
           )}
         </S.TextBoxGroup>
       </S.TextContainer>

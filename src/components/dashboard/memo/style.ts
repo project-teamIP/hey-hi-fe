@@ -82,3 +82,27 @@ export const WordGroup = styled.div`
     line-height: 15.51px;
   }
 `;
+
+export const NoMemoWrapper = styled.div`
+  padding-top: 30px;
+  width: 100%;
+  height: 100%;
+`;
+
+export const NoMemoBox = styled.div`
+  margin-top: 20px;
+  margin: 0 auto;
+  width: 25%;
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    margin-top: 33px;
+    color: #aeaeae;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+    line-height: normal;
+  }
+`;

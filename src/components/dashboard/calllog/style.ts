@@ -129,3 +129,17 @@ export const CallLogMatchingUserInfo = styled.div`
     line-height: 140%;
   }
 `;
+
+export const NoCallLogBox = styled.div`
+  margin-top: 20px;
+  width: 35%;
+  height: 35%;
+  p {
+    margin-top: 33px;
+    color: #aeaeae;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+    line-height: normal;
+  }
+`;

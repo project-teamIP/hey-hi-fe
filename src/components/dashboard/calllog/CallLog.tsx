@@ -4,6 +4,7 @@ import * as S from "./style";
 import svgPath from "../../../assets/images/more_SVG.svg";
 import { CallLogInfo } from "./style";
 import { getDashboardData } from "../../../api/api";
+import noCallLogPath from "../../../assets/images/noCallLog.svg";
 
 const CallLog: React.FC = () => {
   const [callLogData, setCallLogData] = useState<CallLogInfo[]>([]); // 빈 배열로 초기화
@@ -78,7 +79,12 @@ const CallLog: React.FC = () => {
               return null; // 3보다 큰 인덱스는 렌더링하지 않음
             })
           ) : (
-            <p>메모 데이터가 없습니다.</p>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <S.NoCallLogBox>
+                <img style={{ width: "100%" }} src={noCallLogPath} alt="noCallLog" />
+                <p>아직 통화기록이 없어요</p>
+              </S.NoCallLogBox>
+            </div>
           )}
         </S.CallLogContainer>
       </S.CallLogWrapper>

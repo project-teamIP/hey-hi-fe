@@ -1,0 +1,24 @@
+<svg width="209" height="150" viewBox="0 0 209 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_1352_1957" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="93" y="17" width="98" height="98">
+<circle cx="142.427" cy="66.4273" r="48.5" transform="rotate(30.576 142.427 66.4273)" fill="#004BC8"/>
+</mask>
+<g mask="url(#mask0_1352_1957)">
+<rect x="74.8496" y="47.0234" width="140.612" height="95.4961" transform="rotate(30.576 74.8496 47.0234)" fill="#FFE4DC"/>
+</g>
+<rect x="45.3145" y="1.75" width="37.2667" height="52.3166" rx="15" transform="rotate(60 45.3145 1.75)" fill="#D8DEE9"/>
+<rect x="96.9141" y="91.125" width="37.2667" height="52.3166" rx="15" transform="rotate(60 96.9141 91.125)" fill="#D8DEE9"/>
+<rect x="23.5859" y="14.2969" width="140.467" height="27.2333" rx="13.6167" transform="rotate(60 23.5859 14.2969)" fill="#D8DEE9"/>
+<mask id="mask1_1352_1957" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="6" width="106" height="139">
+<rect x="45.9316" y="1.39062" width="37.2667" height="52.3166" rx="15" transform="rotate(60 45.9316 1.39062)" fill="#D8DEE9"/>
+<rect x="97.5312" y="90.7656" width="37.2667" height="52.3166" rx="15" transform="rotate(60 97.5312 90.7656)" fill="#D8DEE9"/>
+<rect x="24.2031" y="13.9375" width="140.467" height="27.2333" rx="13.6167" transform="rotate(60 24.2031 13.9375)" fill="#D8DEE9"/>
+</mask>
+<g mask="url(#mask1_1352_1957)">
+<rect x="53.5352" y="-48.5078" width="206.4" height="50.8833" transform="rotate(60 53.5352 -48.5078)" fill="#004BC8"/>
+</g>
+<circle cx="103.207" cy="27.207" r="22.207" fill="#FF6E46"/>
+<path d="M92.8223 16.4609L114.313 37.9516" stroke="black" stroke-width="3"/>
+<path d="M113.238 16.4609L91.7476 37.9516" stroke="black" stroke-width="3"/>
+<path d="M21.355 92.7411L25.1609 112.293L6.32576 105.813L21.355 92.7411Z" fill="black"/>
+<path d="M158.789 17L183.137 30.6689L152.292 28.5727L175.296 44.636L142.659 45.7321L163.646 65.387C151.784 67.9995 128.531 73.279 130.414 73.4963C132.296 73.7136 150.401 78.0692 159.218 80.2199L115.999 93.22L152.711 101.234" stroke="#D14A00" stroke-width="3" stroke-linecap="square"/>
+</svg>
