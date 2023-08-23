@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import DashBoardBox from "../DashBoardBox";
 import * as S from "./style";
 import svgPath from "../../../assets/images/more_SVG.svg";
-import instance from "../../../api/api";
-import styled from "styled-components";
 import { CallLogInfo } from "./style";
-const CallLog = () => {
+import { getDashboardData } from "../../../api/api";
+
+const CallLog: React.FC = () => {
   const [callLogData, setCallLogData] = useState<CallLogInfo[]>([]); // 빈 배열로 초기화
   const [callLogInfo, setCallLogInfo] = useState<CallLogInfo>({
     image: "",
@@ -15,13 +15,13 @@ const CallLog = () => {
     date: "",
   });
 
-  console.log("callLogData", callLogData);
+  // console.log("callLogData", callLogData);
 
   // 대시보드 정보 조회
   const getCallLogInfo = async () => {
     try {
-      const response = await instance.get(`/api/users/dashboard`);
-      const callLogData = response.data.matchRoomInfos;
+      const data = await getDashboardData();
+      const callLogData = data.matchRoomInfos;
       setCallLogData(callLogData); // callLogData를 상태에 저장
     } catch (error) {
       console.error("dashboard 조회 오류", error);

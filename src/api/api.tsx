@@ -289,3 +289,13 @@ export const fetchOnlineUsers = async () => {
   const response = await instance.get("/api/users/count");
   return response.data;
 };
+
+//대시보드 조회
+export const getDashboardData = async () => {
+  try {
+    const response = await instance.get(`/api/users/dashboard`);
+    return response.data;
+  } catch (error) {
+    console.log("dashboard 조회 오류", error);
+  }
+};
