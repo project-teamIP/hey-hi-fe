@@ -1,7 +1,7 @@
 import * as S from "../../dashboard/interest/style";
 import { CallRoomCategoriProps } from "../../../types/types";
 
-const MatchingUserCategori = ({ interest, image, className }: CallRoomCategoriProps) => {
+const MatchingUserCategori = ({ interest, image, className, size }: CallRoomCategoriProps) => {
   return (
     <S.CategoriStyle className={className} size="callroom">
       <S.Image>
