@@ -34,7 +34,7 @@ const Header = () => {
   }, [state, refetch]);
 
   return (
-    <S.HeaderBox ismainpage={isMainPage}>
+    <S.HeaderBox $isMainPage={isMainPage}>
       <S.HeaderInner>
         <S.Nav>
           <Link to="/">

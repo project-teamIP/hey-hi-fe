@@ -3,13 +3,13 @@ import { styled } from "styled-components";
 import { colors } from "../../../assets/styles/colors";
 
 interface HeaderBoxProps {
-  ismainpage: boolean;
+  $isMainPage: boolean;
 }
 
 export const HeaderBox = styled.div<HeaderBoxProps>`
   width: 100%;
   height: 70px;
-  background-color: ${({ ismainpage }) => (ismainpage ? colors.header_orange : colors.white)};
+  background-color: ${({ $isMainPage }) => ($isMainPage ? colors.header_orange : colors.white)};
   display: flex;
   justify-content: center;
   align-items: center;
