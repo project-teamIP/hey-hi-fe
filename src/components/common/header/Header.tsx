@@ -11,7 +11,7 @@ import { getUserInfo } from "../../../api/api";
 const Header = () => {
   //유저 정보
   // const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
-  const { data, isLoading, refetch } = useQuery("userInfo", () => getUserInfo(), {
+  const { data, refetch } = useQuery("userInfo", () => getUserInfo(), {
     enabled: false, // 초기 데이터 가져오기를 수동으로 트리거하도록 설정
   });
 
@@ -50,17 +50,19 @@ const Header = () => {
               />
             </svg>
           </Link>
-          <ul>
-            <li>
-              <S.StyledLink to="/dashboard">home</S.StyledLink>
-            </li>
-            <li>
-              <S.StyledLink to="/mypage">my page</S.StyledLink>
-            </li>
-            <li>
-              <S.StyledLink to="/">FAQ</S.StyledLink>
-            </li>
-          </ul>
+          {state ? (
+            <ul>
+              <li>
+                <S.StyledLink to="/dashboard">home</S.StyledLink>
+              </li>
+              <li>
+                <S.StyledLink to="/mypage">my page</S.StyledLink>
+              </li>
+              <li>
+                <S.StyledLink to="/">FAQ</S.StyledLink>
+              </li>
+            </ul>
+          ) : null}
         </S.Nav>
         {state ? (
           <div>
