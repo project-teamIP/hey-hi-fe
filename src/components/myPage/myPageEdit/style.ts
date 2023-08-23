@@ -5,13 +5,13 @@ export const MyPageEditBox = styled.div`
   width: 750px;
   margin-left: 351px;
   margin-top: 87px;
+`;
 
-  label:not(.radio-label) {
-    display: block;
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 16px;
-  }
+export const FormLabel = styled.label`
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
 `;
 
 export const ProfileTop = styled.div`
@@ -50,8 +50,8 @@ export const ImgInput = styled.div`
     cursor: pointer;
   }
 
+  /* 파일 필드 숨기기 */
   input[type="file"] {
-    /* 파일 필드 숨기기 */
     position: absolute;
     width: 1px;
     height: 1px;
@@ -74,6 +74,7 @@ export const ImgInput = styled.div`
     cursor: pointer;
   }
 `;
+
 export const FormGroup = styled.div`
   margin-bottom: 34px;
 `;
@@ -95,67 +96,66 @@ export const EmailReadOnly = styled.div`
   padding: 19px 0 20px 28px;
 `;
 
-export const RadioGroup = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  width: 574px;
-  grid-column-gap: 49px;
-`;
-
-export const RadioButton = styled.label<{ isselected: boolean }>`
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 600;
-  color: #a0a0a0;
-
-  input[type="radio"] {
-    height: 24px;
-    width: 24px;
-  }
-
-  ${({ isselected }) =>
-    isselected &&
-    `
-    font-weight: bold;
-  `}
-`;
-
 export const BtnPosition = styled.div`
   text-align: end;
   margin-top: -40px;
 `;
 
 /* checkbox */
-export const CheckboxWrapper = styled.label`
+export const CheckBoxGroup = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 574px;
+  grid-column-gap: 49px;
+  grid-row-gap: 20px;
+`;
+
+export const SingleCheckbox = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 20px;
   cursor: pointer;
-  font-size: 16px;
-  color: #333;
 
   input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    width: 24px;
-    height: 24px;
-    border: 2px solid #007bff;
+    width: 19px;
+    height: 19px;
+    border: 2px solid #bababa;
     border-radius: 50%;
-    margin-right: 8px;
+    margin-right: 9px;
     cursor: pointer;
 
     &:checked {
-      background-color: #007bff;
-      border: 2px solid #007bff;
+      background-color: #fff;
+      border: 2px solid #ff6e46;
+      position: relative;
     }
 
     &:checked::before {
-      content: "\u2713"; /* 체크 마크 표시 (유니코드) */
+      content: "";
       display: block;
       text-align: center;
-      font-size: 20px;
       color: white;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #ff6e46;
+      border: 2px solid #ff6e46;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #a0a0a0;
+
+    &.selected {
+      color: #323232;
     }
   }
 `;

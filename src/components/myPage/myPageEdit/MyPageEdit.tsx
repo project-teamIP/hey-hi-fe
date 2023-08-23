@@ -22,6 +22,9 @@ const MyPageEdit = () => {
     interests: [] as string[],
   });
 
+  // 관심사 다중 선택
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
   //0. 로그인된 사용자 정보 조회
   const { data: user, isLoading } = useQuery("myInfo", getUserInfo);
 
@@ -36,9 +39,6 @@ const MyPageEdit = () => {
       setSelectedInterests(user.interests);
     }
   }, [user]);
-
-  // 관심사 다중 선택
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
   // 관심사 핸들러
   const onChangeInterestsHandler = (interest: string) => {
@@ -55,6 +55,7 @@ const MyPageEdit = () => {
       }
     }
   };
+
   //1. 프로필 이미지 뮤테이션
   const imgChangeMutation = useMutation(changeProfileImg, {
     onSuccess: (data) => {
@@ -119,7 +120,7 @@ const MyPageEdit = () => {
     }
   };
 
-  // 수정
+  // 3-1. 계정 정보 수정 submit
   const onSubmitUserInfo = () => {
     if (selectedInterests.length === 0) {
       alert("1개 이상의 관심사를 선택해주세요.");
@@ -130,7 +131,7 @@ const MyPageEdit = () => {
       ...userInfo,
       interests: selectedInterests,
     };
-
+    console.log("관심사", userInfo, selectedInterests, updatedUserInfo);
     userInfoChangeMutation.mutate(updatedUserInfo);
   };
 
@@ -178,9 +179,9 @@ const MyPageEdit = () => {
           </S.ProfileTop>
           <form>
             <S.FormGroup>
-              <label htmlFor="nickname">
+              <S.FormLabel htmlFor="nickname">
                 닉네임 {nickNameCheckMutation.isSuccess && <span>사용 가능한 닉네임입니다.</span>}
-              </label>
+              </S.FormLabel>
               <S.Gap>
                 <Input
                   value={userInfo.nickname}
@@ -197,11 +198,11 @@ const MyPageEdit = () => {
               </S.Gap>
             </S.FormGroup>
             <S.FormGroup>
-              <label htmlFor="email">이메일</label>
+              <S.FormLabel htmlFor="email">이메일</S.FormLabel>
               <S.EmailReadOnly>{user.loginId}</S.EmailReadOnly>
             </S.FormGroup>
             <S.FormGroup>
-              <label htmlFor="country">거주국가</label>
+              <S.FormLabel htmlFor="country">거주국가</S.FormLabel>
               <Select
                 label={user.country}
                 options={countries}
@@ -211,7 +212,7 @@ const MyPageEdit = () => {
               />
             </S.FormGroup>
             <S.FormGroup>
-              <label htmlFor="country">사용언어</label>
+              <S.FormLabel htmlFor="country">사용언어</S.FormLabel>
               <Select
                 label={user.language}
                 options={["한국어", "English"]}
@@ -221,20 +222,24 @@ const MyPageEdit = () => {
               />
             </S.FormGroup>
             <S.FormGroup>
-              <label htmlFor="interests">관심사</label>
-              <S.RadioGroup>
+              <S.FormLabel htmlFor="interests">관심사</S.FormLabel>
+              <S.CheckBoxGroup>
                 {interests.map((interest) => (
-                  <S.CheckboxWrapper key={interest.name}>
+                  <S.SingleCheckbox key={interest.name}>
                     <input
                       type="checkbox"
                       id={interest.name}
                       checked={selectedInterests.includes(interest.name)}
                       onChange={() => onChangeInterestsHandler(interest.name)}
                     />
-                    <label htmlFor={interest.name}>{interest.name}</label>
-                  </S.CheckboxWrapper>
+                    <label
+                      className={selectedInterests.includes(interest.name) ? "selected" : ""}
+                      htmlFor={interest.name}>
+                      {interest.name}
+                    </label>
+                  </S.SingleCheckbox>
                 ))}
-              </S.RadioGroup>
+              </S.CheckBoxGroup>
             </S.FormGroup>
             <S.BtnPosition>
               <Button.Primary size="the smallest" bc="#FF6E46" onClick={onSubmitUserInfo}>
