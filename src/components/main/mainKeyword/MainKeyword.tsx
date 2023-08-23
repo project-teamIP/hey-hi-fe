@@ -9,7 +9,7 @@ import experienceSvg from "../../../assets/images/main/experience.svg";
 const MainKeyword = () => {
   return (
     <S.MainKeywordBox>
-      <S.SectionNum>01</S.SectionNum>
+      <S.SectionNum>WHY?</S.SectionNum>
       <h2>
         자연스럽게 친구와 영어로
         <br />
