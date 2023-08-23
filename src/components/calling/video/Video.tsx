@@ -3,7 +3,6 @@ import CallingPageInterestSelect from "../interest/CallingPageInterestSelect";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import { io, Socket } from "socket.io-client";
-import styled, { keyframes } from "styled-components";
 import {
   BsFillCameraVideoFill,
   BsFillCameraVideoOffFill,
@@ -21,6 +20,7 @@ import Timer from "./Timer";
 import CleanPoint from "../cleanPoint/CleanPoint";
 
 const Video: React.FC<{}> = () => {
+  const [shouldSubmit, setShouldSubmit] = useState(false);
   const [running, setRunning] = useState(false); // running 상태를 추가
   const [isMatchingModalOpen, setIsMatchingModalOpen] = React.useState(true);
   const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
@@ -294,7 +294,9 @@ const Video: React.FC<{}> = () => {
     }
   }
 
-  const onClickEndCalling = () => {
+  const onClickEndCalling = async () => {
+    await alert("메모가 등록됩니다.");
+    await setShouldSubmit(true);
     if (socketRef.current) {
       const message = "나가기 버튼 누름!";
       if (myPeerRef.current) {
@@ -330,10 +332,6 @@ const Video: React.FC<{}> = () => {
 
   const MatchingUserData = userData.interests; // userData의 interests 프로퍼티로부터 배열을 가져옴
 
-  // for (const interest of MatchingUserData) {
-  //   console.log("상대방관심사", interest); // '운동', '독서'가 각각 순서대로 출력됨
-  // }
-
   //클린포인트
   // opponentInfoRef.current.cleanPoint 값이 string 타입이어야 합니다
   const opponentCleanPoint: string = opponentInfoRef.current.cleanPoint;
@@ -352,7 +350,7 @@ const Video: React.FC<{}> = () => {
               <p>나와 관심사가 비슷한 친구와 매칭을 시도하고 있어요!</p>
             </div>
             <S.MatchingSpinnerBox>
-              <SpinnerImage style={{ width: "65px", height: "65px" }} src={spinPath} alt="spin" />
+              <S.SpinnerImage style={{ width: "65px", height: "65px" }} src={spinPath} alt="spin" />
             </S.MatchingSpinnerBox>
             <S.MatchingBtn onClick={onClickcloseMatchingModal}>취소</S.MatchingBtn>
           </S.MatchingContainer>
@@ -362,11 +360,19 @@ const Video: React.FC<{}> = () => {
         <div style={{ display: "flex", gap: "20px" }}>
           <S.CallingTextGroup>
             <h4>{opponentInfoRef.current.country}에 거주중인</h4>
-            <h2>{opponentInfoRef.current.nickname} 님과 통화 중</h2>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "28px",
+                alignItems: "flex-end",
+              }}>
+              <h2>{opponentInfoRef.current.nickname} 님과 통화 중</h2>
+              <Timer onStart={handleTimerStart} running={running} />
+            </div>
           </S.CallingTextGroup>
-          <Timer onStart={handleTimerStart} running={running} />
         </div>
-        <TotalBox>
+        <S.TotalBox>
           <div style={{ display: "flex" }}>
             <S.VideoWrapper>
               <div style={{ display: "flex", gap: "20px" }}>
@@ -439,50 +445,19 @@ const Video: React.FC<{}> = () => {
               </S.ButtonGroup>
             </S.VideoWrapper>
           </div>
-          <SideBox>
+          <S.SideBox>
             <CleanPoint cleanPoint={opponentCleanPoint} />
-            <CallingPageMemo />
+            <CallingPageMemo
+              // onSubmit={handleSubmit}
+              shouldSubmit={shouldSubmit}
+              nickname={opponentInfoRef.current.nickname}
+            />
             <CallingPageInterestSelect MatchingUserData={MatchingUserData} />
-          </SideBox>
-        </TotalBox>
+          </S.SideBox>
+        </S.TotalBox>
       </S.MediaBox>
     </>
   );
 };
 
-const rotateAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const SpinnerImage = styled.img`
-  width: 50px;
-  height: 50px;
-  animation: ${rotateAnimation} 1s linear infinite; // 회전 애니메이션 적용
-`;
-
-const SideBox = styled.div`
-  /* background-color: yellow; */
-  display: flex;
-  flex-direction: column;
-  max-width: 420px;
-  width: 40%;
-  height: 100%;
-  gap: 26px;
-`;
-
-const TotalBox = styled.div`
-  margin-left: -16%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  /* background-color: green; */
-  height: 100%;
-  width: 100%;
-  gap: 30px;
-`;
 export default Video;

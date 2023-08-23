@@ -17,7 +17,7 @@ const CleanPoint: React.FC<CleanPointProps> = ({ cleanPoint }) => {
     background-color: #ff6e46;
 
     img {
-      margin-left: ${3.52 * cleanPointValue - 25}px; /* 수학 연산을 위해 괄호로 묶어줍니다 */
+      margin-left: ${3.52 * cleanPointValue - 20}px; /* 수학 연산을 위해 괄호로 묶어줍니다 */
       margin-top: -15px;
       width: 37px;
       height: 34px;

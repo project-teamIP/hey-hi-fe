@@ -1,4 +1,25 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+export const SideBox = styled.div`
+  /* background-color: yellow; */
+  display: flex;
+  flex-direction: column;
+  max-width: 420px;
+  width: 40%;
+  height: 100%;
+  gap: 26px;
+`;
+
+export const TotalBox = styled.div`
+  margin-left: -16%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* background-color: green; */
+  height: 100%;
+  width: 100%;
+  gap: 30px;
+`;
 
 export const MatchingBox = styled.div`
   background-color: #ffffff;
@@ -11,17 +32,18 @@ export const MatchingBox = styled.div`
 `;
 
 export const VideoWrapper = styled.div`
+  /* background-color: green; */
   display: flex;
   flex-direction: column;
   gap: 23px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: 100%;
 `;
 
 export const VideoContainer = styled.div`
-  margin-top: -13%;
+  /* margin-top: -13%; */
   display: flex;
   flex-direction: row;
   /* background-color: red; */
@@ -32,7 +54,7 @@ export const VideoContainer = styled.div`
 `;
 
 export const VideoBox = styled.div`
-  /* background-color: white; */
+  background-color: white;
   max-width: 519px;
   max-height: 742px;
   width: 519px;
@@ -87,10 +109,11 @@ export const CallingTextGroup = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 10px;
+
   h2 {
     font-size: 22px;
     font-weight: 600;
+    margin-bottom: 10px;
   }
   h4 {
     font-size: 17px;
@@ -100,6 +123,7 @@ export const CallingTextGroup = styled.div`
 `;
 
 export const CallTimer = styled.div`
+  margin-bottom: 10px;
   background-color: #ff6e46;
   width: 141px;
   height: 49px;
@@ -208,4 +232,19 @@ export const MatchingBtn = styled.button`
     background-color: #ff6e46;
     color: #ffffff;
   }
+`;
+
+export const rotateAnimation = keyframes`
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+`;
+
+export const SpinnerImage = styled.img`
+  width: 50px;
+  height: 50px;
+  animation: ${rotateAnimation} 1s linear infinite; // 회전 애니메이션 적용
 `;
