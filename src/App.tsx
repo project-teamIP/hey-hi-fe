@@ -12,6 +12,7 @@ import Header from "./components/common/header/Header";
 import GlobalStyle from "./assets/styles/GlobalStyle";
 import KakaoRedirect from "./pages/login/KakaoRedirect";
 import GoogleRedirect from "./pages/login/GoogleRedirect";
+import Error from "./pages/Error";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/calling" element={<Calling />} />
           <Route path="/oauth/kakao" element={<KakaoRedirect />} />
           <Route path="/oauth/google" element={<GoogleRedirect />} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
     </div>
