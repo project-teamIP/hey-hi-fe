@@ -25,6 +25,11 @@ export const Container = styled.div`
   background: #ffffff;
 `;
 
+// 이미지
+export const Img = styled.img`
+  margin-bottom: 16px;
+`
+
 // 타이틀
 export const Title = styled.div`
   line-height: 51px;

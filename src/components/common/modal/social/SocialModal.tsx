@@ -2,6 +2,7 @@ import React from "react";
 import * as S from "./style";
 import Button from "../../button/Button";
 import { useNavigate } from "react-router";
+import SocialNotice from "../../../../assets/images/SocialNotice.svg"
 
 const SocialModal = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const SocialModal = () => {
     <S.Wrap>
       {/* 모달 내무 컨테이너 */}
       <S.Container>
+        <S.Img src={SocialNotice} />
         <S.Title>
           마이페이지에서 관심사와
           <br /> 거주국가,언어를 설정해주세요!
