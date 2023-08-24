@@ -23,7 +23,7 @@ export type UserInfoType = {
   nickname: string;
   country: string;
   language: string;
-  interest: string;
+  interests: string[];
 };
 
 //친구목록

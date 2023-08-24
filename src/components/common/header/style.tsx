@@ -21,7 +21,7 @@ export const HeaderBox = styled.div<HeaderBoxProps>`
 
 export const HeaderInner = styled.div`
   margin: 0 auto;
-  max-width: 1920px;
+  max-width: 1556px;
   width: 100vw;
   display: flex;
   justify-content: space-between;

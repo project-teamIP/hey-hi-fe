@@ -5,13 +5,13 @@ export const MyPageEditBox = styled.div`
   width: 750px;
   margin-left: 351px;
   margin-top: 87px;
+`;
 
-  label:not(.radio-label) {
-    display: block;
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 16px;
-  }
+export const FormLabel = styled.label`
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
 `;
 
 export const ProfileTop = styled.div`
@@ -50,8 +50,8 @@ export const ImgInput = styled.div`
     cursor: pointer;
   }
 
+  /* 파일 필드 숨기기 */
   input[type="file"] {
-    /* 파일 필드 숨기기 */
     position: absolute;
     width: 1px;
     height: 1px;
@@ -74,6 +74,7 @@ export const ImgInput = styled.div`
     cursor: pointer;
   }
 `;
+
 export const FormGroup = styled.div`
   margin-bottom: 34px;
 `;
@@ -95,32 +96,66 @@ export const EmailReadOnly = styled.div`
   padding: 19px 0 20px 28px;
 `;
 
-export const RadioGroup = styled.div`
+export const BtnPosition = styled.div`
+  text-align: end;
+  margin-top: -40px;
+`;
+
+/* checkbox */
+export const CheckBoxGroup = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   width: 574px;
   grid-column-gap: 49px;
+  grid-row-gap: 20px;
 `;
 
-export const RadioButton = styled.label<{ isselected: boolean }>`
+export const SingleCheckbox = styled.div`
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  font-size: 18px;
-  font-weight: 600;
-  color: #a0a0a0;
 
-  input[type="radio"] {
-    height: 24px;
-    width: 24px;
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 19px;
+    height: 19px;
+    border: 2px solid #bababa;
+    border-radius: 50%;
+    margin-right: 9px;
+    cursor: pointer;
+
+    &:checked {
+      background-color: #fff;
+      border: 2px solid #ff6e46;
+      position: relative;
+    }
+
+    &:checked::before {
+      content: "";
+      display: block;
+      text-align: center;
+      color: white;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #ff6e46;
+      border: 2px solid #ff6e46;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
-  ${({ isselected }) =>
-    isselected &&
-    `
-    font-weight: bold;
-  `}
-`;
+  label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #a0a0a0;
 
-export const BtnPosition = styled.div`
-  text-align: end;
-  margin-top: -40px;
+    &.selected {
+      color: #323232;
+    }
+  }
 `;
