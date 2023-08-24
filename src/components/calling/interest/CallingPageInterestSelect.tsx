@@ -23,6 +23,7 @@ const MatchingUserInterstWrapper = styled.div`
   h3 {
     margin-top: 20px;
     font-size: 20px;
+    font-style: normal;
     font-weight: 600;
     margin-bottom: 30px;
     line-height: 23.87px;
