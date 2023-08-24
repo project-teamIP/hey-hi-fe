@@ -65,14 +65,16 @@ const Img = styled.img`
 // 타이틀
 const Title = styled.div`
   font-size: 28px;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: normal;
   margin: 18px 0px 40px;
 `
 
 // 서브 타이틀
 const SubTitle = styled.div`
-  line-height: 30px;
   font-size: 20px;
+  font-weight: 500;
+  line-height: normal; 
   text-align: center;
   margin-bottom: 62px;
 `
@@ -90,7 +92,9 @@ const Button = styled.button<ButtonProps>`
   border-radius: 50px;
   border: none;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.4px;
   background: ${({ bc }) => bc};
 
   color: ${({ color }) => color};
