@@ -18,11 +18,14 @@ import * as M from "../../common/modal/notice/style";
 import spinPath from "../../../assets/images/match_spinner.svg";
 import Timer from "./Timer";
 import CleanPoint from "../cleanPoint/CleanPoint";
+import ReportModal from "../../common/modal/report/ReportModal";
 
 const Video: React.FC<{}> = () => {
   const [shouldSubmit, setShouldSubmit] = useState(false);
   const [running, setRunning] = useState(false); // running 상태를 추가
   const [isMatchingModalOpen, setIsMatchingModalOpen] = React.useState(true);
+  const [isExitModalOpen, setIsExitModalOpen] = React.useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = React.useState(false);
   const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
   const navigate = useNavigate();
   const socketUrl = process.env.REACT_APP_SERVER_URL;
@@ -64,7 +67,7 @@ const Video: React.FC<{}> = () => {
       loginId: userInfoRef.current.loginId,
     };
     if (socketRef.current) socketRef.current.emit("match", message);
-    console.log("매칭 테스트");
+    // console.log("매칭 테스트");
   };
 
   async function getMedia() {
@@ -111,7 +114,6 @@ const Video: React.FC<{}> = () => {
   }
 
   useEffect(() => {
-    // console.log("socketUrl", socketUrl);
     if (socketUrl) {
       socketRef.current = io(socketUrl);
       socketRef.current.on("wait", (data: any) => {
@@ -129,7 +131,7 @@ const Video: React.FC<{}> = () => {
         try {
           if (socketRef.current) {
             socketRef.current.emit("matchUserInfo", message);
-            console.log("유저정보 주기");
+            // console.log("유저정보 주기");
           }
         } catch (error) {
           // setLocalDescription()에서 발생한 오류 처리
@@ -142,7 +144,7 @@ const Video: React.FC<{}> = () => {
         opponentInfoRef.current.country = data.country;
         opponentInfoRef.current.interests = data.interests;
         opponentInfoRef.current.cleanPoint = data.cleanPoint;
-        console.log("opponentInfoRef.current.", opponentInfoRef.current);
+        // console.log("opponentInfoRef.current.", opponentInfoRef.current);
         await getMedia();
         await makeConnection();
         const message = {
@@ -220,7 +222,7 @@ const Video: React.FC<{}> = () => {
       socketRef.current.on("ice", async (data: any) => {
         if (myPeerRef.current) {
           try {
-            console.log("서버로부터 ice 메시지 수신 : ", data);
+            // console.log("서버로부터 ice 메시지 수신 : ", data);
             await myPeerRef.current.addIceCandidate(data);
           } catch (e) {
             console.log("아이스", e);
@@ -254,7 +256,7 @@ const Video: React.FC<{}> = () => {
     });
   }
   async function makeConnection() {
-    console.log("메이크 커넥션");
+    // console.log("메이크 커넥션");
     myPeerRef.current = new RTCPeerConnection({
       iceServers: [
         {
@@ -305,8 +307,9 @@ const Video: React.FC<{}> = () => {
         myPeerRef.current.close();
       }
       socketRef.current.emit("end", message);
-      navigate("/dashboard");
+      setIsExitModalOpen(true);
     }
+    navigate("/dashboard");
   };
 
   const onClickcloseMatchingModal = () => {
@@ -316,7 +319,7 @@ const Video: React.FC<{}> = () => {
 
   //타이머 시작
   const handleTimerStart = () => {
-    console.log("타이머가 시작되었습니다!");
+    // console.log("타이머가 시작되었습니다!");
     setRunning(true);
   };
 
@@ -336,6 +339,10 @@ const Video: React.FC<{}> = () => {
   // opponentInfoRef.current.cleanPoint 값이 string 타입이어야 합니다
   const opponentCleanPoint: string = opponentInfoRef.current.cleanPoint;
 
+  //신고하기 버튼 이벤트
+  const onClickConfirmReport = () => {
+    setIsReportModalOpen(false);
+  };
   return (
     <>
       {isMatchingModalOpen && (
@@ -356,6 +363,11 @@ const Video: React.FC<{}> = () => {
           </S.MatchingContainer>
         </M.Wrap>
       )}
+      {/* {isReportModalOpen && (
+        <M.Wrap>
+          <ReportModal isReportModalOpen={isReportModalOpen} />
+        </M.Wrap>
+      )} */}
       <S.MediaBox>
         <div style={{ display: "flex", gap: "20px" }}>
           <S.CallingTextGroup>
@@ -429,12 +441,18 @@ const Video: React.FC<{}> = () => {
                       </div>
                     )}
                   </S.ButtonStyle>
-                  <S.ButtonStyle>
+                  <S.ButtonStyle onClick={() => setIsReportModalOpen(true)}>
                     <S.ButtonInnerStyle>
                       <BsFillXOctagonFill size={4.5 * 4.5} />
                       <p>신고하기</p>
                     </S.ButtonInnerStyle>
                   </S.ButtonStyle>
+                  <ReportModal
+                    isReportModalOpen={isReportModalOpen}
+                    onClickCancelReport={() => setIsReportModalOpen(false)}
+                    onClickConfirmReport={onClickConfirmReport}
+                    nickname={opponentInfoRef.current.nickname}
+                  />
                 </div>
                 <S.ButtonStyle onClick={onClickEndCalling}>
                   <S.ButtonInnerStyle>
@@ -448,7 +466,6 @@ const Video: React.FC<{}> = () => {
           <S.SideBox>
             <CleanPoint cleanPoint={opponentCleanPoint} />
             <CallingPageMemo
-              // onSubmit={handleSubmit}
               shouldSubmit={shouldSubmit}
               nickname={opponentInfoRef.current.nickname}
             />
