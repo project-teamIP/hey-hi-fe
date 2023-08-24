@@ -1,10 +1,38 @@
+import React, { useState, useEffect } from "react";
 import DiallogBox from "../components/dashboard/dialogbox/DiallogBox";
 import CallLog from "../components/dashboard/calllog/CallLog";
 import Memo from "../components/dashboard/memo/Memo";
 import Interest from "../components/dashboard/interest/Interest";
 import styled from "styled-components";
+import { useQuery } from "react-query";
+import { getUserInfo } from "../api/api";
+import SocialModal from "../components/common/modal/social/SocialModal";
 
 const DashBoard = () => {
+  // 모달
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+  // 유저 정보
+  const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
+
+  const userInfo = data;
+  // console.log(userInfo)
+  // 소셜 로그인 최초 로그인시
+  useEffect(() => {
+    if (!isLoading && userInfo && userInfo.interests) {
+      if (
+        userInfo.interests.length === 0 &&
+        userInfo.country === "Default" &&
+        userInfo.language === "Default"
+      ) {
+        openModal();
+      }
+    }
+  }, [userInfo, isLoading]);
+
   return (
     <>
       <DashBoardWrapper>
@@ -21,6 +49,7 @@ const DashBoard = () => {
           </div>
         </DashBoardContainer>
       </DashBoardWrapper>
+      {showModal && <SocialModal />}
     </>
   );
 };
