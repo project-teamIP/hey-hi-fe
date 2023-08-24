@@ -32,8 +32,9 @@ export const Img = styled.img`
 
 // 타이틀
 export const Title = styled.div`
-  line-height: 51px;
   font-size: 34px;
+  font-weight: 700;
+  line-height: normal;
   text-align: center;
   letter-spacing: -4px;
 `;
@@ -42,14 +43,16 @@ export const Title = styled.div`
 export const SubTitle = styled.div`
   margin-top: 12px;
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 500;
+  line-height: 135%;
 `;
 
 // 내용
 export const Content = styled.div`
   margin: 36px 0px 33px;
-  line-height: 24px;
   font-size: 15px;
+  font-weight: 500;
+  line-height: 140%;
   text-align: center;
   color: #6D6D6D;
 `;
