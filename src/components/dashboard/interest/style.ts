@@ -22,17 +22,15 @@ export const CategoriStyle = styled.div`
   }
 
   &.box-color-1 {
-    background-color: #004bc8; /* 예시 색상 2 */
-    color: #fff;
+    background-color: #ffe4dc; /* 예시 색상 2 */
   }
 
   &.box-color-2 {
-    background-color: #000000; /* 예시 색상 3 */
-    color: #fff;
+    background-color: #d9e7ff; /* 예시 색상 3 */
   }
 
   &.box-color-3 {
-    background-color: #ff6e46; /* 예시 색상 4 */
+    background-color: #f8f9fc; /* 예시 색상 4 */
   }
   &.dashboard {
     width: 169px;

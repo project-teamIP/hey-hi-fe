@@ -15,7 +15,7 @@ const DiallogBox = () => {
   const navigate = useNavigate();
   const { data } = useQuery("userInfo", () => getUserInfo());
   const userData = data;
-  console.log("userData", userData?.nickname);
+  // console.log("userData", userData?.nickname);
   const [isNoticeModalOpen, setIsNoticeModalOpen] = React.useState(false);
 
   const onClickOpenNoticeModal = () => {
