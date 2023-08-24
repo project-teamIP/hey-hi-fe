@@ -62,12 +62,14 @@ const CleanPointTextGroup = styled.div`
   h2 {
     color: #000;
     font-size: 16px;
+    font-style: normal;
     font-weight: 600;
     line-height: normal;
   }
   h4 {
     color: #9d9d9d;
     font-size: 13px;
+    font-style: normal;
     font-weight: 600;
     line-height: normal;
   }

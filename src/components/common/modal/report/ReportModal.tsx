@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import * as S from "./style";
-import Button from "../../button/Button";
 import * as M from "../notice/style";
 import instance from "../../../../api/api";
+import Button from "../../button/Button";
 
 interface ReportModalProps {
   isReportModalOpen: boolean;
@@ -39,7 +39,7 @@ const ReportModal: React.FC<ReportModalProps> = (props) => {
     if (selectedRadio) {
       // 선택된 신고 사유를 처리하는 로직을 추가하세요
       console.log("Selected Report Reason:", selectedRadio);
-      //ReportMatchingUser(); 내일 백엔드한테 물어보고 해결하기
+      ReportMatchingUser(); //내일 백엔드한테 물어보고 해결하기
       // 모달을 닫습니다.
       onClickConfirmReport();
     } else {
@@ -61,10 +61,10 @@ const ReportModal: React.FC<ReportModalProps> = (props) => {
                   <input
                     type="radio"
                     name="report"
-                    value={"언어폭력 및 욕설"}
-                    checked={selectedRadio === "언어폭력 및 욕설"}
+                    value={"ABUSIVE_LANGUAGE"}
+                    checked={selectedRadio === "ABUSIVE_LANGUAGE"}
                     onChange={onClickRadioChangeHanlder}
-                    className={selectedRadio === "언어폭력 및 욕설" ? "selected" : ""}
+                    className={selectedRadio === "ABUSIVE_LANGUAGE" ? "selected" : ""}
                   />
                   <label>언어폭력 및 욕설</label>
                 </S.InputLabelGroup>
@@ -72,10 +72,10 @@ const ReportModal: React.FC<ReportModalProps> = (props) => {
                   <input
                     type="radio"
                     name="report"
-                    value={"성적 모독"}
-                    checked={selectedRadio === "성적 모독"}
+                    value={"SEXUAL_HARASSMENT"}
+                    checked={selectedRadio === "SEXUAL_HARASSMENT"}
                     onChange={onClickRadioChangeHanlder}
-                    className={selectedRadio === "성적 모독" ? "selected" : ""}
+                    className={selectedRadio === "SEXUAL_HARASSMENT" ? "selected" : ""}
                   />
                   <label>성적 모독</label>
                 </S.InputLabelGroup>
@@ -85,10 +85,10 @@ const ReportModal: React.FC<ReportModalProps> = (props) => {
                   <input
                     type="radio"
                     name="report"
-                    value={"편견,차별,혐오발언"}
-                    checked={selectedRadio === "편견,차별,혐오발언"}
+                    value={"DISCRIMINATION"}
+                    checked={selectedRadio === "DISCRIMINATION"}
                     onChange={onClickRadioChangeHanlder}
-                    className={selectedRadio === "편견,차별,혐오발언" ? "selected" : ""}
+                    className={selectedRadio === "DISCRIMINATION" ? "selected" : ""}
                   />
                   <label>편견,차별,혐오발언</label>
                 </S.InputLabelGroup>
@@ -96,18 +96,22 @@ const ReportModal: React.FC<ReportModalProps> = (props) => {
                   <input
                     type="radio"
                     name="report"
-                    value={"광고,홍보,사기"}
-                    checked={selectedRadio === "광고,홍보,사기"}
+                    value={"SCAM"}
+                    checked={selectedRadio === "SCAM"}
                     onChange={onClickRadioChangeHanlder}
-                    className={selectedRadio === "광고,홍보,사기" ? "selected" : ""}
+                    className={selectedRadio === "SCAM" ? "selected" : ""}
                   />
                   <label>광고,홍보,사기</label>
                 </S.InputLabelGroup>
               </S.TwoSelect>
             </S.ReportSelect>
             <S.ButtonContainer>
-              <S.ReportBtn onClick={onClickCancelReport}>취소</S.ReportBtn>
-              <S.ReportBtn onClick={handleReportConfirmation}>확인</S.ReportBtn>
+              <Button.Primary size="small" activebc="#FF6E46" onClick={onClickCancelReport}>
+                취소
+              </Button.Primary>
+              <Button.Primary size="small" activebc="#FF6E46" onClick={handleReportConfirmation}>
+                확인
+              </Button.Primary>
             </S.ButtonContainer>
           </S.Container>
         </M.Wrap>

@@ -56,5 +56,6 @@ export const Image = styled.div`
 export const Name = styled.div`
   margin-top: 10px;
   font-size: 16px;
+  font-style: normal;
   font-weight: 500;
 `;

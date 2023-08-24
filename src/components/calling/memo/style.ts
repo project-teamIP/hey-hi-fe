@@ -12,6 +12,7 @@ export const MemoStyle = styled.div`
   gap: 10px;
   h3 {
     font-size: 22px;
+    font-style: normal;
     font-weight: 600;
   }
 
@@ -26,6 +27,7 @@ export const MemoTitle = styled.input`
   border-top-right-radius: 30px;
   border-top-left-radius: 30px;
   font-size: 20px;
+  font-style: normal;
   padding: 23px;
   width: 415px;
   height: 67px;
@@ -44,6 +46,7 @@ export const MemoTextArea = styled.textarea`
   resize: none;
   border: none;
   font-size: 17px;
+  font-style: normal;
   font-weight: 500;
   overflow-y: scroll;
 `;
@@ -55,6 +58,7 @@ export const ErrorMessage = styled.div`
   p {
     color: #ff5049;
     font-size: 15px;
+    font-style: normal;
     font-weight: 600;
     line-height: normal;
   }
@@ -68,6 +72,7 @@ export const ErrorContentMessage = styled.div`
     color: #ff5049;
     font-size: 15px;
     font-weight: 600;
+    font-style: normal;
     line-height: normal;
   }
 `;
@@ -86,6 +91,7 @@ export const CounterBox = styled.div`
     color: #ff6e46;
     font-size: 14px;
     font-weight: 500;
+    font-style: normal;
     line-height: normal;
   }
   h5 {

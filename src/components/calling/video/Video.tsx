@@ -19,6 +19,7 @@ import spinPath from "../../../assets/images/match_spinner.svg";
 import Timer from "./Timer";
 import CleanPoint from "../cleanPoint/CleanPoint";
 import ReportModal from "../../common/modal/report/ReportModal";
+import CleanPointModal from "../../common/modal/cleanpoint/CleanPointModal";
 
 const Video: React.FC<{}> = () => {
   const [shouldSubmit, setShouldSubmit] = useState(false);
@@ -26,6 +27,7 @@ const Video: React.FC<{}> = () => {
   const [isMatchingModalOpen, setIsMatchingModalOpen] = React.useState(true);
   const [isExitModalOpen, setIsExitModalOpen] = React.useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = React.useState(false);
+  const [isPointModalOpen, setIsPointModalOpen] = React.useState(false);
   const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
   const navigate = useNavigate();
   const socketUrl = process.env.REACT_APP_SERVER_URL;
@@ -307,9 +309,9 @@ const Video: React.FC<{}> = () => {
         myPeerRef.current.close();
       }
       socketRef.current.emit("end", message);
-      setIsExitModalOpen(true);
+      // setIsExitModalOpen(true);
+      setIsPointModalOpen(true);
     }
-    navigate("/dashboard");
   };
 
   const onClickcloseMatchingModal = () => {
@@ -339,10 +341,18 @@ const Video: React.FC<{}> = () => {
   // opponentInfoRef.current.cleanPoint 값이 string 타입이어야 합니다
   const opponentCleanPoint: string = opponentInfoRef.current.cleanPoint;
 
+  const onClickCancelPoint = () => {
+    setIsPointModalOpen(false);
+  };
+
+  const onClickConfirmPoint = () => {
+    setIsPointModalOpen(false);
+  };
   //신고하기 버튼 이벤트
   const onClickConfirmReport = () => {
     setIsReportModalOpen(false);
   };
+
   return (
     <>
       {isMatchingModalOpen && (
@@ -363,11 +373,6 @@ const Video: React.FC<{}> = () => {
           </S.MatchingContainer>
         </M.Wrap>
       )}
-      {/* {isReportModalOpen && (
-        <M.Wrap>
-          <ReportModal isReportModalOpen={isReportModalOpen} />
-        </M.Wrap>
-      )} */}
       <S.MediaBox>
         <div style={{ display: "flex", gap: "20px" }}>
           <S.CallingTextGroup>
@@ -460,6 +465,12 @@ const Video: React.FC<{}> = () => {
                     <p>나가기</p>
                   </S.ButtonInnerStyle>
                 </S.ButtonStyle>
+                <CleanPointModal
+                  isPointModalOpen={isPointModalOpen}
+                  onClickCancelPoint={onClickCancelPoint}
+                  onClickConfirmPoint={onClickConfirmPoint}
+                  nickname={opponentInfoRef.current.nickname}
+                />
               </S.ButtonGroup>
             </S.VideoWrapper>
           </div>
