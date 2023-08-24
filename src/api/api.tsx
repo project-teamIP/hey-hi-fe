@@ -3,6 +3,8 @@ import { MemoEditType, SignupInformationData } from "../types/types";
 import { LoginInformationData } from "../types/types";
 import { UserInfoType } from "../types/user";
 import { deleteToken } from "../utils/deleteToken";
+import store from "../redux/config/configStore";
+import { logOut } from "../redux/modules/userAuth";
 
 // Axios 인스턴스 생성
 export const instance: AxiosInstance = axios.create({
@@ -92,6 +94,10 @@ instance.interceptors.response.use(
           console.log("액세스 토큰 재발급 실패", refreshError);
         }
       }
+    } else if (
+      (error.response?.data as any)?.message === "유효하지 않은 토큰입니다."
+    ) {
+      store.dispatch(logOut());
     }
 
     return Promise.reject(error);
