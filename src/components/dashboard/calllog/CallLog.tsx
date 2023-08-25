@@ -5,7 +5,6 @@ import svgPath from "../../../assets/images/more_SVG.svg";
 import { CallLogInfo } from "./style";
 import { getDashboardData } from "../../../api/api";
 import noCallLogPath from "../../../assets/images/noCallLog.svg";
-import { useMutation, useQueryClient } from "react-query";
 import instance from "../../../api/api";
 
 const CallLog: React.FC = () => {

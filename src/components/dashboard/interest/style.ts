@@ -7,6 +7,42 @@ export const CategoriContainer = styled.div`
   gap: 13px;
 `;
 
+export const DefaultCategoriStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d8dee9;
+  border-radius: 15px;
+  background: #ffffff;
+  width: 169px;
+  height: 121px;
+
+  &.box-color-0 {
+    background-color: #f8f9fc; /* 예시 색상 1 */
+  }
+
+  &.box-color-1 {
+    background-color: #ffe4dc; /* 예시 색상 2 */
+  }
+
+  &.box-color-2 {
+    background-color: #d9e7ff; /* 예시 색상 3 */
+  }
+
+  &.box-color-3 {
+    background-color: #f8f9fc; /* 예시 색상 4 */
+  }
+  &.dashboard {
+    width: 169px;
+    height: 121px;
+  }
+  &.callroom {
+    width: 198px;
+    height: 101px;
+  }
+`;
+
 export const CategoriStyle = styled.div`
   display: flex;
   flex-direction: column;

@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { MatchingUserProps } from "../../../types/types";
 import interests from "../../../utils/interests.json";
 import MyInterestCategori from "./MyInterestCategori";
+import NoInterestBox from "./NoInterestBox";
 
 const MyInterestSelect = ({ MatchingUserData }: MatchingUserProps) => {
   // console.log("MatchingUserData", MatchingUserData);
@@ -25,6 +26,12 @@ const MyInterestSelect = ({ MatchingUserData }: MatchingUserProps) => {
           interest={interest.name} // interest 값 전달
           image={interest.image} // image 값 전달
           className={`box-color-${index % 4}`}
+          customSize="dashboard"
+        />
+      ))}
+      {Array.from({ length: Math.max(4 - filteredInterests.current.length, 0) }).map((_, index) => (
+        <NoInterestBox
+          className={`box-color-${(filteredInterests.current.length + index) % 4}`}
           customSize="dashboard"
         />
       ))}
