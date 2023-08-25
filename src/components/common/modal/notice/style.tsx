@@ -115,5 +115,5 @@ export const StartButton = styled.button`
   letter-spacing: -0.52px;
   border: none;
   border-radius: 50px;
-  background: #ff6e46;
+  background-color: #ff6e46;
 `;
