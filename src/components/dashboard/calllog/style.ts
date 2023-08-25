@@ -46,9 +46,9 @@ export const CallListBtn = styled.button`
   height: 39px;
   border-radius: 50%;
   background-color: ${({ color }) => color};
-  &:active {
+  /* &:active {
     background-color: ${({ color }) => (color === "#ffe4dc" ? "#e7cdc5" : "#ffe4dc")};
-  }
+  } */
 
   ${({ color }) => {
     switch (color) {
@@ -62,17 +62,17 @@ export const CallListBtn = styled.button`
       case "more":
         return css`
           background-color: transparent;
-          &:active {
-            background-color: #d8dee9;
-          }
+          /* &:active {
+            background-color: #d8dee9; 
+          }*/
         `;
-      default:
-        return css`
-          background-color: #ffe4dc;
-          &:active {
+      // default:
+      //   return css`
+      //     background-color: #ffe4dc;
+      /* &:active {
             background-color: #e7cdc5;
-          }
-        `;
+          } 
+        `;*/
     }
   }}
 

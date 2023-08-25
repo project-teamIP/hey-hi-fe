@@ -14,13 +14,12 @@ import {
 import { getUserInfo } from "../../../api/api";
 import { useQuery } from "react-query";
 import * as S from "./style";
-import * as M from "../../common/modal/notice/style";
-import spinPath from "../../../assets/images/match_spinner.svg";
 import Timer from "./Timer";
 import CleanPoint from "../cleanPoint/CleanPoint";
 import ReportModal from "../../common/modal/report/ReportModal";
 import CleanPointModal from "../../common/modal/cleanpoint/CleanPointModal";
 import ExitModal from "../../common/modal/exit/ExitModal";
+import MatchingModal from "../../common/modal/matching/MatchingModal";
 
 const Video: React.FC<{}> = () => {
   const [shouldSubmit, setShouldSubmit] = useState(false);
@@ -364,24 +363,12 @@ const Video: React.FC<{}> = () => {
 
   return (
     <>
-      {isMatchingModalOpen && (
-        <M.Wrap>
-          <S.MatchingContainer>
-            <div hidden={isCallHidden}>
-              <h2>매칭완료</h2>
-              <p>잠시 후 상대방과 연결됩니다.</p>
-            </div>
-            <div hidden={isWelcomeHidden}>
-              <h2>매칭 중입니다</h2>
-              <p>나와 관심사가 비슷한 친구와 매칭을 시도하고 있어요!</p>
-            </div>
-            <S.MatchingSpinnerBox>
-              <S.SpinnerImage style={{ width: "65px", height: "65px" }} src={spinPath} alt="spin" />
-            </S.MatchingSpinnerBox>
-            <S.MatchingBtn onClick={onClickcloseMatchingModal}>취소</S.MatchingBtn>
-          </S.MatchingContainer>
-        </M.Wrap>
-      )}
+      <MatchingModal
+        isMatchingModalOpen={isMatchingModalOpen}
+        isCallHidden={isCallHidden}
+        isWelcomeHidden={isWelcomeHidden}
+        onClickcloseMatchingModal={onClickcloseMatchingModal}
+      />
       <S.MediaBox>
         <div style={{ display: "flex", gap: "20px" }}>
           <S.CallingTextGroup>

@@ -5,8 +5,10 @@ import { useQuery } from "react-query";
 import { DashboardMemosType } from "../../../types/user";
 import * as S from "./style";
 import noMemoPath from "../../../assets/images/noMemo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Memo = () => {
+  const navigate = useNavigate();
   const { data: memoData, error } = useQuery<DashboardMemosType[], Error>(
     "dashboardInfo",
     async () => {
@@ -27,12 +29,17 @@ const Memo = () => {
     console.error("dashboard 조회 오류", error);
   }
 
+  const onClickGotoMypageMemo = () => {
+    localStorage.setItem("activePage", "나의메모");
+    navigate("/mypage");
+  };
+
   return (
     <DashBoardBox size="memo">
       <S.TextContainer>
         <S.WordGroup>
           <h3>내가 쓴 메모</h3>
-          <p>더보기</p>
+          <p onClick={onClickGotoMypageMemo}>더보기</p>
         </S.WordGroup>
         <S.TextBoxGroup>
           {memoData && memoData.length > 0 ? (
