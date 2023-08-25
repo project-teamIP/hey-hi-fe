@@ -94,9 +94,8 @@ instance.interceptors.response.use(
           console.log("액세스 토큰 재발급 실패", refreshError);
         }
       }
-    } else if (
-      (error.response?.data as any)?.message === "유효하지 않은 토큰입니다."
-    ) {
+    } else if ((error.response?.data as any)?.message === "유효하지 않은 토큰입니다.") {
+      alert("로그인이 만료되었습니다.");
       store.dispatch(logOut());
     }
 
