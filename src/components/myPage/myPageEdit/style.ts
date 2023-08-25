@@ -27,6 +27,39 @@ export const ProfileTop = styled.div`
   }
 `;
 
+export const ProfileTopLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ProfileImage = styled.div`
+  height: 103px;
+  width: 103px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export const MannerPoint = styled.div`
+  width: 92px;
+  height: 29px;
+  color: #373737;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.24px;
+  border-radius: 10px;
+  background-color: #efefef;
+  padding-top: 10px;
+  text-align: center;
+  margin-top: 11px;
+`;
+
 export const ImgForm = styled.div`
   height: 156px;
   width: 156px;
@@ -158,4 +191,40 @@ export const SingleCheckbox = styled.div`
       color: #323232;
     }
   }
+`;
+
+/* ! image change modal */
+export const MemoModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(94, 94, 94, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`;
+
+export const MemoModalBox = styled.div`
+  width: 968px;
+  height: 773px;
+  background-color: white;
+  padding: 0 45px;
+  border-radius: 30px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+`;
+
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 37px;
+  right: 45px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
 `;

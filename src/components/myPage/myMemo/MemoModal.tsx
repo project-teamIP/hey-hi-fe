@@ -45,6 +45,7 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
         title: data.title,
         content: data.content,
       });
+      queryClient.invalidateQueries("myMemo");
     },
   });
   const onClickMemoEditSubmitHandler = () => {

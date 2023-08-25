@@ -11,6 +11,7 @@ import { changeProfileImg, changeUserInfo, getUserInfo, userNickNameCheck } from
 import pencilSvg from "../../../assets/images/pencil.svg";
 import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
 import { UserInfoType } from "../../../types/user";
+import CleanPoint from "../../calling/cleanPoint/CleanPoint";
 
 const MyPageEdit = () => {
   const [profileImg, setProfileImg] = useState(null);
@@ -151,7 +152,7 @@ const MyPageEdit = () => {
       {user && (
         <S.MyPageEditBox>
           <S.ProfileTop>
-            <S.ImgForm>
+            {/* <S.ImgForm>
               {imgPreview ? (
                 <img
                   src={imgPreview}
@@ -170,7 +171,16 @@ const MyPageEdit = () => {
                   <img src={require(`../../../assets/images/check.png`)} alt="submit-btn" />
                 </button>
               </S.ImgInput>
-            </S.ImgForm>
+            </S.ImgForm> */}
+            <S.ProfileTopLeft>
+              <S.ProfileImage>
+                <img src={user.image} alt="profile_pic" />
+                <button type="button" onClick={onClickImageSubmitHandler}>
+                  <img src={pencilSvg} alt="submit-btn" />
+                </button>
+              </S.ProfileImage>
+              <S.MannerPoint>매너점수 : {user.cleanPoint}</S.MannerPoint>
+            </S.ProfileTopLeft>
             <h1>
               만나서 반가워요!
               <br />
