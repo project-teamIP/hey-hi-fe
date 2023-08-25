@@ -5,7 +5,6 @@ import MatchingUserInterest from "./MatchingUserInterest";
 import { MatchingUserProps } from "../../../types/types";
 
 const CallingPageInterestSelect = ({ MatchingUserData }: MatchingUserProps) => {
-  console.log("MatchingUserData", MatchingUserData);
   return (
     <MatchingUserInterstWrapper>
       <h3>상대방의 관심사</h3>
@@ -23,6 +22,7 @@ const MatchingUserInterstWrapper = styled.div`
   h3 {
     margin-top: 20px;
     font-size: 20px;
+    font-style: normal;
     font-weight: 600;
     margin-bottom: 30px;
     line-height: 23.87px;

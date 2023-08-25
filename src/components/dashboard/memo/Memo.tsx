@@ -4,8 +4,11 @@ import instance from "../../../api/api";
 import { useQuery } from "react-query";
 import { DashboardMemosType } from "../../../types/user";
 import * as S from "./style";
+import noMemoPath from "../../../assets/images/noMemo.svg";
+import { useNavigate } from "react-router-dom";
 
 const Memo = () => {
+  const navigate = useNavigate();
   const { data: memoData, error } = useQuery<DashboardMemosType[], Error>(
     "dashboardInfo",
     async () => {
@@ -26,12 +29,17 @@ const Memo = () => {
     console.error("dashboard 조회 오류", error);
   }
 
+  const onClickGotoMypageMemo = () => {
+    localStorage.setItem("activePage", "나의메모");
+    navigate("/mypage");
+  };
+
   return (
     <DashBoardBox size="memo">
       <S.TextContainer>
         <S.WordGroup>
           <h3>내가 쓴 메모</h3>
-          <p>더보기</p>
+          <p onClick={onClickGotoMypageMemo}>더보기</p>
         </S.WordGroup>
         <S.TextBoxGroup>
           {memoData && memoData.length > 0 ? (
@@ -54,7 +62,12 @@ const Memo = () => {
               return null; // 3보다 큰 인덱스는 렌더링하지 않음
             })
           ) : (
-            <p>메모 데이터가 없습니다.</p>
+            <S.NoMemoWrapper>
+              <S.NoMemoBox>
+                <img style={{ width: "100%" }} src={noMemoPath} alt="noMemo" />
+                <p>아직 작성된 메모가 없어요</p>
+              </S.NoMemoBox>
+            </S.NoMemoWrapper>
           )}
         </S.TextBoxGroup>
       </S.TextContainer>

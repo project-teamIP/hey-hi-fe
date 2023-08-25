@@ -87,3 +87,8 @@ export type CallRoomCategoriProps = {
   className?: string;
   customSize?: "dashboard" | "callroom";
 };
+
+export type NoInterestCategoriProps = {
+  className?: string;
+  customSize?: "dashboard" | "callroom";
+};

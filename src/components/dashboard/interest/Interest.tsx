@@ -57,7 +57,6 @@ const Interest: React.FC = () => {
       },
     ],
   });
-  // console.log("차트", chartData.datasets[0].data);
   // 데이터가 업데이트될 때마다 데이터를 업데이트
   useEffect(() => {
     const fetchCountByHourData = async () => {
@@ -93,7 +92,9 @@ const Interest: React.FC = () => {
             },
             options: {
               scales: {
-                // ... (설정을 원하시는 대로 변경하세요)
+                y: {
+                  beginAtZero: true, // y축을 0부터 시작하도록 설정
+                },
               },
               elements: {
                 line: {

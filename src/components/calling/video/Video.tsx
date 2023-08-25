@@ -14,15 +14,20 @@ import {
 import { getUserInfo } from "../../../api/api";
 import { useQuery } from "react-query";
 import * as S from "./style";
-import * as M from "../../common/modal/notice/style";
-import spinPath from "../../../assets/images/match_spinner.svg";
 import Timer from "./Timer";
 import CleanPoint from "../cleanPoint/CleanPoint";
+import ReportModal from "../../common/modal/report/ReportModal";
+import CleanPointModal from "../../common/modal/cleanpoint/CleanPointModal";
+import ExitModal from "../../common/modal/exit/ExitModal";
+import MatchingModal from "../../common/modal/matching/MatchingModal";
 
 const Video: React.FC<{}> = () => {
   const [shouldSubmit, setShouldSubmit] = useState(false);
   const [running, setRunning] = useState(false); // running 상태를 추가
   const [isMatchingModalOpen, setIsMatchingModalOpen] = React.useState(true);
+  const [isExitModalOpen, setIsExitModalOpen] = React.useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = React.useState(false);
+  const [isPointModalOpen, setIsPointModalOpen] = React.useState(false);
   const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
   const navigate = useNavigate();
   const socketUrl = process.env.REACT_APP_SERVER_URL;
@@ -64,7 +69,7 @@ const Video: React.FC<{}> = () => {
       loginId: userInfoRef.current.loginId,
     };
     if (socketRef.current) socketRef.current.emit("match", message);
-    console.log("매칭 테스트");
+    // console.log("매칭 테스트");
   };
 
   async function getMedia() {
@@ -111,7 +116,6 @@ const Video: React.FC<{}> = () => {
   }
 
   useEffect(() => {
-    // console.log("socketUrl", socketUrl);
     if (socketUrl) {
       socketRef.current = io(socketUrl);
       socketRef.current.on("wait", (data: any) => {
@@ -129,7 +133,7 @@ const Video: React.FC<{}> = () => {
         try {
           if (socketRef.current) {
             socketRef.current.emit("matchUserInfo", message);
-            console.log("유저정보 주기");
+            // console.log("유저정보 주기");
           }
         } catch (error) {
           // setLocalDescription()에서 발생한 오류 처리
@@ -142,7 +146,7 @@ const Video: React.FC<{}> = () => {
         opponentInfoRef.current.country = data.country;
         opponentInfoRef.current.interests = data.interests;
         opponentInfoRef.current.cleanPoint = data.cleanPoint;
-        console.log("opponentInfoRef.current.", opponentInfoRef.current);
+        // console.log("opponentInfoRef.current.", opponentInfoRef.current);
         await getMedia();
         await makeConnection();
         const message = {
@@ -220,7 +224,7 @@ const Video: React.FC<{}> = () => {
       socketRef.current.on("ice", async (data: any) => {
         if (myPeerRef.current) {
           try {
-            console.log("서버로부터 ice 메시지 수신 : ", data);
+            // console.log("서버로부터 ice 메시지 수신 : ", data);
             await myPeerRef.current.addIceCandidate(data);
           } catch (e) {
             console.log("아이스", e);
@@ -254,7 +258,7 @@ const Video: React.FC<{}> = () => {
     });
   }
   async function makeConnection() {
-    console.log("메이크 커넥션");
+    // console.log("메이크 커넥션");
     myPeerRef.current = new RTCPeerConnection({
       iceServers: [
         {
@@ -305,7 +309,8 @@ const Video: React.FC<{}> = () => {
         myPeerRef.current.close();
       }
       socketRef.current.emit("end", message);
-      navigate("/dashboard");
+      // setIsExitModalOpen(true);
+      setIsExitModalOpen(true);
     }
   };
 
@@ -316,7 +321,7 @@ const Video: React.FC<{}> = () => {
 
   //타이머 시작
   const handleTimerStart = () => {
-    console.log("타이머가 시작되었습니다!");
+    // console.log("타이머가 시작되었습니다!");
     setRunning(true);
   };
 
@@ -332,30 +337,38 @@ const Video: React.FC<{}> = () => {
 
   const MatchingUserData = userData.interests; // userData의 interests 프로퍼티로부터 배열을 가져옴
 
+  const onClickCancelExitRoom = () => {
+    setIsExitModalOpen(false);
+  };
+
+  const onClickConfirmExitRoom = () => {
+    setIsExitModalOpen(false);
+    setIsPointModalOpen(true);
+  };
   //클린포인트
   // opponentInfoRef.current.cleanPoint 값이 string 타입이어야 합니다
   const opponentCleanPoint: string = opponentInfoRef.current.cleanPoint;
 
+  const onClickCancelPoint = () => {
+    setIsPointModalOpen(false);
+  };
+
+  const onClickConfirmPoint = () => {
+    setIsPointModalOpen(false);
+  };
+  //신고하기 버튼 이벤트
+  const onClickConfirmReport = () => {
+    setIsReportModalOpen(false);
+  };
+
   return (
     <>
-      {isMatchingModalOpen && (
-        <M.Wrap>
-          <S.MatchingContainer>
-            <div hidden={isCallHidden}>
-              <h2>매칭완료</h2>
-              <p>잠시 후 상대방과 연결됩니다.</p>
-            </div>
-            <div hidden={isWelcomeHidden}>
-              <h2>매칭 중입니다</h2>
-              <p>나와 관심사가 비슷한 친구와 매칭을 시도하고 있어요!</p>
-            </div>
-            <S.MatchingSpinnerBox>
-              <S.SpinnerImage style={{ width: "65px", height: "65px" }} src={spinPath} alt="spin" />
-            </S.MatchingSpinnerBox>
-            <S.MatchingBtn onClick={onClickcloseMatchingModal}>취소</S.MatchingBtn>
-          </S.MatchingContainer>
-        </M.Wrap>
-      )}
+      <MatchingModal
+        isMatchingModalOpen={isMatchingModalOpen}
+        isCallHidden={isCallHidden}
+        isWelcomeHidden={isWelcomeHidden}
+        onClickcloseMatchingModal={onClickcloseMatchingModal}
+      />
       <S.MediaBox>
         <div style={{ display: "flex", gap: "20px" }}>
           <S.CallingTextGroup>
@@ -429,12 +442,18 @@ const Video: React.FC<{}> = () => {
                       </div>
                     )}
                   </S.ButtonStyle>
-                  <S.ButtonStyle>
+                  <S.ButtonStyle onClick={() => setIsReportModalOpen(true)}>
                     <S.ButtonInnerStyle>
                       <BsFillXOctagonFill size={4.5 * 4.5} />
                       <p>신고하기</p>
                     </S.ButtonInnerStyle>
                   </S.ButtonStyle>
+                  <ReportModal
+                    isReportModalOpen={isReportModalOpen}
+                    onClickCancelReport={() => setIsReportModalOpen(false)}
+                    onClickConfirmReport={onClickConfirmReport}
+                    nickname={opponentInfoRef.current.nickname}
+                  />
                 </div>
                 <S.ButtonStyle onClick={onClickEndCalling}>
                   <S.ButtonInnerStyle>
@@ -442,13 +461,23 @@ const Video: React.FC<{}> = () => {
                     <p>나가기</p>
                   </S.ButtonInnerStyle>
                 </S.ButtonStyle>
+                <ExitModal
+                  isExitModalOpen={isExitModalOpen}
+                  onClickCancelExitRoom={onClickCancelExitRoom}
+                  onClickConfirmExitRoom={onClickConfirmExitRoom}
+                />
+                <CleanPointModal
+                  isPointModalOpen={isPointModalOpen}
+                  onClickCancelPoint={onClickCancelPoint}
+                  onClickConfirmPoint={onClickConfirmPoint}
+                  nickname={opponentInfoRef.current.nickname}
+                />
               </S.ButtonGroup>
             </S.VideoWrapper>
           </div>
           <S.SideBox>
             <CleanPoint cleanPoint={opponentCleanPoint} />
             <CallingPageMemo
-              // onSubmit={handleSubmit}
               shouldSubmit={shouldSubmit}
               nickname={opponentInfoRef.current.nickname}
             />

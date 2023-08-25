@@ -26,7 +26,7 @@ const SlideThree = ({ userData, setUserData, onClickUserRegisterHandler }: Slide
   };
 
   // 관심사 선택시 버튼 활성화
-  const isFormValid = selectedInterests.length === 4;
+  const isFormValid = selectedInterests.length >= 1 && selectedInterests.length <= 4;
 
   console.log(selectedInterests);
   return (
