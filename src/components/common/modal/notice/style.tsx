@@ -108,9 +108,12 @@ export const Notice = styled.div`
 export const StartButton = styled.button`
   width: 404px;
   height: 70px;
+  color: #fff;
   font-size: 26px;
-  color: #ffffff;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.52px;
   border: none;
   border-radius: 50px;
-  background: #323232;
+  background: #ff6e46;
 `;
