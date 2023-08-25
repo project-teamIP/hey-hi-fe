@@ -8,10 +8,14 @@ import * as S from "./style";
 import svgPath from "../../../assets/images/noticeModal_bang.svg";
 import facePath from "../../../assets/images/dissatisfied_Face.svg";
 import handPath from "../../../assets/images/sign_language.svg";
+import { getUserInfo } from "../../../api/api";
+import { useQuery } from "react-query";
 
 const DiallogBox = () => {
   const navigate = useNavigate();
-
+  const { data } = useQuery("userInfo", () => getUserInfo());
+  const userData = data;
+  // console.log("userData", userData?.nickname);
   const [isNoticeModalOpen, setIsNoticeModalOpen] = React.useState(false);
 
   const onClickOpenNoticeModal = () => {
@@ -22,8 +26,6 @@ const DiallogBox = () => {
     setIsNoticeModalOpen(false);
     navigate("/calling");
   };
-
-  console.log(isNoticeModalOpen, "isNoticeModalOpen");
 
   return (
     <>
@@ -67,7 +69,8 @@ const DiallogBox = () => {
           <img src={require("../../../assets/images/dialogbox.png")} alt="dailogbox" />
           <S.InnerGroup>
             <div style={{ fontWeight: "600", fontSize: "35px" }}>
-              반가워요!<br></br>스트로베리님!
+              반가워요!<br></br>
+              {userData?.nickname}님!
             </div>
             <S.ButtonWrapper>
               <Button.Primary style={diallogBtnStyle} onClick={onClickOpenNoticeModal}>

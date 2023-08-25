@@ -5,6 +5,8 @@ import svgPath from "../../../assets/images/more_SVG.svg";
 import { CallLogInfo } from "./style";
 import { getDashboardData } from "../../../api/api";
 import noCallLogPath from "../../../assets/images/noCallLog.svg";
+import { useMutation, useQueryClient } from "react-query";
+import instance from "../../../api/api";
 
 const CallLog: React.FC = () => {
   const [callLogData, setCallLogData] = useState<CallLogInfo[]>([]); // 빈 배열로 초기화
@@ -16,7 +18,24 @@ const CallLog: React.FC = () => {
     date: "",
   });
 
-  // console.log("callLogData", callLogData);
+  const PlusFriend = async (nickname: string) => {
+    try {
+      const response = await instance.post(`/api/users/buddy/${nickname}`);
+      return response;
+    } catch (error) {
+      console.error("친구 추가 Error:", error);
+    }
+  };
+
+  const onClickAddFriend = async (nickname: string) => {
+    // console.log("nickname", nickname);
+    // console.log("버튼 클릭");
+    try {
+      await PlusFriend(nickname);
+    } catch (error) {
+      // Handle error if needed
+    }
+  };
 
   // 대시보드 정보 조회
   const getCallLogInfo = async () => {
@@ -63,7 +82,9 @@ const CallLog: React.FC = () => {
                       <h4 style={{ fontSize: "17px", fontWeight: "700" }}>{callLog.time}</h4>
                     </S.CallLogMatchingUserInfo>
                     <S.ButtonGroup>
-                      <S.CallListBtn color="friend">
+                      <S.CallListBtn
+                        color="friend"
+                        onClick={() => onClickAddFriend(callLog.nickname)}>
                         <img
                           src={require("../../../assets/images/addfriend.png")}
                           alt="addfriend"

@@ -13,7 +13,7 @@ export const Container = styled.div`
   border-radius: 30px;
   background: #fcfcfc;
   width: 541px;
-  height: 497px;
+  height: 524px;
   margin-top: 55px;
   padding: 30px;
   gap: 11px;
@@ -39,11 +39,16 @@ export const Content = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 19px;
-  /* margin: 46px 0px 60px; */
+`;
+
+export const RadioButtonGroup = styled.div`
+  margin-top: 29px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 `;
 
 export const AddFriend = styled.div`
-  margin-top: 24px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -105,11 +110,11 @@ export const ScoreTagBox = styled.div`
 export const SliderContainer = styled.div`
   padding: 10px;
   width: 92%;
-  height: 48%;
+  height: 70%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 48px;
 `;
 
 export const SliderBox = styled.div`
@@ -126,7 +131,7 @@ export const SliderTrack = styled.div<SliderTrackProps>`
   height: 10px;
   border-radius: 6px;
   background-color: #ff6e46;
-  margin-top: 12px;
+  margin-top: 2.5px;
   ${(props) => {
     if (props.value < 0) {
       return `  
@@ -172,7 +177,7 @@ export const SliderInput = styled.input`
     background-color: #ff6e46;
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0px 0px 0px 8px rgba(253, 210, 198, 0.7);
+    box-shadow: 0px 0px 0px 8px rgba(253, 210, 198, 0.5);
     margin-top: -24px;
     z-index: 1;
     padding-left: 5px;

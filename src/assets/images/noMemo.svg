@@ -1,44 +1,30 @@
-<svg width="275" height="187" viewBox="0 0 275 187" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_1352_1923)">
-<rect x="4" width="108.173" height="100.495" rx="5" fill="#D8DEE9"/>
-<path d="M19.4531 17.7812H96.7197" stroke="#B1BACC" stroke-width="3"/>
-<path d="M19.4531 34.5703H96.7197" stroke="#B1BACC" stroke-width="3"/>
-<path d="M19.4531 51.3594H96.7197" stroke="#B1BACC" stroke-width="3"/>
-<path d="M19.4531 68.1484H96.7197" stroke="#B1BACC" stroke-width="3"/>
-<path d="M19.4531 84.9375H96.7197" stroke="#B1BACC" stroke-width="3"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M94.0938 66.5078C91.3323 66.5078 89.0938 68.7464 89.0938 71.5078V173.006C89.0938 175.768 91.3323 178.006 94.0937 178.006H152.786L181.031 149.761V71.5078C181.031 68.7464 178.793 66.5078 176.031 66.5078H94.0938Z" fill="#FFE4DC"/>
-<path d="M101.807 86.0703H168.315" stroke="#F2C7BA" stroke-width="3"/>
-<path d="M101.807 100.742H168.315" stroke="#F2C7BA" stroke-width="3"/>
-<path d="M101.807 115.414H168.315" stroke="#F2C7BA" stroke-width="3"/>
-<path d="M101.807 130.086H168.315" stroke="#F2C7BA" stroke-width="3"/>
-<path d="M101.807 144.75H168.315" stroke="#F2C7BA" stroke-width="3"/>
-<path d="M101.807 159.422H168.315" stroke="#F2C7BA" stroke-width="3"/>
-<rect x="130.17" y="28.3672" width="86.0691" height="69.4421" rx="5" fill="#004BC8"/>
-<path d="M154.398 153.677L152.504 178.301L181.002 149.803L159.556 149.064C156.878 148.971 154.604 151.006 154.398 153.677Z" fill="#FF6E46"/>
-<rect x="174.861" y="16.625" width="9.78058" height="23.4734" transform="rotate(18.706 174.861 16.625)" fill="#FF6E46" fill-opacity="0.63"/>
-<path d="M141.906 47.9219H205.48" stroke="#5B8CDE" stroke-width="3"/>
-<path d="M141.906 59.6641H205.48" stroke="#5B8CDE" stroke-width="3"/>
-<path d="M141.906 71.3984H174.182" stroke="#5B8CDE" stroke-width="3"/>
-<rect x="247.488" y="39.6484" width="19.7473" height="85.7772" transform="rotate(24.2093 247.488 39.6484)" fill="#D8DEE9"/>
-<path d="M252.27 29.0134C253.402 26.4948 256.362 25.3711 258.881 26.5035L267.771 30.5006C270.289 31.6329 271.413 34.5926 270.281 37.1112L265.498 47.7473L247.488 39.6495L252.27 29.0134Z" fill="#FF6E46"/>
-<path d="M217.501 135.276C216.271 136.168 214.535 135.416 214.344 133.908L212.314 117.885L230.325 125.983L217.501 135.276Z" fill="#F8957A"/>
-<mask id="mask0_1352_1923" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="212" y="117" width="19" height="19">
-<path d="M217.511 135.276C216.281 136.168 214.544 135.416 214.353 133.908L212.324 117.885L230.334 125.983L217.511 135.276Z" fill="#D9D9D9"/>
+<svg width="269" height="179" viewBox="0 0 269 179" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="108.173" height="100.495" rx="5" fill="#D8DEE9"/>
+<path d="M15.4531 17.7812H92.7197" stroke="#B1BACC" stroke-width="3"/>
+<path d="M15.4531 34.5703H92.7197" stroke="#B1BACC" stroke-width="3"/>
+<path d="M15.4531 51.3594H92.7197" stroke="#B1BACC" stroke-width="3"/>
+<path d="M15.4531 68.1484H92.7197" stroke="#B1BACC" stroke-width="3"/>
+<path d="M15.4531 84.9375H92.7197" stroke="#B1BACC" stroke-width="3"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M90.0938 66.5078C87.3323 66.5078 85.0938 68.7464 85.0938 71.5078V173.006C85.0938 175.768 87.3323 178.006 90.0937 178.006H148.786L177.031 149.761V71.5078C177.031 68.7464 174.793 66.5078 172.031 66.5078H90.0938Z" fill="#FFE4DC"/>
+<path d="M97.8066 86.0703H164.315" stroke="#F2C7BA" stroke-width="3"/>
+<path d="M97.8066 100.742H164.315" stroke="#F2C7BA" stroke-width="3"/>
+<path d="M97.8066 115.414H164.315" stroke="#F2C7BA" stroke-width="3"/>
+<path d="M97.8066 130.086H164.315" stroke="#F2C7BA" stroke-width="3"/>
+<path d="M97.8066 144.75H164.315" stroke="#F2C7BA" stroke-width="3"/>
+<path d="M97.8066 159.422H164.315" stroke="#F2C7BA" stroke-width="3"/>
+<rect x="126.17" y="28.3672" width="86.0691" height="69.4421" rx="5" fill="#004BC8"/>
+<path d="M150.398 153.677L148.504 178.301L177.002 149.803L155.556 149.064C152.878 148.971 150.604 151.006 150.398 153.677Z" fill="#FF6E46"/>
+<rect x="170.861" y="16.625" width="9.78058" height="23.4734" transform="rotate(18.706 170.861 16.625)" fill="#FF6E46" fill-opacity="0.63"/>
+<path d="M137.906 47.9219H201.48" stroke="#5B8CDE" stroke-width="3"/>
+<path d="M137.906 59.6641H201.48" stroke="#5B8CDE" stroke-width="3"/>
+<path d="M137.906 71.3984H170.182" stroke="#5B8CDE" stroke-width="3"/>
+<rect x="243.488" y="39.6484" width="19.7473" height="85.7772" transform="rotate(24.2093 243.488 39.6484)" fill="#D8DEE9"/>
+<path d="M248.27 29.0134C249.402 26.4948 252.362 25.3711 254.881 26.5035L263.771 30.5006C266.289 31.6329 267.413 34.5926 266.281 37.1112L261.498 47.7473L243.488 39.6495L248.27 29.0134Z" fill="#FF6E46"/>
+<path d="M213.501 135.276C212.271 136.168 210.535 135.416 210.344 133.908L208.314 117.885L226.325 125.983L213.501 135.276Z" fill="#F8957A"/>
+<mask id="mask0_1352_1923" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="208" y="117" width="19" height="19">
+<path d="M213.511 135.276C212.281 136.168 210.544 135.416 210.353 133.908L208.324 117.885L226.334 125.983L213.511 135.276Z" fill="#D9D9D9"/>
 </mask>
 <g mask="url(#mask0_1352_1923)">
-<rect x="208.828" y="125.656" width="24.067" height="12.9591" transform="rotate(24.2093 208.828 125.656)" fill="black"/>
+<rect x="204.828" y="125.656" width="24.067" height="12.9591" transform="rotate(24.2093 204.828 125.656)" fill="black"/>
 </g>
-</g>
-<defs>
-<filter id="filter0_d_1352_1923" x="0" y="0" width="274.721" height="186.305" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1352_1923"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1352_1923" result="shape"/>
-</filter>
-</defs>
 </svg>

@@ -20,6 +20,7 @@ import Timer from "./Timer";
 import CleanPoint from "../cleanPoint/CleanPoint";
 import ReportModal from "../../common/modal/report/ReportModal";
 import CleanPointModal from "../../common/modal/cleanpoint/CleanPointModal";
+import ExitModal from "../../common/modal/exit/ExitModal";
 
 const Video: React.FC<{}> = () => {
   const [shouldSubmit, setShouldSubmit] = useState(false);
@@ -310,7 +311,7 @@ const Video: React.FC<{}> = () => {
       }
       socketRef.current.emit("end", message);
       // setIsExitModalOpen(true);
-      setIsPointModalOpen(true);
+      setIsExitModalOpen(true);
     }
   };
 
@@ -337,6 +338,14 @@ const Video: React.FC<{}> = () => {
 
   const MatchingUserData = userData.interests; // userData의 interests 프로퍼티로부터 배열을 가져옴
 
+  const onClickCancelExitRoom = () => {
+    setIsExitModalOpen(false);
+  };
+
+  const onClickConfirmExitRoom = () => {
+    setIsExitModalOpen(false);
+    setIsPointModalOpen(true);
+  };
   //클린포인트
   // opponentInfoRef.current.cleanPoint 값이 string 타입이어야 합니다
   const opponentCleanPoint: string = opponentInfoRef.current.cleanPoint;
@@ -465,6 +474,11 @@ const Video: React.FC<{}> = () => {
                     <p>나가기</p>
                   </S.ButtonInnerStyle>
                 </S.ButtonStyle>
+                <ExitModal
+                  isExitModalOpen={isExitModalOpen}
+                  onClickCancelExitRoom={onClickCancelExitRoom}
+                  onClickConfirmExitRoom={onClickConfirmExitRoom}
+                />
                 <CleanPointModal
                   isPointModalOpen={isPointModalOpen}
                   onClickCancelPoint={onClickCancelPoint}
