@@ -4,7 +4,6 @@ import interests from "../../../utils/interests.json";
 import MatchingUserCategori from "./MatchingUserCategori";
 
 const MatchingUserInterest = ({ MatchingUserData }: MatchingUserProps) => {
-  console.log("MatchingUserData", MatchingUserData);
   const filteredInterests = useRef<{ name: string; image: string }[]>([]);
 
   if (Array.isArray(MatchingUserData)) {

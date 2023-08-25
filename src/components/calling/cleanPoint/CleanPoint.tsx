@@ -7,7 +7,6 @@ interface CleanPointProps {
 }
 
 const CleanPoint: React.FC<CleanPointProps> = ({ cleanPoint }) => {
-  console.log("클린포인트", cleanPoint);
   const cleanPointValue: number = parseInt(cleanPoint, 10);
 
   const CleanPointBar = styled.div`

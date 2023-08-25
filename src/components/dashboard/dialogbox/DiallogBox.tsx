@@ -8,7 +8,7 @@ import * as S from "./style";
 import svgPath from "../../../assets/images/noticeModal_bang.svg";
 import facePath from "../../../assets/images/dissatisfied_Face.svg";
 import handPath from "../../../assets/images/sign_language.svg";
-import { userInfo } from "../../../api/api";
+import { getUserInfo } from "../../../api/api";
 import { useQuery } from "react-query";
 
 const DiallogBox = () => {
@@ -26,8 +26,6 @@ const DiallogBox = () => {
     setIsNoticeModalOpen(false);
     navigate("/calling");
   };
-
-  console.log(isNoticeModalOpen, "isNoticeModalOpen");
 
   return (
     <>

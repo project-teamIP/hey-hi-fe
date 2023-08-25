@@ -13,9 +13,6 @@ interface ReportModalProps {
 
 const ReportModal: React.FC<ReportModalProps> = (props) => {
   const { isReportModalOpen, onClickCancelReport, onClickConfirmReport, nickname } = props;
-  console.log("isReportModalOpen", isReportModalOpen);
-  console.log("모달 컴포넌트");
-  console.log("nickname", nickname);
   //UseState;
   const [selectedRadio, setSelectedRadio] = useState<string | null>(null);
   // Handler

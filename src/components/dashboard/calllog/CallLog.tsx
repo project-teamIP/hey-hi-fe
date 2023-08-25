@@ -3,7 +3,7 @@ import DashBoardBox from "../DashBoardBox";
 import * as S from "./style";
 import svgPath from "../../../assets/images/more_SVG.svg";
 import { CallLogInfo } from "./style";
-import { getDashboardData, PlusFriend } from "../../../api/api";
+import { getDashboardData } from "../../../api/api";
 import noCallLogPath from "../../../assets/images/noCallLog.svg";
 import { useMutation, useQueryClient } from "react-query";
 import instance from "../../../api/api";
@@ -18,7 +18,7 @@ const CallLog: React.FC = () => {
     date: "",
   });
 
-  const PlusFriend = async (nickname) => {
+  const PlusFriend = async (nickname: string) => {
     try {
       const response = await instance.post(`/api/users/buddy/${nickname}`);
       return response;
@@ -27,7 +27,7 @@ const CallLog: React.FC = () => {
     }
   };
 
-  const onClickAddFriend = async (nickname) => {
+  const onClickAddFriend = async (nickname: string) => {
     // console.log("nickname", nickname);
     // console.log("버튼 클릭");
     try {
