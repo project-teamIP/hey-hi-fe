@@ -9,50 +9,51 @@ import experienceSvg from "../../../assets/images/main/experience.svg";
 const MainKeyword = () => {
   return (
     <S.MainKeywordBox>
-      <S.SectionNum>01</S.SectionNum>
+      <S.SectionNum>WHY?</S.SectionNum>
       <h2>
         자연스럽게 친구와 영어로
-        <br />h 대화해보고 싶지 않나요?
+        <br />
+        대화해보고 싶지 않나요?
       </h2>
       <S.BoxContainer>
         <S.KeywordImgBox>
           <img src={shareSvg} alt="keyword_1" />
           <p>
-            한 줄로 텍스트를 입력해
+            세계 각지의 사람들과
             <br />
-            문장을 완성해주세요.
+            다양한 경험을 나눠보세요.
           </p>
         </S.KeywordImgBox>
         <S.KeywordImgBox>
           <img src={funSvg} alt="keyword_2" />
           <p>
-            한 줄로 텍스트를 입력해
+            재미있는 순간을
             <br />
-            문장을 완성해주세요.
+            함께 즐기세요.
           </p>
         </S.KeywordImgBox>
         <S.KeywordImgBox>
           <img src={eyesightSvg} alt="keyword_3" />
           <p>
-            한 줄로 텍스트를 입력해
+            새로운 시선을
             <br />
-            문장을 완성해주세요.
+            찾아보세요.
           </p>
         </S.KeywordImgBox>
         <S.KeywordImgBox>
           <img src={languageSvg} alt="keyword_4" />
           <p>
-            한 줄로 텍스트를 입력해
+            다른 언어를 사용하여
             <br />
-            문장을 완성해주세요.
+            의사 소통하세요.
           </p>
         </S.KeywordImgBox>
         <S.KeywordImgBox>
           <img src={experienceSvg} alt="keyword_5" />
           <p>
-            한 줄로 텍스트를 입력해
+            세상을 더 다양하게
             <br />
-            문장을 완성해주세요.
+            탐험하세요.
           </p>
         </S.KeywordImgBox>
       </S.BoxContainer>

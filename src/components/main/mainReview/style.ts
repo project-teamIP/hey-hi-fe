@@ -5,15 +5,24 @@ export const MainReviewBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 134px;
   width: 100%;
   height: 719px;
+  background-color: #2c2c2c;
 
   h1 {
     font-size: 50px;
     font-weight: 700;
     line-height: 53px;
-    margin-top: 21px;
+    margin-top: 28px;
+    color: #fff;
+  }
+
+  .subtitle {
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 20px;
   }
 `;
 
@@ -24,15 +33,17 @@ export const ReviewSubtitle = styled.p`
 `;
 
 export const SectionNum = styled.div`
-  width: 36px;
-  height: 23px;
-  border-radius: 11.5px;
-  background-color: ${colors.header_orange};
+  width: 70px;
+  height: 30px;
+  border-radius: 50px;
+  background-color: #ff6e46;
+  color: #fff;
+  font-size: 13px;
   text-align: center;
-  line-height: 26px;
-  font-weight: 400;
-  margin-top: 102px;
-  color: white;
+  letter-spacing: 0.52px;
+  font-weight: 700;
+  padding: 11px 0;
+  margin-top: 91px;
 `;
 
 export const ReviewWrapper = styled.div`
@@ -89,4 +100,16 @@ export const UserInfo = styled.p`
   color: #959595;
   position: absolute;
   bottom: 0;
+`;
+
+/* 커스텀 화살표 */
+export const CustomArrow = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
 `;

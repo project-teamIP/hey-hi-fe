@@ -1,17 +1,17 @@
 import React from "react";
 import { styled } from "styled-components";
-import Button from "../components/common/button/Button";
-import Input from "../components/common/input/Input";
+import Button from "../../components/common/button/Button";
+import Input from "../../components/common/input/Input";
 import { Link } from "react-router-dom";
-import useInput from "../hooks/useInput";
+import useInput from "../../hooks/useInput";
 import { useMutation } from "react-query";
-import { userLogin } from "../api/api";
+import { userLogin } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import LogoImage from "../assets/images/LogoImage.svg";
 import { useDispatch } from "react-redux";
-import { logIn } from "../redux/modules/userAuth";
-import Google from "../assets/images/google.svg";
-import Kakao from "../assets/images/kakao.svg";
+import { logIn } from "../../redux/modules/userAuth";
+import LogoImage from "../../assets/images/LogoImage.svg";
+import Google from "../../assets/images/google.svg";
+import Kakao from "../../assets/images/kakao.svg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,11 +20,27 @@ const Login = () => {
   const [userId, onChangeUserIdHandler] = useInput();
   const [password, onChangePasswordHandler] = useInput();
 
+  // KaKao 로그인
+  const KAKAO_REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
+  const KAKAO_REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+
+  // Google 로그인
+  const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const GOOGLE_REDIRECT_URI = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
+  const GOOGLE_SCOPE = "openid profile email";
+  const GOOGLE_RESPONSE_TYPE = "code";
+  const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&scope=${GOOGLE_SCOPE}&response_type=${GOOGLE_RESPONSE_TYPE}`;
+
   // Mutation
   const loginMutation = useMutation(userLogin, {
     onSuccess: () => {
       dispatch(logIn());
       navigate("/dashboard");
+    },
+    onError: () => {
+      // 아이디나 비밀번호가 올바르지 않을때.
+      alert("아이디나 비밀번호가 올바르지 않습니다.");
     },
   });
 
@@ -37,6 +53,13 @@ const Login = () => {
     loginMutation.mutate(loginData);
   };
 
+  const onClickKaKaoLoginHandler = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
+  const onClickGoogleLoginHandler = () => {
+    window.location.href = GOOGLE_AUTH_URL;
+  };
   return (
     <Wrap>
       <Logo>
@@ -56,17 +79,30 @@ const Login = () => {
           value={password}
           onChangeHandler={onChangePasswordHandler}
           size="medium"
+          onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") {
+              onClickLoginHandler();
+            }
+          }}
         />
       </LoginContainer>
       {/* OR */}
       <OR>OR</OR>
       {/* 소셜로그인 */}
       <SocialContainer>
-        <Button.Primary size="loginbtn" bc="#F8F8F8" color="#000000">
+        <Button.Primary
+          size="loginbtn"
+          bc="#F8F8F8"
+          color="#000000"
+          onClick={onClickGoogleLoginHandler}>
           <img src={Google} alt="google" />
           구글로 시작하기
         </Button.Primary>
-        <Button.Primary size="loginbtn" bc="#F8F8F8" color="#000000">
+        <Button.Primary
+          size="loginbtn"
+          bc="#F8F8F8"
+          color="#000000"
+          onClick={onClickKaKaoLoginHandler}>
           <img src={Kakao} alt="kakao" />
           카카오로 시작하기
         </Button.Primary>

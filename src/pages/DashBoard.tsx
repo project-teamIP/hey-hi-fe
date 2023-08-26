@@ -1,37 +1,92 @@
-import React, { Children } from "react";
+import React, { useState, useEffect } from "react";
 import DiallogBox from "../components/dashboard/dialogbox/DiallogBox";
 import CallLog from "../components/dashboard/calllog/CallLog";
 import Memo from "../components/dashboard/memo/Memo";
 import Interest from "../components/dashboard/interest/Interest";
-import Header from "../components/common/header/Header";
 import styled from "styled-components";
+import { useQuery } from "react-query";
+import { getUserInfo } from "../api/api";
+import SocialModal from "../components/common/modal/social/SocialModal";
 
 const DashBoard = () => {
+  // 모달
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+  // 유저 정보
+  const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
+
+  const userInfo = data;
+  // console.log(userInfo)
+  // 소셜 로그인 최초 로그인시
+  useEffect(() => {
+    if (!isLoading && userInfo && userInfo.interests) {
+      if (
+        userInfo.interests.length === 0 &&
+        userInfo.country === "Default" &&
+        userInfo.language === "Default"
+      ) {
+        openModal();
+      }
+    }
+  }, [userInfo, isLoading]);
+
   return (
     <>
-      <Header />
       <DashBoardWrapper>
-        <div style={{ display: "flex", flexDirection: "column", gap: "33px" }}>
+        <DashBoardContainer>
           <div style={{ display: "flex", gap: "33px" }}>
-            <DiallogBox />
-            <CallLog />
+            <div style={{ display: "flex", flexDirection: "column", gap: "33px" }}>
+              <div style={{ display: "flex", gap: "33px" }}>
+                <DiallogBox />
+                <CallLog />
+              </div>
+              <Memo />
+            </div>
+            <Interest />
           </div>
-          <Memo />
-        </div>
-        <Interest />
+        </DashBoardContainer>
       </DashBoardWrapper>
+      {showModal && <SocialModal />}
     </>
   );
 };
 
 const DashBoardWrapper = styled.div`
+  margin: 0 auto;
+  margin-top: 70px;
+  width: 100vw;
   display: flex;
-  margin-top: 103px;
-  gap: 33px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
 `;
+const DashBoardContainer = styled.div`
+  margin-top: 50px;
+  display: flex;
+  gap: 33px;
+  position: relative;
+  /* width: 100vw; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1555px;
+  width: 100%;
+`;
+// const DashboardContainer = styled.div`
+//   max-width: 1555px;
+//   width: 100%;
+//   display: flex;
+//   justify-content: start;
+//   align-items: start;
+//   display: flex;
+//   position: absolute;
+//   height: 100%;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+// `;
 
 export default DashBoard;

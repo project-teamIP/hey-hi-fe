@@ -4,7 +4,6 @@ import mainTextSvg from "../../../assets/images/main/maintext.svg";
 
 export const MainBox = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 70px;
@@ -22,22 +21,23 @@ export const MainInner = styled.div`
 
   h1 {
     font-size: 60px;
-    font-weight: 600;
+    font-weight: 800;
+    margin-bottom: 62px;
   }
 
   p {
-    margin-top: 68px;
     font-size: 18px;
-    font-weight: 400;
-    width: 400px;
-    height: 148px;
+    font-weight: 500;
+    letter-spacing: -0.36px;
+    line-height: 140%;
+    margin-bottom: 68px;
   }
 `;
 
 export const ImgBox = styled.div`
-  width: 53.5rem;
-  height: 41.5625rem;
-  margin-right: 92px;
+  width: 63.3125rem;
+  height: 53.75rem;
+  margin-right: 5.75rem;
 
   img {
     height: 100%;
@@ -47,9 +47,10 @@ export const ImgBox = styled.div`
 
 export const SvgBox = styled.div`
   text-align: end;
-  transform: translateX(18.75rem);
+  transform: translateX(8.0625rem);
 `;
 
+//띠
 export const SvgBox2 = styled.div`
   height: 55px;
   width: 100%;

@@ -23,12 +23,7 @@ const stepTexts = [
   },
 ];
 
-const images = [
-  "https://via.placeholder.com/924x698",
-  "https://via.placeholder.com/924x698",
-  "https://via.placeholder.com/924x698",
-  "https://via.placeholder.com/924x698",
-];
+const images = ["step1-signup", "step2-dashboard", "step3-calling", "step4-friends"];
 
 const MainSlide = () => {
   // 슬라이드 현재 페이지
@@ -46,18 +41,19 @@ const MainSlide = () => {
   // };
 
   useEffect(() => {
+    // 5초 간격으로 슬라이드 자동 넘김
     const interval = setInterval(() => {
       setCurrentStep((prevStep) => (prevStep % stepTexts.length) + 1);
-    }, 5000); // 5초 간격으로 슬라이드 자동 넘김
-
+    }, 5000);
+    // 컴포넌트 언마운트 시 타이머 정리
     return () => {
-      clearInterval(interval); // 컴포넌트 언마운트 시 타이머 정리
+      clearInterval(interval);
     };
   }, []);
 
   return (
     <S.MainSlideBox>
-      <S.SectionNum>02</S.SectionNum>
+      <S.SectionNum>HOW</S.SectionNum>
       <h2>헤이,안녕 이용방법</h2>
       <S.MainSlideInner>
         <S.ProgressBar>
@@ -83,7 +79,10 @@ const MainSlide = () => {
           ))}
         </S.ProgressBar>
         <S.SliderWrapper>
-          <S.SliderImage src={images[currentStep - 1]} alt={`Slide ${currentStep}`} />
+          <S.SliderImage
+            src={require(`../../../assets/images/main/${images[currentStep - 1]}.png`)}
+            alt={`Slide ${currentStep}`}
+          />
           {/* <S.ButtonWrapper>
           <S.SlideBtn onClick={onClickPrevSlideHandler}>
             <img src={require(`../../../assets/images/main/prev.png`)} alt="prev-btn" />

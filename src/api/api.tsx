@@ -1,6 +1,10 @@
 import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
-import { SignupInformationData } from "../types/types";
+import { MemoEditType, SignupInformationData } from "../types/types";
 import { LoginInformationData } from "../types/types";
+import { UserInfoType } from "../types/user";
+import { deleteToken } from "../utils/deleteToken";
+import store from "../redux/config/configStore";
+import { logOut } from "../redux/modules/userAuth";
 
 // Axios 인스턴스 생성
 export const instance: AxiosInstance = axios.create({
@@ -64,27 +68,35 @@ instance.interceptors.response.use(
       (error.response.data as any)?.message === "토큰이 만료되었습니다."
     ) {
       const cookies = getCookies();
-      const { refresh_token } = cookies;
+      const { refresh_token, access_token } = cookies;
 
       // 리프레시 토큰이 존재할 경우에만 실행
       if (refresh_token) {
         try {
           const refreshResponse = await instance.post("/auth/re-access", {
             refresh_token,
+            access_token,
           });
-          const newAccessToken = refreshResponse.headers.access_token;
-          console.log(newAccessToken);
-          console.log(refreshResponse);
 
-          if (error.config) {
-            const newConfig = { ...error.config };
-            addTokenToHeaders(newConfig, newAccessToken, "AccessToken");
-            return instance.request(newConfig);
-          }
+          const newAccessToken = refreshResponse.headers.accesstoken;
+
+          // 기존의 만료된 액세스 토큰을 삭제
+          deleteToken("access_token");
+
+          // 새로운 액세스 토큰을 쿠키에 저장
+          document.cookie = `access_token=${newAccessToken}; path=/;`;
+
+          const newConfig = { ...error.config };
+          addTokenToHeaders(newConfig, newAccessToken, "AccessToken");
+
+          return instance.request(newConfig);
         } catch (refreshError) {
           console.log("액세스 토큰 재발급 실패", refreshError);
         }
       }
+    } else if ((error.response?.data as any)?.message === "유효하지 않은 토큰입니다.") {
+      alert("로그인이 만료되었습니다.");
+      store.dispatch(logOut());
     }
 
     return Promise.reject(error);
@@ -108,7 +120,7 @@ const userIdCheck = async (loginId: string) => {
 // 회원 닉네임 중복 조회
 const userNickNameCheck = async (nickName: string) => {
   const response = await instance.get(`/api/users/check?nickname=${nickName}`);
-  console.log("닉넴 중복 확인", nickName, response.data);
+  console.log("닉네임 중복 확인", nickName, response.data);
   return response.data;
 };
 
@@ -123,7 +135,29 @@ const userLogin = async (loginData: LoginInformationData) => {
   return response.data;
 };
 
-export { userRegister, userLogin, userIdCheck, userNickNameCheck };
+// 카카오 로그인
+const userKakaoLogin = async (KAKAO_CODE: string) => {
+  const response = await instance.get(`/api/users/login/kakao?code=${KAKAO_CODE}`);
+  // path:/ : 쿠키의 유효범위 설정
+  document.cookie = `access_token=${response.headers.accesstoken}; path=/;`;
+  document.cookie = `refresh_token=${response.headers.refreshtoken}; path=/`;
+
+  console.log("카카오 로그인", response);
+  return response.data;
+};
+
+// 구글 로그인
+const userGoogleLogin = async (GOOGLE_CODE: string) => {
+  const response = await instance.get(`/api/users/login/google?code=${GOOGLE_CODE}`);
+  // path:/ : 쿠키의 유효범위 설정
+  document.cookie = `access_token=${response.headers.accesstoken}; path=/;`;
+  document.cookie = `refresh_token=${response.headers.refreshtoken}; path=/`;
+
+  console.log("구글 로그인", response);
+  return response.data;
+};
+
+export { userRegister, userLogin, userKakaoLogin, userGoogleLogin, userIdCheck, userNickNameCheck };
 
 // 로그아웃
 export const userLogout = async () => {
@@ -165,11 +199,22 @@ export const changeProfileImg = async (image: FormData) => {
 };
 
 // 회원정보 수정
-export const changeUserInfo = async (userInfo: any) => {
+export const changeUserInfo = async (userInfo: UserInfoType) => {
   try {
     const response = await instance.patch(`/api/users`, userInfo);
     return response;
   } catch (error) {
+    throw error;
+  }
+};
+
+// 회원 탈퇴
+export const withdrawalUser = async () => {
+  try {
+    const response = await instance.delete(`/api/users/withdrawal`);
+    return response;
+  } catch (error) {
+    console.error("회원 탈퇴 오류", error);
     throw error;
   }
 };
@@ -216,6 +261,21 @@ export const getSingleMemo = async (id: number) => {
     return response.data;
   } catch (error) {
     console.error("메모 조회 오류", error);
+    throw error;
+  }
+};
+
+// 메모 수정
+export const editMemo = async (memoData: MemoEditType) => {
+  try {
+    const response = await instance.put(`api/memo/${memoData.id}`, {
+      title: memoData.title,
+      content: memoData.content,
+    });
+    return response;
+  } catch (error) {
+    console.error("메모 수정 오류", error);
+    throw error;
   }
 };
 
@@ -226,5 +286,21 @@ export const deleteSingleMemo = async (id: number) => {
     return response;
   } catch (error) {
     console.error("메모 조회 오류", error);
+  }
+};
+
+//접속 인원 조회
+export const fetchOnlineUsers = async () => {
+  const response = await instance.get("/api/users/count");
+  return response.data;
+};
+
+//대시보드 조회
+export const getDashboardData = async () => {
+  try {
+    const response = await instance.get(`/api/users/dashboard`);
+    return response.data;
+  } catch (error) {
+    console.log("dashboard 조회 오류", error);
   }
 };

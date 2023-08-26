@@ -3,6 +3,7 @@ import MainTop from "../components/main/mainTop/MainTop";
 import MainKeyword from "../components/main/mainKeyword/MainKeyword";
 import MainSlide from "../components/main/mainSlide/MainSlide";
 import MainReview from "../components/main/mainReview/MainReview";
+import Footer from "../components/common/footer/Footer";
 
 const Main = () => {
   return (
@@ -11,7 +12,7 @@ const Main = () => {
       <MainKeyword />
       <MainSlide />
       <MainReview />
-      <footer />
+      <Footer />
     </Layout>
   );
 };
@@ -24,10 +25,4 @@ const Layout = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-
-  footer {
-    width: 100%;
-    height: 328px;
-    background-color: #545454;
-  }
 `;

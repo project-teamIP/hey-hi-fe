@@ -25,6 +25,6 @@ export const InputBox = styled.input<InputProps>`
   }
 
   &:focus {
-    border: 1px solid #323232;
+    outline: 2px solid #323232;
   }
 `;

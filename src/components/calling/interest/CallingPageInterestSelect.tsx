@@ -1,37 +1,16 @@
 import React from "react";
-import * as S from "../../dashboard/interest/style";
+import * as A from "../../dashboard/interest/style";
 import styled from "styled-components";
+import MatchingUserInterest from "./MatchingUserInterest";
+import { MatchingUserProps } from "../../../types/types";
 
-const CallingPageInterestSelect: React.FC = () => {
+const CallingPageInterestSelect = ({ MatchingUserData }: MatchingUserProps) => {
   return (
     <MatchingUserInterstWrapper>
       <h3>상대방의 관심사</h3>
-      <S.InterestBoxContainer>
-        <S.InterestBox>
-          <S.ImageBox>
-            <img src={require("../../../assets/images/book.png")} alt="book" />
-          </S.ImageBox>
-          <p>텍스트</p>
-        </S.InterestBox>
-        <S.InterestBox style={{ backgroundColor: "#004BC8", color: "#FFFFFF" }}>
-          <S.ImageBox>
-            <img src={require("../../../assets/images/movie.png")} alt="movie" />
-          </S.ImageBox>
-          <p>텍스트</p>
-        </S.InterestBox>
-        <S.InterestBox style={{ backgroundColor: "#000000", color: "#FFFFFF" }}>
-          <S.ImageBox>
-            <img src={require("../../../assets/images/game.png")} alt="game" />
-          </S.ImageBox>
-          <p>텍스트</p>
-        </S.InterestBox>
-        <S.InterestBox style={{ backgroundColor: "#FF6E46" }}>
-          <S.ImageBox style={{ width: "48px", height: "48px" }}>
-            <img src={require("../../../assets/images/sport.png")} alt="sport" />
-          </S.ImageBox>
-          <p>텍스트</p>
-        </S.InterestBox>
-      </S.InterestBoxContainer>
+      <A.InterestBoxContainer>
+        <MatchingUserInterest MatchingUserData={MatchingUserData} />
+      </A.InterestBoxContainer>
     </MatchingUserInterstWrapper>
   );
 };
@@ -41,8 +20,9 @@ const MatchingUserInterstWrapper = styled.div`
   height: 423px;
 
   h3 {
-    margin-top: 30px;
+    margin-top: 20px;
     font-size: 20px;
+    font-style: normal;
     font-weight: 600;
     margin-bottom: 30px;
     line-height: 23.87px;
