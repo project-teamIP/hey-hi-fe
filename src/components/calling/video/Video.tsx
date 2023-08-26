@@ -246,6 +246,16 @@ const Video: React.FC<{}> = () => {
     } else {
       console.log("socketUrl undefined");
     }
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        console.log("연결 해제");
+      }
+
+      if (myPeerRef.current) {
+        myPeerRef.current.close();
+      }
+    };
   }, []);
 
   if (socketRef.current) {
@@ -303,18 +313,12 @@ const Video: React.FC<{}> = () => {
     await setShouldSubmit(true);
     if (socketRef.current) {
       const message = "나가기 버튼 누름!";
-      if (myPeerRef.current) {
-        // if (myPeerRef.current && senderRef.current) {
-        // myPeerRef.current.removeTrack(senderRef.current);
-        myPeerRef.current.close();
-      }
       socketRef.current.emit("end", message);
-      // setIsExitModalOpen(true);
       setIsExitModalOpen(true);
     }
   };
 
-  const onClickcloseMatchingModal = () => {
+  const onClickcloseMatchingModal = async () => {
     setIsMatchingModalOpen(false);
     navigate("/dashboard");
   };
