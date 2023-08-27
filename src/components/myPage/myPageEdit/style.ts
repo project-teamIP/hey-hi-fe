@@ -205,13 +205,15 @@ export const ImgArray = styled.div`
     object-fit: contain;
     cursor: pointer;
   }
+  /* 기본 이미지 선택 시 테두리 */
+  img.selected {
+    box-shadow: #ff6e46 0px 0px 0px 5px;
+  }
 
   input {
     display: none;
   }
 `;
-
-export const ImgInput = styled.div``;
 
 export const BtnBox = styled.div`
   display: flex;

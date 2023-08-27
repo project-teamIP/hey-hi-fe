@@ -138,7 +138,7 @@ const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalH
               src={require(`../../../assets/images/mypage/profile5.png`)}
               alt="profile5"
               onClick={() => onClickDefaultImageHandler("profile5")}
-              className={profileImg === "profile15" ? "selected" : ""}
+              className={profileImg === "profile5" ? "selected" : ""}
             />
             <img
               src={require(`../../../assets/images/mypage/profile6.png`)}
