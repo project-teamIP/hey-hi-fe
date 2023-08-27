@@ -32,6 +32,7 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
     title: memo.title,
     content: memo.content,
   });
+
   const onClickMemoEditHandler = () => {
     setShowDropDown(false);
     setIsEditing(true);

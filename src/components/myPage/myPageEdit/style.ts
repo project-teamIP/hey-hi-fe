@@ -7,13 +7,6 @@ export const MyPageEditBox = styled.div`
   margin-top: 87px;
 `;
 
-export const FormLabel = styled.label`
-  display: block;
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 16px;
-`;
-
 export const ProfileTop = styled.div`
   display: flex;
   justify-content: start;
@@ -34,16 +27,28 @@ export const ProfileTopLeft = styled.div`
   align-items: center;
 `;
 
-export const ProfileImage = styled.div`
+export const ProfileImageBox = styled.div`
   height: 103px;
   width: 103px;
-  border-radius: 50%;
-  overflow: hidden;
+  position: relative;
 
   img {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
   }
+`;
+
+export const ModalToggleBtn = styled.button`
+  background: none;
+  border: none;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  right: 1px;
+  bottom: 6px;
+  padding: 0;
+  cursor: pointer;
 `;
 
 export const MannerPoint = styled.div`
@@ -60,56 +65,15 @@ export const MannerPoint = styled.div`
   margin-top: 11px;
 `;
 
-export const ImgForm = styled.div`
-  height: 156px;
-  width: 156px;
-  position: relative;
-
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  }
-`;
-
-export const ImgInput = styled.div`
-  label {
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-    cursor: pointer;
-  }
-
-  /* 파일 필드 숨기기 */
-  input[type="file"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-  }
-
-  button {
-    background: none;
-    border: none;
-    width: 33px;
-    height: 33px;
-    position: absolute;
-    right: 1px;
-    bottom: 6px;
-    padding: 0;
-    cursor: pointer;
-  }
-`;
-
 export const FormGroup = styled.div`
   margin-bottom: 34px;
+`;
+
+export const FormLabel = styled.label`
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
 `;
 
 export const Gap = styled.div`
@@ -194,7 +158,7 @@ export const SingleCheckbox = styled.div`
 `;
 
 /* ! image change modal */
-export const MemoModalOverlay = styled.div`
+export const ImgChangeModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -208,23 +172,64 @@ export const MemoModalOverlay = styled.div`
   z-index: 9999;
 `;
 
-export const MemoModalBox = styled.div`
-  width: 968px;
-  height: 773px;
+export const ImgChangeModalBox = styled.div`
+  width: 541px;
+  height: 493px;
   background-color: white;
-  padding: 0 45px;
   border-radius: 30px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h3 {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 700;
+  }
 `;
 
-export const CloseButton = styled.button`
-  position: absolute;
-  top: 37px;
-  right: 45px;
-  background: none;
+export const ImgArray = styled.div`
+  width: 400px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-row-gap: 14px;
+  grid-column-gap: 29px;
+  margin: 51px auto;
+
+  img {
+    width: 77px;
+    height: 77px;
+    border-radius: 50%;
+    text-align: center;
+    object-fit: contain;
+    cursor: pointer;
+  }
+
+  input {
+    display: none;
+  }
+`;
+
+export const ImgInput = styled.div``;
+
+export const BtnBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 19px;
+`;
+
+export const ModalBtn = styled.button<{ bc?: string; tc?: string }>`
+  width: 185px;
+  height: 70px;
+  border-radius: 50px;
+  background: ${(props) => props.bc || "#FF6E46"};
+  color: ${(props) => props.tc || "#fff"};
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.52px;
   border: none;
+  padding: 0;
   cursor: pointer;
-  font-size: 16px;
-  color: #333;
 `;

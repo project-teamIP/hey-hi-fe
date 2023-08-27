@@ -51,8 +51,8 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
           height: 70px;
           width: 185px;
           border-radius: 50px;
-          font-weight: 600;
-          font-size: 22px;
+          font-weight: 700;
+          font-size: 26px;
         `;
       case "the smallest":
         return css`
