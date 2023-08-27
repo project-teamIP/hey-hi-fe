@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as S from "./style";
 import { useMutation } from "react-query";
-import { changeProfileImg } from "../../../api/api";
+import { changeProfileImgFormData, changeProfileImgJson } from "../../../api/api";
 
 interface ImageChangeModalProps {
   onClickToggleModalHandler: () => void;
@@ -10,13 +10,12 @@ interface ImageChangeModalProps {
 }
 
 const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalHandler }) => {
-  const [profileImg, setProfileImg] = useState(null);
+  const [profileImg, setProfileImg] = useState<string | File | null>(null);
   const [imgPreview, setImgPreview] = useState(null);
-  const [selectedDefaultImage, setSelectedDefaultImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
-  // 프로필 이미지 뮤테이션
-  const imgChangeMutation = useMutation(changeProfileImg, {
+  // 프로필 이미지 뮤테이션 form data
+  const formDataImgChangeMutation = useMutation(changeProfileImgFormData, {
     onSuccess: () => {
       setIsLoading(false);
       alert("프로필 이미지가 변경되었습니다.");
@@ -24,7 +23,19 @@ const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalH
     },
     onError: (error) => {
       alert("잠시 후 다시 시도해주세요😭");
-      console.error("Image change error:", error);
+      console.error("ImgFormData 오류:", error);
+    },
+  });
+  // 프로필 이미지 뮤테이션 json
+  const JsonImgChangeMutation = useMutation(changeProfileImgJson, {
+    onSuccess: () => {
+      setIsLoading(false);
+      alert("프로필 이미지가 변경되었습니다.");
+      onClickToggleModalHandler();
+    },
+    onError: (error) => {
+      alert("잠시 후 다시 시도해주세요😭");
+      console.error("ImgJson 오류:", error);
     },
   });
 
@@ -43,10 +54,11 @@ const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalH
       reader.readAsDataURL(file);
     }
   };
-  console.log("프로필 이미지 선택", imgPreview, profileImg);
+
   // 기본 이미지에서 선택
-  const onSelectDefaultImageHandler = (imageName: string) => {
-    setSelectedDefaultImage(imageName);
+  const onClickDefaultImageHandler = (imageName: string) => {
+    setImgPreview(null);
+    setProfileImg(imageName);
   };
 
   // 프로필 이미지 서버로 전송
@@ -55,10 +67,21 @@ const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalH
 
     if (profileImg) {
       setIsLoading(true);
-      const formdataFile = new FormData();
-      // formdataFile에 "image"라는 key로 profileImg를 추가
-      formdataFile.append("image", profileImg);
-      imgChangeMutation.mutate(formdataFile);
+      // profileImg가 문자열인 경우 (기본 이미지 선택)
+      if (typeof profileImg === "string") {
+        // json 형태의 Img data 생성
+        const imgJsonData = {
+          key: "profile",
+          value: profileImg,
+        };
+        JsonImgChangeMutation.mutate(imgJsonData);
+      } else {
+        // profileImg가 File 객체인 경우 (파일 업로드)
+        const imgFormData = new FormData();
+        // imgFormData에 "image"라는 key로 profileImg를 추가
+        imgFormData.append("image", profileImg);
+        formDataImgChangeMutation.mutate(imgFormData);
+      }
     } else {
       alert("변경할 이미지를 선택해주세요😉");
     }
@@ -88,32 +111,46 @@ const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalH
               />
             </label>
             <img
-              src={require(`../../../assets/images/mypage/default-img1.png`)}
-              alt="default-img1"
+              src={require(`../../../assets/images/mypage/profile1.png`)}
+              alt="profile1"
+              onClick={() => onClickDefaultImageHandler("profile1")}
+              className={profileImg === "profile1" ? "selected" : ""}
             />
             <img
-              src={require(`../../../assets/images/mypage/default-img2.png`)}
-              alt="default-img1"
+              src={require(`../../../assets/images/mypage/profile2.png`)}
+              alt="profile2"
+              onClick={() => onClickDefaultImageHandler("profile2")}
+              className={profileImg === "profile2" ? "selected" : ""}
             />
             <img
-              src={require(`../../../assets/images/mypage/default-img3.png`)}
-              alt="default-img1"
+              src={require(`../../../assets/images/mypage/profile3.png`)}
+              alt="profile3"
+              onClick={() => onClickDefaultImageHandler("profile3")}
+              className={profileImg === "profile3" ? "selected" : ""}
             />
             <img
-              src={require(`../../../assets/images/mypage/default-img4.png`)}
-              alt="default-img1"
+              src={require(`../../../assets/images/mypage/profile4.png`)}
+              alt="profile4"
+              onClick={() => onClickDefaultImageHandler("profile4")}
+              className={profileImg === "profile4" ? "selected" : ""}
             />
             <img
-              src={require(`../../../assets/images/mypage/default-img5.png`)}
-              alt="default-img1"
+              src={require(`../../../assets/images/mypage/profile5.png`)}
+              alt="profile5"
+              onClick={() => onClickDefaultImageHandler("profile5")}
+              className={profileImg === "profile15" ? "selected" : ""}
             />
             <img
-              src={require(`../../../assets/images/mypage/default-img6.png`)}
-              alt="default-img1"
+              src={require(`../../../assets/images/mypage/profile6.png`)}
+              alt="profile6"
+              onClick={() => onClickDefaultImageHandler("profile6")}
+              className={profileImg === "profile6" ? "selected" : ""}
             />
             <img
-              src={require(`../../../assets/images/mypage/default-img7.png`)}
-              alt="default-img1"
+              src={require(`../../../assets/images/mypage/profile7.png`)}
+              alt="profile7"
+              onClick={() => onClickDefaultImageHandler("profile7")}
+              className={profileImg === "profile7" ? "selected" : ""}
             />
           </S.ImgArray>
           <S.BtnBox>
