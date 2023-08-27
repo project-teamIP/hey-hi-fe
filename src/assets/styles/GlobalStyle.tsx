@@ -4,18 +4,26 @@ import reset from "styled-reset";
 // 전역 스타일링 초기화 진행 후 기본 셋팅
 const GlobalStyle = createGlobalStyle`
   ${reset}
-  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+
+  @font-face {
+    font-family: 'Pretendard Variable';
+    font-weight: 45 920;
+    font-style: normal;
+    font-display: swap;
+    src: url('../../../public/fonts/PretendardVariable.woff2') format('woff2-variations');
+  }
+
   * {
     box-sizing: border-box;
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'Pretendard Variable', sans-serif !important;
     font-style: normal;
     -ms-overflow-style: none; /* 인터넷 익스플로러 */
     scrollbar-width: none; /* 파이어폭스 */
-
     &::-webkit-scrollbar {
       display: none; /* 크롬, 사파리, 오페라, 엣지 */
     }
   }
+
   body {
     background: #fafafa;
   }
