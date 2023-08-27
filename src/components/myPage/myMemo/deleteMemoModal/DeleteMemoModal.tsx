@@ -26,7 +26,9 @@ const DeleteMemoModal: React.FC<DeleteModalProps> = ({
   });
   const onClickMemoDeleteHandler = () => {
     deleteMemoMutation.mutate(memoId);
+    // 삭제 확인 모달 닫기
     onClickMemoDeleteModalHandler();
+    // 부모 모달 닫기
     onDeleted();
   };
 

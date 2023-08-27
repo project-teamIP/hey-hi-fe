@@ -62,6 +62,14 @@ const ViewMemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) 
     },
   });
 
+  // const onClickMemoEditSubmitHandler = () => {
+  //   // 줄바꿈 문자 `\n`을 HTML <br>로 변환
+  //   const contentWithLineBreaks = editedMemo.content.replace(/\n/g, "<br/>");
+  //   editMemoMutation.mutate({
+  //     ...editedMemo,
+  //     content: contentWithLineBreaks,
+  //   });
+  // };
   const onClickMemoEditSubmitHandler = () => {
     editMemoMutation.mutate(editedMemo);
   };
@@ -184,7 +192,15 @@ const ViewMemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) 
             </S.EditBtns>
           </S.MemoModalBodyEdit>
         ) : (
-          <S.MemoModalBody>{data.content}</S.MemoModalBody>
+          <S.MemoModalBody>
+            {/* 화면에 보여질 때 <br /> 태그를 줄바꿈으로 변환 */}
+            {data.content.split("\n").map((line: string, index: number) => (
+              <React.Fragment key={index}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
+          </S.MemoModalBody>
         )}
       </S.MemoModalBox>
     </S.MemoModalOverlay>
