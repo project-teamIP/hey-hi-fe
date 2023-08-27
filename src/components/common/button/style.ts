@@ -64,10 +64,10 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
         `;
       case "loginbtn":
         return css`
-          height: 60px;
-          width: 217px;
-          border: 1px solid #bababa;
-          border-radius: 15px;
+          height: 44px;
+          width: 153px;
+          border: 1px solid #000;
+          border-radius: 50px;
           font-weight: 400;
           font-size: 16px;
         `;
