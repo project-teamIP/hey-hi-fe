@@ -113,7 +113,7 @@ const Login = () => {
       </LoginButton>
       {/* 회원가입 안내문 */}
       <SignUp>
-        아직 회원이 아니신가요? <Link to="/signup">회원가입</Link>
+        아직 회원이 아니신가요?<SignUpLink to="/signup">회원가입</SignUpLink>
       </SignUp>
     </Wrap>
   );
@@ -196,4 +196,12 @@ const LoginButton = styled(Button.Primary)`
 const SignUp = styled.div`
   display: flex;
   justify-content: center;
+  color: #a0a0a0;
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const SignUpLink = styled(Link)`
+  color: #a0a0a0;
+  margin-left: 15px;
 `;
