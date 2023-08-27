@@ -90,19 +90,11 @@ const Login = () => {
       <OR>OR</OR>
       {/* 소셜로그인 */}
       <SocialContainer>
-        <Button.Primary
-          size="loginbtn"
-          bc="#F8F8F8"
-          color="#000000"
-          onClick={onClickGoogleLoginHandler}>
+        <Button.Primary size="sns" onClick={onClickGoogleLoginHandler}>
           <img src={Google} alt="google" />
           구글로 시작하기
         </Button.Primary>
-        <Button.Primary
-          size="loginbtn"
-          bc="#F8F8F8"
-          color="#000000"
-          onClick={onClickKaKaoLoginHandler}>
+        <Button.Primary size="sns" onClick={onClickKaKaoLoginHandler}>
           <img src={Kakao} alt="kakao" />
           카카오로 시작하기
         </Button.Primary>
