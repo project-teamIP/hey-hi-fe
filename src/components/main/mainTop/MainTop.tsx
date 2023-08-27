@@ -3,8 +3,12 @@ import Button from "../../common/button/Button";
 import { Link } from "react-router-dom";
 //svg img
 import mainTopSvg from "../../../assets/images/main/maintop.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../types/user";
 
 const MainTop = () => {
+  const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
+
   return (
     <div>
       <S.MainBox>
@@ -40,7 +44,7 @@ const MainTop = () => {
               <br />
               지금 바로 헤이,안녕을 시작해보세요!
             </p>
-            <Link to="/login">
+            <Link to={state ? "/dashboard" : "/login"}>
               <Button.Primary size="large" bc="#000">
                 헤이,안녕 시작하기
               </Button.Primary>
