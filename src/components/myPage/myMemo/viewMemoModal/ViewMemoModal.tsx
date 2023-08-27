@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as S from "./style";
 import * as C from "../../../../assets/styles/commonStyle";
 import rabbitSvg from "../../../../assets/images/profileImg/rabbit1.svg";
@@ -19,7 +19,7 @@ const ViewMemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) 
   const queryClient = useQueryClient();
 
   // 해당 메모 하나만 조회
-  const { data, isLoading } = useQuery(["mymemo", memo.id], () => getSingleMemo(memo.id));
+  const { data, isLoading } = useQuery(["myMemo", memo.id], () => getSingleMemo(memo.id));
   console.log(data, memo);
 
   // 드랍다운
@@ -51,36 +51,22 @@ const ViewMemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) 
 
   const editMemoMutation = useMutation((editedMemo: MemoEditType) => editMemo(editedMemo), {
     onSuccess: () => {
-      queryClient.invalidateQueries("myMemo");
+      queryClient.refetchQueries(["myMemo", memo.id]);
       setIsEditing(false);
       setEditedMemo({
         id: memo.id,
         title: data.title,
         content: data.content,
       });
-      queryClient.invalidateQueries("myMemo");
     },
   });
 
-  // const onClickMemoEditSubmitHandler = () => {
-  //   // 줄바꿈 문자 `\n`을 HTML <br>로 변환
-  //   const contentWithLineBreaks = editedMemo.content.replace(/\n/g, "<br/>");
-  //   editMemoMutation.mutate({
-  //     ...editedMemo,
-  //     content: contentWithLineBreaks,
-  //   });
-  // };
   const onClickMemoEditSubmitHandler = () => {
     editMemoMutation.mutate(editedMemo);
   };
 
   // 최대 글자수
   const maxLength = 1500;
-
-  // 수정 완료 시 모달 리렌더링
-  useEffect(() => {
-    console.log("useEffect", isEditing);
-  }, [isEditing]);
 
   // 로딩중 스피너 설정
   if (isLoading) {
