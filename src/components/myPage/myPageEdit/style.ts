@@ -82,6 +82,24 @@ export const Gap = styled.div`
   }
 `;
 
+export const NickCheckBtn = styled.button`
+  width: 141px;
+  height: 60px;
+  border-radius: 15px;
+  background: #757575;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 600;
+`;
+
+export const NickCheckMsg = styled.div`
+  color: #ff5049;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: -13px;
+`;
+
 export const EmailReadOnly = styled.div`
   height: 60px;
   width: 574px;
