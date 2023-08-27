@@ -6,7 +6,7 @@ export interface PrimitiveButtonProps {
   bc?: string;
   color?: string;
   fw?: string;
-  size?: "large" | "middle" | "small" | "the smallest" | "loginbtn";
+  size?: "large" | "middle" | "small" | "the smallest" | "loginbtn" | "sns";
   width?: string;
   height?: string;
   activebc?: string;
@@ -70,6 +70,17 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
           border-radius: 50px;
           font-weight: 400;
           font-size: 16px;
+        `;
+      case "sns":
+        return css`
+          width: 217px;
+          height: 60px;
+          background-color: #f8f8f8;
+          border: 1px solid #bababa;
+          border-radius: 15px;
+          color: #000;
+          font-size: 18px;
+          font-weight: 600;
         `;
       default:
         return css`
