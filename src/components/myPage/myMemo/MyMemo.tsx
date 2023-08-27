@@ -7,7 +7,7 @@ import { MemosType } from "../../../types/user";
 import Pagination from "../../common/pagination/Pagination";
 import { useState } from "react";
 import { formatDateTime } from "../../../utils/formattedDate";
-import MemoModal from "./MemoModal";
+import ViewMemoModal from "./viewMemoModal/ViewMemoModal";
 
 const MyMemo = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,7 +70,9 @@ const MyMemo = () => {
         onChangePageHandler={setCurrentPage}
       />
       {/* 모달 */}
-      {selectedMemo && <MemoModal memo={selectedMemo} onCloseModalHandler={closeModalHandler} />}
+      {selectedMemo && (
+        <ViewMemoModal memo={selectedMemo} onCloseModalHandler={closeModalHandler} />
+      )}
     </S.MyMemoBox>
   );
 };

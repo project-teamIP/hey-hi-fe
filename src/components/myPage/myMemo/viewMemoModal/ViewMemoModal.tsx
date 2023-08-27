@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./style";
-import * as C from "../../../assets/styles/commonStyle";
-import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
-import { MemosType } from "../../../types/user";
-import { formatDateTime2 } from "../../../utils/formattedDate";
+import * as C from "../../../../assets/styles/commonStyle";
+import rabbitSvg from "../../../../assets/images/profileImg/rabbit1.svg";
+import { MemosType } from "../../../../types/user";
+import { formatDateTime2 } from "../../../../utils/formattedDate";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { deleteSingleMemo, editMemo, getSingleMemo } from "../../../api/api";
-import Button from "../../common/button/Button";
-import { MemoEditType } from "../../../types/types";
+import { editMemo, getSingleMemo } from "../../../../api/api";
+import Button from "../../../common/button/Button";
+import { MemoEditType } from "../../../../types/types";
+import DeleteMemoModal from "../deleteMemoModal/DeleteMemoModal";
 
 interface MemoModalProps {
   memo: MemosType;
   onCloseModalHandler: () => void;
 }
 
-const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
+const ViewMemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
+  const queryClient = useQueryClient();
+
   // 해당 메모 하나만 조회
   const { data, isLoading } = useQuery(["mymemo", memo.id], () => getSingleMemo(memo.id));
   console.log(data, memo);
@@ -23,6 +26,14 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
   const [showDropDown, setShowDropDown] = useState(false);
   const onClickDropDownHandler = () => {
     setShowDropDown(!showDropDown);
+  };
+
+  // 메모 삭제 확인 모달
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const onClickMemoDeleteModalHandler = () => {
+    setShowDropDown(false);
+    setIsDeleteModalOpen((prevIsDeleteModalOpen) => !prevIsDeleteModalOpen);
   };
 
   // 메모 수정
@@ -37,6 +48,7 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
     setShowDropDown(false);
     setIsEditing(true);
   };
+
   const editMemoMutation = useMutation((editedMemo: MemoEditType) => editMemo(editedMemo), {
     onSuccess: () => {
       queryClient.invalidateQueries("myMemo");
@@ -49,26 +61,13 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
       queryClient.invalidateQueries("myMemo");
     },
   });
+
   const onClickMemoEditSubmitHandler = () => {
     editMemoMutation.mutate(editedMemo);
   };
 
   // 최대 글자수
   const maxLength = 1500;
-
-  // 메모 삭제
-  const queryClient = useQueryClient();
-  const deleteMemoMutation = useMutation((memoId: number) => deleteSingleMemo(memoId), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("myMemo");
-      alert("메모가 삭제되었습니다.");
-    },
-  });
-  const onClickMemoDeleteHandler = () => {
-    setShowDropDown(false);
-    deleteMemoMutation.mutate(memo.id);
-    onCloseModalHandler();
-  };
 
   // 수정 완료 시 모달 리렌더링
   useEffect(() => {
@@ -122,7 +121,7 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
                 <h3>{data.title}</h3>
                 <button onClick={onClickDropDownHandler}>
                   <img
-                    src={require("../../../assets/images/mypage/kebab-btn.png")}
+                    src={require("../../../../assets/images/mypage/kebab-btn.png")}
                     alt="memo-more"
                   />
                 </button>
@@ -132,17 +131,28 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
           {showDropDown && (
             <S.MoreDropdown>
               <button onClick={onClickMemoEditHandler}>
-                <img src={require("../../../assets/images/mypage/memo-edit.png")} alt="memo-edit" />
+                <img
+                  src={require("../../../../assets/images/mypage/memo-edit.png")}
+                  alt="memo-edit"
+                />
                 수정하기
               </button>
-              <button onClick={onClickMemoDeleteHandler}>
+              <button onClick={onClickMemoDeleteModalHandler}>
                 <img
-                  src={require("../../../assets/images/mypage/memo-delete.png")}
+                  src={require("../../../../assets/images/mypage/memo-delete.png")}
                   alt="memo-delete"
                 />
                 삭제하기
               </button>
             </S.MoreDropdown>
+          )}
+          {/* 삭제 확인 모달 */}
+          {isDeleteModalOpen && (
+            <DeleteMemoModal
+              memoId={memo.id}
+              onClickMemoDeleteModalHandler={onClickMemoDeleteModalHandler}
+              onDeleted={onCloseModalHandler}
+            />
           )}
         </S.MemoModalHeader>
         {isEditing ? (
@@ -181,4 +191,4 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
   );
 };
 
-export default MemoModal;
+export default ViewMemoModal;
