@@ -186,12 +186,22 @@ export const getUserInfo = async () => {
   }
 };
 
-// 프로필 이미지 변경
-export const changeProfileImg = async (image: FormData) => {
+// 프로필 이미지 변경 form data ver.
+export const changeProfileImgFormData = async (image: FormData) => {
   try {
     const request = await instance.put(`/api/users/image`, image, {
       headers: { "Content-Type": "multipart/form-data" },
     });
+    return request;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 프로필 이미지 변경 json ver.
+export const changeProfileImgJson = async (imageData: { key: string; value: any }) => {
+  try {
+    const request = await axios.put(`/api/users/image`, imageData);
     return request;
   } catch (error) {
     throw error;

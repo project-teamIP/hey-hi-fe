@@ -32,6 +32,7 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
     title: memo.title,
     content: memo.content,
   });
+
   const onClickMemoEditHandler = () => {
     setShowDropDown(false);
     setIsEditing(true);
@@ -45,6 +46,7 @@ const MemoModal: React.FC<MemoModalProps> = ({ memo, onCloseModalHandler }) => {
         title: data.title,
         content: data.content,
       });
+      queryClient.invalidateQueries("myMemo");
     },
   });
   const onClickMemoEditSubmitHandler = () => {
