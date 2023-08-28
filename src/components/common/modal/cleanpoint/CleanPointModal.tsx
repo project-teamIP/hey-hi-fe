@@ -5,6 +5,7 @@ import * as M from "../notice/style";
 import instance from "../../../../api/api";
 import pointPath from "../../../../assets/images/pointBox.svg";
 import { useNavigate } from "react-router";
+import { AxiosError } from "axios";
 
 interface CleanPointModalProps {
   isPointModalOpen: boolean;
@@ -63,19 +64,27 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
   const PlusFriend = async () => {
     try {
       const response = await instance.post(`/api/users/buddy/${nickname}`);
+      if (response.status === 200) {
+        alert(`${nickname}과 친구가 되었습니다.`);
+      }
       return response;
     } catch (error) {
-      console.error("친구 추가 Error:", error);
+      const axiosError = error as AxiosError;
+      console.error("친구 추가 Error:", axiosError);
+      // HTTP 상태 코드에 따른 분기 처리
+      if (axiosError.response?.status === 400) {
+        alert(`${nickname}은 이미 친구입니다.`);
+      } else if (axiosError.response?.status === 404) {
+        alert("친구 추가 실패: 잘못된 경로입니다.");
+      }
     }
   };
-
   const onClickConfirmCleanPoint = () => {
     // console.log("매너점수:", score);
     PostCleanPoint();
     onClickConfirmPoint();
     if (selectedRadio) {
       PlusFriend();
-      alert(`${nickname}과 친구가 되었습니다.`);
     }
     if (selectedBlockRadio) {
       const result = window.confirm("정말 차단하시겠습니까?");
