@@ -38,9 +38,14 @@ const Login = () => {
       dispatch(logIn());
       navigate("/dashboard");
     },
-    onError: () => {
-      // 아이디나 비밀번호가 올바르지 않을때.
-      alert("아이디나 비밀번호가 올바르지 않습니다.");
+    onError: (error: any) => {
+      if (error.response?.data.status === "FORBIDDEN") {
+        // 정지된 계정, 탈퇴한 계정이 로그인 시도 시.
+        alert("사용이 정지된 계정입니다.");
+      } else {
+        // 아이디나 비밀번호가 올바르지 않을때.
+        alert("아이디나 비밀번호가 올바르지 않습니다.");
+      }
     },
   });
 
