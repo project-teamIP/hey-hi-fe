@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as S from "./style";
 import { useMutation } from "react-query";
-import { changeProfileImgFormData, changeProfileImgJson } from "../../../api/api";
+import { changeProfileImgFormData } from "../../../api/api";
 
 interface ImageChangeModalProps {
   onClickToggleModalHandler: () => void;
@@ -10,32 +10,18 @@ interface ImageChangeModalProps {
 }
 
 const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalHandler }) => {
-  const [profileImg, setProfileImg] = useState<string | File | null>(null);
+  const [profileImg, setProfileImg] = useState<File | string | null>(null);
   const [imgPreview, setImgPreview] = useState(null);
-  const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
-  // 프로필 이미지 뮤테이션 form data
-  const formDataImgChangeMutation = useMutation(changeProfileImgFormData, {
+  // 프로필 이미지 뮤테이션
+  const imgChangeMutation = useMutation(changeProfileImgFormData, {
     onSuccess: () => {
-      setIsLoading(false);
       alert("프로필 이미지가 변경되었습니다.");
       onClickToggleModalHandler();
     },
     onError: (error) => {
       alert("잠시 후 다시 시도해주세요😭");
       console.error("ImgFormData 오류:", error);
-    },
-  });
-  // 프로필 이미지 뮤테이션 json
-  const JsonImgChangeMutation = useMutation(changeProfileImgJson, {
-    onSuccess: () => {
-      setIsLoading(false);
-      alert("프로필 이미지가 변경되었습니다.");
-      onClickToggleModalHandler();
-    },
-    onError: (error) => {
-      alert("잠시 후 다시 시도해주세요😭");
-      console.error("ImgJson 오류:", error);
     },
   });
 
@@ -64,23 +50,17 @@ const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalH
   // 프로필 이미지 서버로 전송
   const onClickImageSubmitHandler = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     if (profileImg) {
-      setIsLoading(true);
       const imgFormData = new FormData();
       // profileImg가 문자열인 경우 (기본 이미지 선택)
       if (typeof profileImg === "string") {
-        // json 형태의 Img data 생성
-        const imgJsonData = {
-          profile: profileImg,
-        };
-        imgFormData.append("data", JSON.stringify(imgJsonData));
-        JsonImgChangeMutation.mutate(imgFormData);
+        imgFormData.append("profile", profileImg);
+        imgChangeMutation.mutate(imgFormData);
       } else {
         // profileImg가 File 객체인 경우 (파일 업로드)
         // imgFormData에 "image"라는 key로 profileImg를 추가
         imgFormData.append("image", profileImg);
-        formDataImgChangeMutation.mutate(imgFormData);
+        imgChangeMutation.mutate(imgFormData);
       }
     } else {
       alert("변경할 이미지를 선택해주세요😉");
