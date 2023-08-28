@@ -37,7 +37,7 @@ const Header = () => {
     <S.HeaderBox $isMainPage={isMainPage}>
       <S.HeaderInner>
         <S.Nav>
-          <Link to="/">
+          <Link to={state ? "/dashboard" : "/"}>
             <svg
               width="101"
               height="24"
@@ -57,9 +57,6 @@ const Header = () => {
               </li>
               <li>
                 <S.StyledLink to="/mypage">my page</S.StyledLink>
-              </li>
-              <li>
-                <S.StyledLink to="/">FAQ</S.StyledLink>
               </li>
             </ul>
           ) : null}

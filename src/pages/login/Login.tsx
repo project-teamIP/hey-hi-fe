@@ -38,9 +38,14 @@ const Login = () => {
       dispatch(logIn());
       navigate("/dashboard");
     },
-    onError: () => {
-      // 아이디나 비밀번호가 올바르지 않을때.
-      alert("아이디나 비밀번호가 올바르지 않습니다.");
+    onError: (error: any) => {
+      if (error.response?.data.status === "FORBIDDEN") {
+        // 정지된 계정, 탈퇴한 계정이 로그인 시도 시.
+        alert("사용이 정지된 계정입니다.");
+      } else {
+        // 아이디나 비밀번호가 올바르지 않을때.
+        alert("아이디나 비밀번호가 올바르지 않습니다.");
+      }
     },
   });
 
@@ -90,19 +95,11 @@ const Login = () => {
       <OR>OR</OR>
       {/* 소셜로그인 */}
       <SocialContainer>
-        <Button.Primary
-          size="loginbtn"
-          bc="#F8F8F8"
-          color="#000000"
-          onClick={onClickGoogleLoginHandler}>
+        <Button.Primary size="sns" onClick={onClickGoogleLoginHandler}>
           <img src={Google} alt="google" />
           구글로 시작하기
         </Button.Primary>
-        <Button.Primary
-          size="loginbtn"
-          bc="#F8F8F8"
-          color="#000000"
-          onClick={onClickKaKaoLoginHandler}>
+        <Button.Primary size="sns" onClick={onClickKaKaoLoginHandler}>
           <img src={Kakao} alt="kakao" />
           카카오로 시작하기
         </Button.Primary>
@@ -113,7 +110,7 @@ const Login = () => {
       </LoginButton>
       {/* 회원가입 안내문 */}
       <SignUp>
-        아직 회원이 아니신가요? <Link to="/signup">회원가입</Link>
+        아직 회원이 아니신가요?<SignUpLink to="/signup">회원가입</SignUpLink>
       </SignUp>
     </Wrap>
   );
@@ -196,4 +193,12 @@ const LoginButton = styled(Button.Primary)`
 const SignUp = styled.div`
   display: flex;
   justify-content: center;
+  color: #a0a0a0;
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const SignUpLink = styled(Link)`
+  color: #a0a0a0;
+  margin-left: 15px;
 `;

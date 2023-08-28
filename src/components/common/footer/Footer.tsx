@@ -1,8 +1,16 @@
 import React from "react";
 import * as S from "./style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../types/user";
 
 const Footer = () => {
+  const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
+  const navigate = useNavigate();
+  const onClickStatusHandler = () => {
+    alert("로그인 후 이용해주세요.");
+    navigate("/login");
+  };
   return (
     <S.FooterBox>
       <S.FooterTop>
@@ -24,13 +32,18 @@ const Footer = () => {
             <Link to="/">HOME</Link>
           </li>
           <li>
-            <Link to="/dashboard">DASHBOARD</Link>
+            {state ? (
+              <Link to="/dashboard">DASHBOARD</Link>
+            ) : (
+              <button onClick={onClickStatusHandler}>DASHBOARD</button>
+            )}
           </li>
           <li>
-            <Link to="/mypage">MY PAGE</Link>
-          </li>
-          <li>
-            <Link to="/">FAQ</Link>
+            {state ? (
+              <Link to="/mypage">MY PAGE</Link>
+            ) : (
+              <button onClick={onClickStatusHandler}>MY PAGE</button>
+            )}
           </li>
         </ul>
       </S.FooterTop>
@@ -38,9 +51,10 @@ const Footer = () => {
       <S.FooterBottom>
         <span>Copyright Ⓒ Hey, Annyeong All rights reserved </span>
         <span>
-          피드백 : <S.FeedbackLink to="">google form</S.FeedbackLink>
+          피드백 :
+          <S.FeedbackLink to="https://forms.gle/3xj4CSfNT3xTe6qXA">Google form</S.FeedbackLink>
           <S.SpanDivider>|</S.SpanDivider>
-          <S.FeedbackLink to="https://github.com/project-teamIP">github</S.FeedbackLink>
+          <S.FeedbackLink to="https://github.com/project-teamIP">Github</S.FeedbackLink>
         </span>
       </S.FooterBottom>
     </S.FooterBox>

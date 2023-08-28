@@ -72,7 +72,7 @@ const SlideTwo = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
       <S.Title>사용언어</S.Title>
       <Select
         label="언어를 선택해주세요."
-        options={["한국어", "영어"]}
+        options={["한국어", "English"]}
         size="normal"
         onChangeHandler={(selectedLanguage) =>
           setUserData({ ...userData, language: selectedLanguage })

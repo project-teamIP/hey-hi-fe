@@ -13,7 +13,6 @@ export const FooterBox = styled.div`
 
 export const FooterTop = styled.div`
   width: 60%;
-  color: #fff;
   display: flex;
   justify-content: space-between;
 
@@ -36,6 +35,15 @@ export const FooterTop = styled.div`
     text-decoration: none;
     color: inherit;
   }
+
+  button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+  }
 `;
 
 export const FooterDivider = styled.div`
@@ -57,6 +65,10 @@ export const FooterBottom = styled.div`
 
 export const FeedbackLink = styled(Link)`
   color: #7d7d7d;
+
+  &:first-child {
+    margin-left: 10px;
+  }
 `;
 
 export const SpanDivider = styled.span`

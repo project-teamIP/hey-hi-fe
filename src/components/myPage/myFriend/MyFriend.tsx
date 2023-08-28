@@ -74,7 +74,7 @@ const MyFriend = () => {
                 </td>
                 <td>{buddy.loginId}</td>
                 <td>
-                  <S.FuncBtn>
+                  <S.FuncBtn onClick={() => alert("아직 지원하지 않는 기능입니다.")}>
                     <img src={require(`../../../assets/images/call.png`)} alt="call" />
                   </S.FuncBtn>
                 </td>
