@@ -53,6 +53,11 @@ const Video: React.FC<{}> = () => {
     interests: [],
     cleanPoint: "",
   });
+  const [parentTime, setParentTime] = useState(600); // 초 단위로 초기화
+
+  const handleParentTimeChange = (newTime: number) => {
+    setParentTime(newTime);
+  };
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -246,6 +251,16 @@ const Video: React.FC<{}> = () => {
     } else {
       console.log("socketUrl undefined");
     }
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        console.log("연결 해제");
+      }
+
+      if (myPeerRef.current) {
+        myPeerRef.current.close();
+      }
+    };
   }, []);
 
   if (socketRef.current) {
@@ -303,18 +318,12 @@ const Video: React.FC<{}> = () => {
     await setShouldSubmit(true);
     if (socketRef.current) {
       const message = "나가기 버튼 누름!";
-      if (myPeerRef.current) {
-        // if (myPeerRef.current && senderRef.current) {
-        // myPeerRef.current.removeTrack(senderRef.current);
-        myPeerRef.current.close();
-      }
       socketRef.current.emit("end", message);
-      // setIsExitModalOpen(true);
       setIsExitModalOpen(true);
     }
   };
 
-  const onClickcloseMatchingModal = () => {
+  const onClickcloseMatchingModal = async () => {
     setIsMatchingModalOpen(false);
     navigate("/dashboard");
   };
@@ -361,6 +370,12 @@ const Video: React.FC<{}> = () => {
     setIsReportModalOpen(false);
   };
 
+  if (parentTime === 0 && running) {
+    setRunning(false);
+    alert("통화시간이 종료되었습니다.");
+    onClickEndCalling();
+  }
+
   return (
     <>
       <MatchingModal
@@ -381,7 +396,12 @@ const Video: React.FC<{}> = () => {
                 alignItems: "flex-end",
               }}>
               <h2>{opponentInfoRef.current.nickname} 님과 통화 중</h2>
-              <Timer onStart={handleTimerStart} running={running} />
+              <Timer
+                onStart={handleTimerStart}
+                running={running}
+                time={parentTime} // time prop으로 parentTime 값을 전달
+                onTimeChange={handleParentTimeChange}
+              />
             </div>
           </S.CallingTextGroup>
         </div>
