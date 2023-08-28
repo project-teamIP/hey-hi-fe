@@ -199,9 +199,13 @@ export const changeProfileImgFormData = async (image: FormData) => {
 };
 
 // 프로필 이미지 변경 json ver.
-export const changeProfileImgJson = async (imageData: { key: string; value: any }) => {
+export const changeProfileImgJson = async (data: { profile: any }) => {
   try {
-    const request = await axios.put(`/api/users/image`, imageData);
+    const request = await axios.put(`/api/users/image`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return request;
   } catch (error) {
     throw error;

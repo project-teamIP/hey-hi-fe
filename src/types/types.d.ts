@@ -92,3 +92,7 @@ export type NoInterestCategoriProps = {
   className?: string;
   customSize?: "dashboard" | "callroom";
 };
+
+export type ProfileImgChagesProps = {
+  profile: any;
+};

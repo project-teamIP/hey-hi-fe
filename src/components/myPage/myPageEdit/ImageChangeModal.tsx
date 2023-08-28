@@ -67,17 +67,17 @@ const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalH
 
     if (profileImg) {
       setIsLoading(true);
+      const imgFormData = new FormData();
       // profileImg가 문자열인 경우 (기본 이미지 선택)
       if (typeof profileImg === "string") {
         // json 형태의 Img data 생성
         const imgJsonData = {
-          key: "profile",
-          value: profileImg,
+          profile: profileImg,
         };
-        JsonImgChangeMutation.mutate(imgJsonData);
+        imgFormData.append("data", JSON.stringify(imgJsonData));
+        JsonImgChangeMutation.mutate(imgFormData);
       } else {
         // profileImg가 File 객체인 경우 (파일 업로드)
-        const imgFormData = new FormData();
         // imgFormData에 "image"라는 key로 profileImg를 추가
         imgFormData.append("image", profileImg);
         formDataImgChangeMutation.mutate(imgFormData);
