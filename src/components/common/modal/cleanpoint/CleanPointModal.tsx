@@ -131,7 +131,7 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
                     <input
                       type="radio"
                       name="addFriend"
-                      value={"nickname"}
+                      value={"addFriend"}
                       checked={selectedRadio}
                       onClick={handleRadioClick}
                     />
@@ -140,8 +140,8 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
                   <S.AddFriend>
                     <input
                       type="radio"
-                      name="addFriend"
-                      value={"nickname"}
+                      name="blockUser"
+                      value={"blockUser"}
                       checked={selectedBlockRadio}
                       onClick={handleBlockRadioClick}
                     />

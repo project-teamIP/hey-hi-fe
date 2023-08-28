@@ -53,6 +53,11 @@ const Video: React.FC<{}> = () => {
     interests: [],
     cleanPoint: "",
   });
+  const [parentTime, setParentTime] = useState(600); // 초 단위로 초기화
+
+  const handleParentTimeChange = (newTime: number) => {
+    setParentTime(newTime);
+  };
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -330,6 +335,7 @@ const Video: React.FC<{}> = () => {
   };
 
   //상대방 관심사
+  // type MatchingUserData = string[];
   interface MatchingUserData {
     interests: string[]; // interests 프로퍼티는 문자열 배열을 나타냄
   }
@@ -364,6 +370,12 @@ const Video: React.FC<{}> = () => {
     setIsReportModalOpen(false);
   };
 
+  if (parentTime === 0 && running) {
+    setRunning(false);
+    alert("통화시간이 종료되었습니다.");
+    onClickEndCalling();
+  }
+
   return (
     <>
       <MatchingModal
@@ -384,7 +396,12 @@ const Video: React.FC<{}> = () => {
                 alignItems: "flex-end",
               }}>
               <h2>{opponentInfoRef.current.nickname} 님과 통화 중</h2>
-              <Timer onStart={handleTimerStart} running={running} />
+              <Timer
+                onStart={handleTimerStart}
+                running={running}
+                time={parentTime} // time prop으로 parentTime 값을 전달
+                onTimeChange={handleParentTimeChange}
+              />
             </div>
           </S.CallingTextGroup>
         </div>
