@@ -10,6 +10,7 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
   // 상태관리
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
   const [loginIdError, setloginIdError] = useState("");
   const [isloginIdValid, setIsloginIdValid] = useState(false);
   const [isMessage, setIsMessage] = useState("");
@@ -25,6 +26,12 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
     setPasswordMatch(userData.password === passwordCheck);
   }, [userData.password, passwordCheck]);
 
+  // 비밀번호 유효성 검사
+  const validatePassword = (password: string) => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
+    return passwordRegex.test(password);
+  };
+
   // 이메일 유효성 검사
   const validateLoginId = (loginId: string) => {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -35,6 +42,16 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
   useEffect(() => {
     setIsloginIdValid(validateLoginId(loginId));
   }, [loginId]);
+
+  // 비밀번호 유효성 검사 및 상태 업데이트
+  const onChangePasswordHandler = (password: string) => {
+    if (!validatePassword(password)) {
+      setPasswordError("비밀번호는 8~16자리로, 영어와 숫자를 포함하여 입력해주세요.");
+    } else {
+      setPasswordError("");
+    }
+    setUserData({ ...userData, password: password });
+  };
 
   // 중복 이메일 체크 함수
   const onClickLoginIdCheckHanlder = async () => {
@@ -68,8 +85,10 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
     userIdCheckMutation.isSuccess &&
     isMessage !== "이미 가입된 이메일입니다." &&
     passwordMatch &&
-    passwordCheck !== "";
+    passwordCheck !== "" &&
+    validatePassword(userData.password);
 
+  console.log(userData);
   return (
     <S.Wrap>
       {/* 닉네임 */}
@@ -101,8 +120,10 @@ const SlideOne = ({ userData, setUserData, onClickNextButtonHandler }: SlideProp
         value={userData.password}
         type="password"
         size="medium"
-        onChangeHandler={(e) => setUserData({ ...userData, password: e.target.value })}
+        onChangeHandler={(e) => onChangePasswordHandler(e.target.value)}
       />
+      {/* 비밀번호 유효성 표시 */}
+      {passwordError && <S.Message>{passwordError}</S.Message>}
 
       {/* 비밀번호 확인 */}
       <S.Title>비밀번호 확인</S.Title>
