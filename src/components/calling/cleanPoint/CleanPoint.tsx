@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import svgPath from "../../../assets/images/cleanPointImoticon.svg";
+import svgPath from "../../../assets/images/cleanPointHandle.svg";
 // CleanPoint 인터페이스 정의
 interface CleanPointProps {
   cleanPoint: string; // cleanPoint의 타입을 숫자로 지정
@@ -17,7 +17,7 @@ const CleanPoint: React.FC<CleanPointProps> = ({ cleanPoint }) => {
 
     img {
       margin-left: ${3.52 * cleanPointValue - 20}px; /* 수학 연산을 위해 괄호로 묶어줍니다 */
-      margin-top: -15px;
+      margin-top: -5.5%;
       width: 37px;
       height: 34px;
     }

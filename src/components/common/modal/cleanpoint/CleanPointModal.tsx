@@ -75,9 +75,17 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
     onClickConfirmPoint();
     if (selectedRadio) {
       PlusFriend();
+      alert(`${nickname}과 친구가 되었습니다.`);
     }
     if (selectedBlockRadio) {
-      BlockMatchingUser();
+      const result = window.confirm("정말 차단하시겠습니까?");
+      if (result) {
+        window.alert("차단을 진행합니다.");
+        BlockMatchingUser();
+      } else {
+        window.alert("차단을 취소했습니다.");
+        return;
+      }
     }
     navigate("/dashboard");
   };

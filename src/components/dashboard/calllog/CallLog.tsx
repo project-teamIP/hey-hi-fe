@@ -31,6 +31,7 @@ const CallLog: React.FC = () => {
     // console.log("버튼 클릭");
     try {
       await PlusFriend(nickname);
+      alert(`${nickname}과 친구가 되었습니다`);
     } catch (error) {
       // Handle error if needed
     }

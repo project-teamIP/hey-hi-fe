@@ -330,7 +330,6 @@ const Video: React.FC<{}> = () => {
   };
 
   //상대방 관심사
-  // type MatchingUserData = string[];
   interface MatchingUserData {
     interests: string[]; // interests 프로퍼티는 문자열 배열을 나타냄
   }
