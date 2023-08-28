@@ -39,7 +39,6 @@ const Login = () => {
       navigate("/dashboard");
     },
     onError: (error: any) => {
-      console.log(error.response?.data);
       if (error.response?.data.status === "FORBIDDEN") {
         // 정지된 계정, 탈퇴한 계정이 로그인 시도 시.
         alert("사용이 정지된 계정입니다.");
