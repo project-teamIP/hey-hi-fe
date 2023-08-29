@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+// 미디어 쿼리
+const mediaQuery = {
+  desktop: "@media (max-width: 1463px)",
+};
+
 export const CategoriContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -144,4 +149,8 @@ export const InterestArea = styled.div`
   align-items: flex-start;
   margin: 0px auto;
   width: 100%;
+
+  ${mediaQuery.desktop} {
+    flex-direction: row;
+  }
 `;
