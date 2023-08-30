@@ -348,6 +348,10 @@ const Video: React.FC<{}> = () => {
 
   const onClickConfirmExitRoom = () => {
     setIsExitModalOpen(false);
+    if (socketRef.current) {
+      const message = "나가기 버튼 누름!";
+      socketRef.current.emit("end", message);
+    }
     setIsPointModalOpen(true);
   };
   //클린포인트
@@ -359,10 +363,6 @@ const Video: React.FC<{}> = () => {
   };
 
   const onClickConfirmPoint = () => {
-    if (socketRef.current) {
-      const message = "나가기 버튼 누름!";
-      socketRef.current.emit("end", message);
-    }
     setIsPointModalOpen(false);
   };
   //신고하기 버튼 이벤트
