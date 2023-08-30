@@ -14,7 +14,7 @@ const MatchingModal: React.FC<MatchingModalProps> = (props) => {
   const { isMatchingModalOpen, isCallHidden, isWelcomeHidden, onClickcloseMatchingModal } = props;
   return (
     <>
-      {!isMatchingModalOpen && (
+      {isMatchingModalOpen && (
         <M.Wrap>
           <S.MatchingContainer>
             <div hidden={isCallHidden}>
