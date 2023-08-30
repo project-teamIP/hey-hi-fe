@@ -133,14 +133,15 @@ export const SliderBox = styled.div`
 
 export const SliderTrack = styled.div<SliderTrackProps>`
   position: absolute;
-  top: 48.5%;
   /* z-index: 1; */
+  /* top: 50%; */
+  margin-top: 20px;
   width: 406px;
   height: 10px;
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
   background-color: #ff6e46;
-  margin-top: 2.5px;
+  /* margin-top: 2.5px; */
   ${(props) => {
     if (props.value < 0) {
       return `  
@@ -201,7 +202,7 @@ export const SliderInput = styled.input`
     /* z-index: 1; */
     ${(props) => {
       if (typeof props.value === "number" && props.value < 1) {
-        return "margin-left: -2px;";
+        return "margin-left: -1px;";
       } else {
         return "margin-left: 22px;";
       }

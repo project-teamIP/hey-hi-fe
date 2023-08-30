@@ -316,11 +316,7 @@ const Video: React.FC<{}> = () => {
   const onClickEndCalling = async () => {
     await alert("메모가 등록됩니다.");
     await setShouldSubmit(true);
-    if (socketRef.current) {
-      const message = "나가기 버튼 누름!";
-      socketRef.current.emit("end", message);
-      setIsExitModalOpen(true);
-    }
+    setIsExitModalOpen(true);
   };
 
   const onClickcloseMatchingModal = async () => {
@@ -363,6 +359,10 @@ const Video: React.FC<{}> = () => {
   };
 
   const onClickConfirmPoint = () => {
+    if (socketRef.current) {
+      const message = "나가기 버튼 누름!";
+      socketRef.current.emit("end", message);
+    }
     setIsPointModalOpen(false);
   };
   //신고하기 버튼 이벤트

@@ -17,7 +17,6 @@ export const CategoriStyle = styled.div`
   border: 1px solid #d8dee9;
   border-radius: 15px;
   background: #ffffff;
-  cursor: pointer;
 
   ${(props) =>
     props.className === "box-color-0" &&

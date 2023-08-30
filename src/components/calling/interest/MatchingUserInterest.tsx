@@ -21,7 +21,7 @@ const MatchingUserInterest = ({ MatchingUserData }: MatchingUserProps) => {
     <>
       {filteredInterests.current.map((interest, index) => (
         <MatchingUserCategori
-          key={index}
+          key={interest.name}
           interest={interest.name} // interest 값 전달
           image={interest.image} // image 값 전달
           className={`box-color-${index % 4}`}
@@ -30,6 +30,7 @@ const MatchingUserInterest = ({ MatchingUserData }: MatchingUserProps) => {
       ))}
       {Array.from({ length: Math.max(4 - filteredInterests.current.length, 0) }).map((_, index) => (
         <NoInterestBox
+          key={`noInterest-${index}`}
           className={`box-color-${(filteredInterests.current.length + index) % 4}`}
           customSize="callroom"
         />
