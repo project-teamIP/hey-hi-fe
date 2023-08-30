@@ -14,7 +14,7 @@ const Guide = () => {
         <br />
         PC에서 헤이,안녕을 이용해주세요!
       </SubTitle>
-      <Button>링크 복사하기</Button>
+      {/* <Button>링크 복사하기</Button> */}
     </Wrap>
   );
 };
@@ -49,20 +49,20 @@ const SubTitle = styled.div`
   margin-bottom: 76px;
 `;
 
-const Button = styled.button`
-  width: 242px;
-  height: 63px;
-  border: none;
-  border-radius: 50px;
-  background: #ff6e46;
+// const Button = styled.button`
+//   width: 242px;
+//   height: 63px;
+//   border: none;
+//   border-radius: 50px;
+//   background: #ff6e46;
 
-  /* 폰트 */
-  color: #ffffff;
-  text-align: center;
-  font-size: 22px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+//   /* 폰트 */
+//   color: #ffffff;
+//   text-align: center;
+//   font-size: 22px;
+//   font-style: normal;
+//   font-weight: 700;
+//   line-height: normal;
 
-  cursor: pointer;
-`;
+//   cursor: pointer;
+// `;

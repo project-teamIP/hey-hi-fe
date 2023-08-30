@@ -29,7 +29,7 @@ function App() {
     };
   }, []);
 
-  const isSmallScreen = windowWidth <= 1440;
+  const isSmallScreen = windowWidth <= 1080;
 
   console.log(windowWidth);
   return (
