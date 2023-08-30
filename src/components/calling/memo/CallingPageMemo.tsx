@@ -86,9 +86,7 @@ const CallingPageMemo: React.FC<MemoProps> = ({ nickname, shouldSubmit }) => {
   }, [shouldSubmit]);
   return (
     <S.MemoContainer>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h2>메모장</h2>
-      </div>
+      <h2>메모장</h2>
       <S.MemoStyle>
         <form onSubmit={handleSubmit}>
           <div>

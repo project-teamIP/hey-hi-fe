@@ -17,8 +17,7 @@ const CallingPageInterestSelect = ({ MatchingUserData }: MatchingUserProps) => {
 
 const MatchingUserInterstWrapper = styled.div`
   width: 437px;
-  height: 423px;
-
+  height: 300px;
   h3 {
     margin-top: 20px;
     font-size: 20px;
@@ -26,6 +25,10 @@ const MatchingUserInterstWrapper = styled.div`
     font-weight: 600;
     margin-bottom: 30px;
     line-height: 23.87px;
+  }
+
+  @media (max-width: 1240px) {
+    width: 400px;
   }
 `;
 

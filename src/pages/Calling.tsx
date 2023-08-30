@@ -6,7 +6,6 @@ import Video from "../components/calling/video/Video";
 const Calling: React.FC = () => {
   return (
     <div>
-      <Header />
       <TotalContentWrapper>
         <TotalCotentBox>
           <Video />
@@ -36,13 +35,12 @@ const TotalContentWrapper = styled.div`
 
 const TotalCotentBox = styled.div`
   margin-top: 5%;
-  /* background-color: blue; */
+  /* background-color: red; */
   align-items: center;
   justify-content: center;
   width: 110%;
   /* height: 100%; */
   display: flex;
-  flex-direction: row;
 `;
 
 export default Calling;
