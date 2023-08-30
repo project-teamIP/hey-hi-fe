@@ -15,13 +15,13 @@ export const Container = styled.div`
   background: #fcfcfc;
   width: 541px;
   height: 524px;
-  margin-top: 55px;
   padding: 30px;
   gap: 11px;
 `;
 
 // 타이틀
 export const Title = styled.div`
+  margin-top: 25px;
   color: #000;
   font-size: 34px;
   font-weight: 600;
@@ -81,7 +81,7 @@ export const SliderImageContainer = styled.div`
   justify-content: center;
 `;
 
-export const ScoreText = styled.p`
+export const ScoreText = styled.p<SliderTrackProps>`
   margin-left: 5px;
   color: white;
   font-size: 16px;
@@ -91,7 +91,13 @@ export const ScoreText = styled.p`
   white-space: nowrap; /* 추가된 부분 */
   margin-top: -122px;
   z-index: 1;
-  margin-right: -10.5px;
+  margin-right: -12px;
+
+  ${(props) => {
+    if (typeof props.value === "number" && props.value < 0) {
+      return " margin-right: -18px;";
+    }
+  }}
 `;
 
 export const ScoreTagBox = styled.div`
@@ -127,7 +133,7 @@ export const SliderBox = styled.div`
 
 export const SliderTrack = styled.div<SliderTrackProps>`
   position: absolute;
-  top: 50%;
+  top: 48.5%;
   /* z-index: 1; */
   width: 406px;
   height: 10px;
@@ -148,12 +154,20 @@ export const SliderTrack = styled.div<SliderTrackProps>`
   }}
 `;
 
-export const SliderImage = styled.img`
+export const SliderImage = styled.img<SliderTrackProps>`
   position: absolute;
   right: 0;
   margin-top: -60px;
   transform: translate(43%, -50%);
   z-index: 1;
+
+  ${(props) => {
+    if (typeof props.value === "number" && props.value < 1) {
+      return "transform: translate(51%, -50%);";
+    } else {
+      return " transform: translate(47%, -50%);";
+    }
+  }}
 `;
 
 export const SliderBackground = styled.div`
@@ -187,7 +201,7 @@ export const SliderInput = styled.input`
     /* z-index: 1; */
     ${(props) => {
       if (typeof props.value === "number" && props.value < 1) {
-        return "margin-right: 20px;";
+        return "margin-left: -2px;";
       } else {
         return "margin-left: 22px;";
       }
