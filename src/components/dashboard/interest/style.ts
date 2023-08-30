@@ -56,7 +56,6 @@ export const CategoriStyle = styled.div`
   border: 1px solid #d8dee9;
   border-radius: 15px;
   background: #ffffff;
-  cursor: pointer;
   /* 클래스 이름에 따라서 배경색을 설정하기 위한 mixin */
   &.box-color-0 {
     background-color: #f8f9fc; /* 예시 색상 1 */

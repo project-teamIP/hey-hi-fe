@@ -47,6 +47,7 @@ export const MatchingBtn = styled.button`
   font-weight: 700;
   line-height: normal;
   border: none;
+  cursor: pointer;
 
   &:active {
     background-color: #ff6e46;

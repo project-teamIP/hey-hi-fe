@@ -8,16 +8,16 @@ interface CleanPointProps {
 }
 
 const CleanPoint: React.FC<CleanPointProps> = ({ cleanPoint }) => {
-  const cleanPointValue: number = parseInt(cleanPoint, 10);
+  const cleanpointvalue: number = parseInt(cleanPoint, 10) || 0;
 
   return (
     <S.CleanPointContainer>
       <S.CleanPointTextGroup key="text">
         <h4>상대방의 매너점수</h4>
-        <h2>{cleanPointValue}점</h2>
+        <h2>{cleanpointvalue}점</h2>
       </S.CleanPointTextGroup>
       <S.CleanPointBarStyle>
-        <S.CleanPointBar key="bar" cleanPointValue={cleanPointValue}>
+        <S.CleanPointBar key="bar" $cleanpointvalue={cleanpointvalue}>
           <img src={svgPath} alt="cleanPoint" />
         </S.CleanPointBar>
       </S.CleanPointBarStyle>

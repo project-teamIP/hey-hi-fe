@@ -80,6 +80,7 @@ export const WordGroup = styled.div`
     font-weight: 600;
     color: #b5b5b5;
     line-height: 15.51px;
+    cursor: pointer;
   }
 `;
 

@@ -9,7 +9,7 @@ export const TextTimerGroup = styled.div`
   /* background-color: yellowgreen; */
   padding: 0px 30px;
   z-index: 1;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   @media (max-width: 1490px) {
     max-width: calc(80%); /* 화면이 1200px 이하일 때 너비 조정 */
   }

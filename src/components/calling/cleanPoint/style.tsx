@@ -45,15 +45,16 @@ export const CleanPointBarStyle = styled.div`
   height: 9px;
 `;
 
-export const CleanPointBar = styled.div<{ cleanPointValue: number }>`
+export const CleanPointBar = styled.div<{ $cleanpointvalue: number }>`
   border-radius: 6px;
   height: 9px;
-  width: ${(props) => (props.cleanPointValue > 100 ? 3.52 * 100 : 3.52 * props.cleanPointValue)}px;
+  width: ${(props) =>
+    props.$cleanpointvalue > 100 ? 3.52 * 100 : 3.52 * props.$cleanpointvalue}px;
   background-color: #ff6e46;
 
   img {
     margin-left: ${(props) =>
-      props.cleanPointValue > 100 ? 3.52 * 100 - 20 : 3.52 * props.cleanPointValue - 20}px;
+      props.$cleanpointvalue > 100 ? 3.52 * 100 - 20 : 3.52 * props.$cleanpointvalue - 20}px;
     margin-top: -12px;
     width: 37px;
     height: 34px;

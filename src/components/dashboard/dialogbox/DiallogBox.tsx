@@ -28,13 +28,14 @@ const DiallogBox = () => {
     <>
       <NoticeModal
         isNoticeModalOpen={isNoticeModalOpen}
+        setIsNoticeModalOpen={setIsNoticeModalOpen}
         onClickOpenMatchingModal={onClickOpenMatchingModal}
       />
       <DashBoardBox style={dialogBoxStyle} size="diallogBox">
         <S.ImageContainer>
           <img src={require("../../../assets/images/dialogbox.png")} alt="dailogbox" />
           <S.InnerGroup>
-            <div style={{ fontWeight: "600", fontSize: "35px" }}>
+            <div style={{ fontWeight: "700", fontSize: "35px" }}>
               반가워요!<br></br>
               {userData?.nickname}님!
             </div>
