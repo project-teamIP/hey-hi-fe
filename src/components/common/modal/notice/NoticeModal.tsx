@@ -3,19 +3,36 @@ import * as M from "./style";
 import svgPath from "../../../../assets/images/noticeModal_bang.svg";
 import facePath from "../../../../assets/images/dissatisfied_Face.svg";
 import handPath from "../../../../assets/images/sign_language.svg";
+import { SlClose } from "react-icons/sl";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 interface NoticecModalProps {
   isNoticeModalOpen: boolean;
+  setIsNoticeModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onClickOpenMatchingModal: () => void;
 }
 
 const NoticeModal: React.FC<NoticecModalProps> = (props) => {
-  const { isNoticeModalOpen, onClickOpenMatchingModal } = props;
+  const { isNoticeModalOpen, setIsNoticeModalOpen, onClickOpenMatchingModal } = props;
+  const navigate = useNavigate();
+
+  const onClickCancleBtn = () => {
+    setIsNoticeModalOpen(false);
+  };
   return (
     <>
       {isNoticeModalOpen && (
         <M.Wrap>
           <M.Container>
+            <ExitIconstyle>
+              <SlClose
+                style={{ cursor: "pointer" }}
+                size={5 * 5}
+                color="#C5CEDE"
+                onClick={onClickCancleBtn}
+              />
+            </ExitIconstyle>
             <M.Icon>
               <img style={{ width: "100%" }} src={svgPath} alt="bang" />
             </M.Icon>
@@ -51,5 +68,13 @@ const NoticeModal: React.FC<NoticecModalProps> = (props) => {
     </>
   );
 };
+
+const ExitIconstyle = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 10px;
+  width: 100%;
+  height: 20px;
+`;
 
 export default NoticeModal;

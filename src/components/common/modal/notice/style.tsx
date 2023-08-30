@@ -30,7 +30,8 @@ export const Container = styled.div`
   align-items: center;
   width: 540px;
   margin: 0px auto;
-  padding: 50px 23px 42px;
+  /* padding: 50px 23px 42px; */
+  padding: 10px 23px 42px;
   border-radius: 30px;
   background: #ffffff;
 
@@ -116,4 +117,5 @@ export const StartButton = styled.button`
   border: none;
   border-radius: 50px;
   background-color: #ff6e46;
+  cursor: pointer;
 `;
