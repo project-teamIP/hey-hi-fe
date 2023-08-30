@@ -17,9 +17,12 @@ import Guide from "./pages/Guide";
 function App() {
   // 반응형 Width 값
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1080);
 
   const handleResize = () => {
-    setWindowWidth(window.innerWidth);
+    const newWindowWidth = window.innerWidth;
+    setWindowWidth(newWindowWidth);
+    setIsSmallScreen(newWindowWidth <= 1080);
   };
 
   useEffect(() => {
@@ -29,9 +32,6 @@ function App() {
     };
   }, []);
 
-  const isSmallScreen = windowWidth <= 1080;
-
-  console.log(windowWidth);
   return (
     <div>
       <GlobalStyle />
