@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Button from "../button/Button";
 import * as S from "./style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { RootState } from "../../../types/user";
 import { useQuery } from "react-query";
 import { getUserInfo } from "../../../api/api";
+import { link } from "fs";
 
 const Header = () => {
   //유저 정보
@@ -21,6 +22,34 @@ const Header = () => {
   //메인헤더만 오렌지컬러
   const location = useLocation();
   const isMainPage = location.pathname === "/";
+
+  //통화방에서는 눌렀을때 경고창뜨기
+  const isCallPage = location.pathname === "/calling";
+  const navigate = useNavigate();
+  const onClickLinkToDashboard = () => {
+    if (state && isCallPage) {
+      const result = window.confirm("나가면 통화 연결이 끊어집니다. 괜찮으시겠어요?");
+      if (result) {
+        alert("대시보드로 이동합니다.");
+        navigate("/dashboard");
+      } else {
+        alert("이동이 취소됩니다.");
+        return;
+      }
+    }
+  };
+  const onClickLinkToMyPage = () => {
+    if (state && isCallPage) {
+      const result = window.confirm("나가면 통화 연결이 끊어집니다. 괜찮으시겠어요?");
+      if (result) {
+        alert("마이페이지로 이동합니다.");
+        navigate("/mypage");
+      } else {
+        alert("이동이 취소됩니다.");
+        return;
+      }
+    }
+  };
 
   //로그인 상태 따라 버튼 변경
   const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
@@ -51,23 +80,43 @@ const Header = () => {
             </svg>
           </Link>
           {state ? (
-            <ul>
-              <li>
-                <S.StyledLink to="/dashboard">home</S.StyledLink>
-              </li>
-              <li>
-                <S.StyledLink to="/mypage">my page</S.StyledLink>
-              </li>
-            </ul>
+            isCallPage ? (
+              <ul>
+                <li style={{ cursor: "pointer" }} onClick={onClickLinkToDashboard}>
+                  home
+                </li>
+                <li style={{ cursor: "pointer" }} onClick={onClickLinkToMyPage}>
+                  my page
+                </li>
+              </ul>
+            ) : (
+              <ul>
+                <li>
+                  <S.StyledLink to="/dashboard">home</S.StyledLink>
+                </li>
+                <li>
+                  <S.StyledLink to="/mypage">my page</S.StyledLink>
+                </li>
+              </ul>
+            )
           ) : null}
         </S.Nav>
         {state ? (
-          <div>
-            <S.StyledLink to="/mypage">
-              <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
-              <S.Icon src={userInfo?.image} alt="유저 이미지" />
-            </S.StyledLink>
-          </div>
+          isCallPage ? (
+            <ul>
+              <S.StyledLi onClick={onClickLinkToMyPage}>
+                <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
+                <S.Icon src={userInfo?.image} alt="유저 이미지" />
+              </S.StyledLi>
+            </ul>
+          ) : (
+            <div>
+              <S.StyledLink to="/mypage">
+                <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
+                <S.Icon src={userInfo?.image} alt="유저 이미지" />
+              </S.StyledLink>
+            </div>
+          )
         ) : (
           <S.StyledLink to="/login">
             <Button.Primary size="loginbtn" outlined="true">

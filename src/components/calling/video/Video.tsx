@@ -390,12 +390,14 @@ const Video: React.FC<{}> = () => {
             <h4>{opponentInfoRef.current.country}에 거주중인</h4>
             <h2>{opponentInfoRef.current.nickname} 님과 통화 중</h2>
           </S.CallingTextGroup>
-          <Timer
-            onStart={handleTimerStart}
-            running={running}
-            time={parentTime} // time prop으로 parentTime 값을 전달
-            onTimeChange={handleParentTimeChange}
-          />
+          <div style={{ marginTop: "10px" }}>
+            <Timer
+              onStart={handleTimerStart}
+              running={running}
+              time={parentTime} // time prop으로 parentTime 값을 전달
+              onTimeChange={handleParentTimeChange}
+            />
+          </div>
         </S.TextTimerGroup>
         <S.TotalBox>
           <S.VideoWrapper>
