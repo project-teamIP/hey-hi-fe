@@ -41,20 +41,17 @@ export const ButtonGroup = styled.div`
 `;
 export const CallListBtn = styled.button`
   border: none;
-  cursor: pointer;
   width: 39px;
   height: 39px;
   border-radius: 50%;
   background-color: ${({ color }) => color};
-  /* &:active {
-    background-color: ${({ color }) => (color === "#ffe4dc" ? "#e7cdc5" : "#ffe4dc")};
-  } */
 
   ${({ color }) => {
     switch (color) {
       case "friend":
         return css`
           background-color: #ffe4dc;
+          cursor: pointer;
           &:active {
             background-color: #e7cdc5;
           }
@@ -62,17 +59,7 @@ export const CallListBtn = styled.button`
       case "more":
         return css`
           background-color: transparent;
-          /* &:active {
-            background-color: #d8dee9; 
-          }*/
         `;
-      // default:
-      //   return css`
-      //     background-color: #ffe4dc;
-      /* &:active {
-            background-color: #e7cdc5;
-          } 
-        `;*/
     }
   }}
 

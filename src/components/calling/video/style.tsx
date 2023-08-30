@@ -6,10 +6,9 @@ export const TextTimerGroup = styled.div`
   height: 50px;
   width: 100%;
   max-width: 1600px;
+  align-items: flex-start;
   /* background-color: yellowgreen; */
   padding: 0px 30px;
-  z-index: 1;
-  /* margin-bottom: 10px; */
   @media (max-width: 1490px) {
     max-width: calc(80%); /* 화면이 1200px 이하일 때 너비 조정 */
   }
@@ -20,7 +19,7 @@ export const SideBox = styled.div`
   /* background-color: yellow; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   max-width: 420px;
   max-height: 960px;
@@ -54,9 +53,9 @@ export const TotalBox = styled.div`
   /* margin-left: -16%; */
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   /* justify-content: space-between; */
-  padding: 0px 10px;
+  padding: 20px 10px 0px 10px;
   /* background-color: green; */
   height: 100%;
   max-width: 1600px;
@@ -102,10 +101,6 @@ export const VideoContainer = styled.div`
 
 export const VideoBox = styled.div`
   background-color: white;
-  /* max-width: 519px;
-  max-height: 742px; */
-  /* width: 519px; */
-  /* height: 742px; */
   height: 100%;
   width: 100%;
 
@@ -187,12 +182,13 @@ export const CallingTextGroup = styled.div`
   /* background-color: white; */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: flex-start;
 
   h2 {
     font-size: 22px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-top: 20px;
   }
   h4 {
     font-size: 17px;
