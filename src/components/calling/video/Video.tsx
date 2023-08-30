@@ -377,7 +377,7 @@ const Video: React.FC<{}> = () => {
   }
 
   return (
-    <>
+    <S.MediaWrapper>
       <MatchingModal
         isMatchingModalOpen={isMatchingModalOpen}
         isCallHidden={isCallHidden}
@@ -385,127 +385,125 @@ const Video: React.FC<{}> = () => {
         onClickcloseMatchingModal={onClickcloseMatchingModal}
       />
       <S.MediaBox>
-        <div style={{ display: "flex", gap: "20px" }}>
+        <S.TextTimerGroup>
           <S.CallingTextGroup>
             <h4>{opponentInfoRef.current.country}에 거주중인</h4>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "28px",
-                alignItems: "flex-end",
-              }}>
-              <h2>{opponentInfoRef.current.nickname} 님과 통화 중</h2>
-              <Timer
-                onStart={handleTimerStart}
-                running={running}
-                time={parentTime} // time prop으로 parentTime 값을 전달
-                onTimeChange={handleParentTimeChange}
-              />
-            </div>
+            <h2>{opponentInfoRef.current.nickname} 님과 통화 중</h2>
           </S.CallingTextGroup>
-        </div>
+          <Timer
+            onStart={handleTimerStart}
+            running={running}
+            time={parentTime} // time prop으로 parentTime 값을 전달
+            onTimeChange={handleParentTimeChange}
+          />
+        </S.TextTimerGroup>
         <S.TotalBox>
-          <div style={{ display: "flex" }}>
-            <S.VideoWrapper>
-              <div style={{ display: "flex", gap: "20px" }}>
-                <S.VideoContainer>
-                  <S.WithVedioTag>
-                    <S.VideoBox>
-                      <video id="myFace" ref={myVideoRef} autoPlay playsInline muted />
-                      <h4>{userInfoRef.current.nickname}(나)</h4>
-                    </S.VideoBox>
-                  </S.WithVedioTag>
-                </S.VideoContainer>
-                <S.VideoContainer>
-                  <S.WithVedioTag>
-                    <S.VideoBox>
-                      <video id="PeerFace" ref={PeerFaceRef} autoPlay playsInline />
-                      <h4>{opponentInfoRef.current.nickname}(상대방)</h4>
-                    </S.VideoBox>
-                  </S.WithVedioTag>
-                </S.VideoContainer>
-              </div>
-              <S.ButtonGroup>
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <S.ButtonStyle onClick={onClickCameraOffHandler}>
-                    {isCameraOn ? (
-                      <div>
-                        <S.ButtonInnerStyle>
-                          <BsFillCameraVideoOffFill size={4.5 * 4.5} />
-                          <p>비디오 끄기</p>
-                        </S.ButtonInnerStyle>
-                      </div>
-                    ) : (
-                      <div>
-                        <S.ButtonInnerStyle>
-                          <BsFillCameraVideoFill size={4.5 * 4.5} />
-                          <p>비디오 켜기</p>
-                        </S.ButtonInnerStyle>
-                      </div>
-                    )}
-                  </S.ButtonStyle>
-                  <S.ButtonStyle onClick={onClickAudioOffHandler}>
-                    {isAudioOn ? (
-                      <div>
-                        <S.ButtonInnerStyle>
-                          <BsFillMicMuteFill size={4.5 * 4.5} />
-                          <p>마이크 끄기</p>
-                        </S.ButtonInnerStyle>
-                      </div>
-                    ) : (
-                      <div>
-                        <S.ButtonInnerStyle>
-                          <BsFillMicFill size={4.5 * 4.5} />
-                          <p>마이크 켜기</p>
-                        </S.ButtonInnerStyle>
-                      </div>
-                    )}
-                  </S.ButtonStyle>
-                  <S.ButtonStyle onClick={() => setIsReportModalOpen(true)}>
-                    <S.ButtonInnerStyle>
-                      <BsFillXOctagonFill size={4.5 * 4.5} />
-                      <p>신고하기</p>
-                    </S.ButtonInnerStyle>
-                  </S.ButtonStyle>
-                  <ReportModal
-                    isReportModalOpen={isReportModalOpen}
-                    onClickCancelReport={() => setIsReportModalOpen(false)}
-                    onClickConfirmReport={onClickConfirmReport}
-                    nickname={opponentInfoRef.current.nickname}
-                  />
-                </div>
-                <S.ButtonStyle onClick={onClickEndCalling}>
+          <S.VideoWrapper>
+            <div style={{ display: "flex", gap: "20px" }}>
+              <S.VideoContainer>
+                <S.WithVedioTag>
+                  <S.VideoBox>
+                    <video id="myFace" ref={myVideoRef} autoPlay playsInline muted />
+                    <h4>{userInfoRef.current.nickname}(나)</h4>
+                  </S.VideoBox>
+                </S.WithVedioTag>
+              </S.VideoContainer>
+              <S.VideoContainer>
+                <S.WithVedioTag>
+                  <S.VideoBox>
+                    <video id="PeerFace" ref={PeerFaceRef} autoPlay playsInline />
+                    <h4>{opponentInfoRef.current.nickname}(상대방)</h4>
+                  </S.VideoBox>
+                </S.WithVedioTag>
+              </S.VideoContainer>
+            </div>
+            <S.ButtonGroup>
+              <S.ThreeButton>
+                <S.ButtonStyle onClick={onClickCameraOffHandler}>
+                  {isCameraOn ? (
+                    <div>
+                      <S.ButtonInnerStyle>
+                        <BsFillCameraVideoOffFill size={4.5 * 4.5} />
+                        <p>비디오 끄기</p>
+                      </S.ButtonInnerStyle>
+                    </div>
+                  ) : (
+                    <div>
+                      <S.ButtonInnerStyle>
+                        <BsFillCameraVideoFill size={4.5 * 4.5} />
+                        <p>비디오 켜기</p>
+                      </S.ButtonInnerStyle>
+                    </div>
+                  )}
+                </S.ButtonStyle>
+                <S.ButtonStyle onClick={onClickAudioOffHandler}>
+                  {isAudioOn ? (
+                    <div>
+                      <S.ButtonInnerStyle>
+                        <BsFillMicMuteFill size={4.5 * 4.5} />
+                        <p>마이크 끄기</p>
+                      </S.ButtonInnerStyle>
+                    </div>
+                  ) : (
+                    <div>
+                      <S.ButtonInnerStyle>
+                        <BsFillMicFill size={4.5 * 4.5} />
+                        <p>마이크 켜기</p>
+                      </S.ButtonInnerStyle>
+                    </div>
+                  )}
+                </S.ButtonStyle>
+                <S.ButtonStyle onClick={() => setIsReportModalOpen(true)}>
                   <S.ButtonInnerStyle>
-                    <BsBoxArrowRight size={4.5 * 4.5} />
-                    <p>나가기</p>
+                    <BsFillXOctagonFill size={4.5 * 4.5} />
+                    <p>신고하기</p>
                   </S.ButtonInnerStyle>
                 </S.ButtonStyle>
-                <ExitModal
-                  isExitModalOpen={isExitModalOpen}
-                  onClickCancelExitRoom={onClickCancelExitRoom}
-                  onClickConfirmExitRoom={onClickConfirmExitRoom}
-                />
-                <CleanPointModal
-                  isPointModalOpen={isPointModalOpen}
-                  onClickCancelPoint={onClickCancelPoint}
-                  onClickConfirmPoint={onClickConfirmPoint}
+                <ReportModal
+                  isReportModalOpen={isReportModalOpen}
+                  onClickCancelReport={() => setIsReportModalOpen(false)}
+                  onClickConfirmReport={onClickConfirmReport}
                   nickname={opponentInfoRef.current.nickname}
                 />
-              </S.ButtonGroup>
-            </S.VideoWrapper>
-          </div>
+              </S.ThreeButton>
+              <S.ButtonStyle onClick={onClickEndCalling}>
+                <S.ButtonInnerStyle>
+                  <BsBoxArrowRight size={4.5 * 4.5} />
+                  <p>나가기</p>
+                </S.ButtonInnerStyle>
+              </S.ButtonStyle>
+              <ExitModal
+                isExitModalOpen={isExitModalOpen}
+                onClickCancelExitRoom={onClickCancelExitRoom}
+                onClickConfirmExitRoom={onClickConfirmExitRoom}
+              />
+              <CleanPointModal
+                isPointModalOpen={isPointModalOpen}
+                onClickCancelPoint={onClickCancelPoint}
+                onClickConfirmPoint={onClickConfirmPoint}
+                nickname={opponentInfoRef.current.nickname}
+              />
+            </S.ButtonGroup>
+          </S.VideoWrapper>
           <S.SideBox>
-            <CleanPoint cleanPoint={opponentCleanPoint} />
+            <div
+              style={{
+                paddingTop: "10px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}>
+              <CleanPoint cleanPoint={opponentCleanPoint} />
+              <CallingPageInterestSelect MatchingUserData={MatchingUserData} />
+            </div>
             <CallingPageMemo
               shouldSubmit={shouldSubmit}
               nickname={opponentInfoRef.current.nickname}
             />
-            <CallingPageInterestSelect MatchingUserData={MatchingUserData} />
           </S.SideBox>
         </S.TotalBox>
       </S.MediaBox>
-    </>
+    </S.MediaWrapper>
   );
 };
 

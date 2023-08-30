@@ -44,6 +44,11 @@ export const CategoriStyle = styled.div`
     css`
       background-color: #ff6e46; /* 예시 색상 4 */
     `}
+
+    
+  @media (max-width: 1240px) {
+    width: 90%;
+  }
 `;
 
 export const Image = styled.div`

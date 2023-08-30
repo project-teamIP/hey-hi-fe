@@ -103,6 +103,8 @@ export const CounterBox = styled.div`
 `;
 
 export const MemoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   h2 {
     color: #000;
     font-size: 20px;

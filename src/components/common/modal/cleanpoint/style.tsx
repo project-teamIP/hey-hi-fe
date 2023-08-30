@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import cleanPath from "../../../../assets/images/cleanPointHandle.svg";
 
 interface SliderTrackProps {
   value: number; // value 속성 추가
@@ -14,13 +15,13 @@ export const Container = styled.div`
   background: #fcfcfc;
   width: 541px;
   height: 524px;
-  margin-top: 55px;
   padding: 30px;
   gap: 11px;
 `;
 
 // 타이틀
 export const Title = styled.div`
+  margin-top: 25px;
   color: #000;
   font-size: 34px;
   font-weight: 600;
@@ -80,7 +81,7 @@ export const SliderImageContainer = styled.div`
   justify-content: center;
 `;
 
-export const ScoreText = styled.p`
+export const ScoreText = styled.p<SliderTrackProps>`
   margin-left: 5px;
   color: white;
   font-size: 16px;
@@ -88,9 +89,15 @@ export const ScoreText = styled.p`
   line-height: normal;
   letter-spacing: -0.32px;
   white-space: nowrap; /* 추가된 부분 */
-  margin-top: -108px;
+  margin-top: -122px;
   z-index: 1;
-  margin-right: -15px;
+  margin-right: -12px;
+
+  ${(props) => {
+    if (typeof props.value === "number" && props.value < 0) {
+      return " margin-right: -18px;";
+    }
+  }}
 `;
 
 export const ScoreTagBox = styled.div`
@@ -126,38 +133,50 @@ export const SliderBox = styled.div`
 
 export const SliderTrack = styled.div<SliderTrackProps>`
   position: absolute;
-  top: 50%;
+  top: 48.5%;
+  /* z-index: 1; */
   width: 406px;
   height: 10px;
-  border-radius: 6px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
   background-color: #ff6e46;
   margin-top: 2.5px;
   ${(props) => {
     if (props.value < 0) {
       return `  
-      width: ${212 - Math.abs(props.value) * 20}px;
+      width: ${216 - Math.abs(props.value) * 20}px;
       `;
     } else {
       return `
-        width: ${212 + Math.abs(props.value) * 20}px;
+        width: ${216 + Math.abs(props.value) * 20}px;
       `;
     }
   }}
 `;
 
-export const SliderImage = styled.img`
+export const SliderImage = styled.img<SliderTrackProps>`
   position: absolute;
   right: 0;
-  margin-top: -45px;
-  transform: translate(53%, -50%);
+  margin-top: -60px;
+  transform: translate(43%, -50%);
+  z-index: 1;
+
+  ${(props) => {
+    if (typeof props.value === "number" && props.value < 1) {
+      return "transform: translate(51%, -50%);";
+    } else {
+      return " transform: translate(47%, -50%);";
+    }
+  }}
 `;
 
 export const SliderBackground = styled.div`
   border-radius: 6px;
-  width: 420px;
+  width: 412px;
   height: 10px;
   margin: 0 auto;
   margin-top: 20px;
+  background-color: #e7e9ef;
 `;
 
 export const SliderInput = styled.input`
@@ -172,21 +191,19 @@ export const SliderInput = styled.input`
   /* 슬라이더 핸들을 움직일 때의 스타일을 지정합니다 */
   &::-webkit-slider-thumb {
     appearance: none;
-    width: 17px;
-    height: 17px;
-    background-color: #ff6e46;
+    width: 50px;
+    height: 50px;
+    background-image: url(${cleanPath}); /* 이미지 경로로 수정해주세요 */
+    background-size: cover; /* 이미지를 커버하도록 설정 */
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0px 0px 0px 8px rgba(253, 210, 198, 0.5);
-    margin-top: -24px;
-    z-index: 1;
-    padding-left: 5px;
-    padding-right: 5px;
+    margin-top: -30px;
+    /* z-index: 1; */
     ${(props) => {
-      if (typeof props.value === "number" && props.value < 0) {
-        return "margin-right: 20px;";
+      if (typeof props.value === "number" && props.value < 1) {
+        return "margin-left: -2px;";
       } else {
-        return "margin-left: 10px;";
+        return "margin-left: 22px;";
       }
     }}
   }
@@ -194,21 +211,19 @@ export const SliderInput = styled.input`
   /* Firefox용 스타일 */
   &::-moz-range-thumb {
     appearance: none;
-    width: 17px;
-    height: 17px;
-    background-color: #ff6e46;
+    width: 48px;
+    height: 48px;
+    background-image: url(${cleanPath}); /* 이미지 경로로 수정해주세요 */
+    background-size: cover; /* 이미지를 커버하도록 설정 */
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0px 0px 0px 8px rgba(253, 210, 198, 0.7);
-    margin-top: -24px;
-    z-index: 1;
-    padding-left: 5px;
-    padding-right: 5px;
+    margin-top: -29px;
+    /* z-index: 1; */
     ${(props) => {
       if (typeof props.value === "number" && props.value < 0) {
-        return "margin-right: 20px;";
+        return;
       } else {
-        return "margin-left: 10px;";
+        return "margin-left: 20px;";
       }
     }}
   }

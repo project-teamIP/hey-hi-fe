@@ -110,8 +110,8 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
               <S.SliderBox>
                 <S.SliderTrack value={score}>
                   <S.SliderImageContainer>
-                    <S.SliderImage src={pointPath} alt="pointbox" />
-                    <S.ScoreText>{score}점</S.ScoreText>
+                    <S.SliderImage value={score} src={pointPath} alt="pointbox" />
+                    <S.ScoreText value={score}>{score}점</S.ScoreText>
                   </S.SliderImageContainer>
                 </S.SliderTrack>
                 <S.SliderBackground />
