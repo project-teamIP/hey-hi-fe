@@ -3,7 +3,6 @@ import { styled } from "styled-components";
 export const MyPageEditBox = styled.div`
   height: 874px;
   width: 750px;
-  margin-left: 351px;
   margin-top: 87px;
 `;
 
@@ -86,10 +85,12 @@ export const NickCheckBtn = styled.button`
   width: 141px;
   height: 60px;
   border-radius: 15px;
+  border: none;
   background: #757575;
   color: #fff;
   font-size: 22px;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 export const NickCheckMsg = styled.div`

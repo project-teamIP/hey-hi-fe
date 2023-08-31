@@ -39,6 +39,8 @@ export const MainInner = styled.div`
 export const ImgBox = styled.div`
   // maininner에서 maintext 너비 제외하고 남은 너비 다
   flex: 1;
+  max-width: 63.3125rem;
+  max-height: 53.75rem;
   margin-right: 2.9375rem;
 
   img {
