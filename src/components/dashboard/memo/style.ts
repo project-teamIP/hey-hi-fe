@@ -27,6 +27,34 @@ export const TextBox = styled.div`
   }
 `;
 
+export const TextBody = styled.div`
+  width: 100%;
+
+  h2 {
+    color: #3f3f3f;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 16px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  p {
+    height: 120px;
+    color: #8c8c8c;
+    font-size: 15px;
+    font-weight: 500;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+`;
+
 export const TextBoxTag = styled.div`
   padding-top: 5px;
   text-align: center;
