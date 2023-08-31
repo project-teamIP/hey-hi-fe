@@ -105,12 +105,12 @@ export const SliderWrapper = styled.div`
   border-radius: 20px;
   border: 8px solid black;
   margin-left: 137px;
+  overflow: hidden;
 `;
 
 export const SliderImage = styled.img`
   width: 100%;
   height: 100%;
-  overflow: hidden;
   border-radius: 10px;
 `;
 
