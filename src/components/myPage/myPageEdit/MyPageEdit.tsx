@@ -5,7 +5,7 @@ import Input from "../../common/input/Input";
 import Select from "../../common/select/Select";
 import countries from "../../../utils/countries.json";
 import interests from "../../../utils/interests.json";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "react-query";
 import { changeUserInfo, getUserInfo, userNickNameCheck } from "../../../api/api";
 import pencilSvg from "../../../assets/images/pencil.svg";

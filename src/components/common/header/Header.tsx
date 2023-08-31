@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Button from "../button/Button";
 import * as S from "./style";
@@ -7,17 +7,13 @@ import { useLocation } from "react-router-dom";
 import { RootState } from "../../../types/user";
 import { useQuery } from "react-query";
 import { getUserInfo } from "../../../api/api";
-import { link } from "fs";
 
 const Header = () => {
   //유저 정보
   // const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
-  const { data, refetch } = useQuery("userInfo", () => getUserInfo(), {
+  const { data: userInfo, refetch } = useQuery("userInfo", () => getUserInfo(), {
     enabled: false, // 초기 데이터 가져오기를 수동으로 트리거하도록 설정
   });
-
-  const userInfo = data;
-  console.log(userInfo);
 
   //메인헤더만 오렌지컬러
   const location = useLocation();
@@ -28,24 +24,20 @@ const Header = () => {
   const navigate = useNavigate();
   const onClickLinkToDashboard = () => {
     if (state && isCallPage) {
-      const result = window.confirm("나가면 통화 연결이 끊어집니다. 괜찮으시겠어요?");
+      const result = window.confirm("페이지 이동 시 통화 연결이 끊어집니다.");
       if (result) {
-        alert("대시보드로 이동합니다.");
         navigate("/dashboard");
       } else {
-        alert("이동이 취소됩니다.");
         return;
       }
     }
   };
   const onClickLinkToMyPage = () => {
     if (state && isCallPage) {
-      const result = window.confirm("나가면 통화 연결이 끊어집니다. 괜찮으시겠어요?");
+      const result = window.confirm("페이지 이동 시 통화 연결이 끊어집니다.");
       if (result) {
-        alert("마이페이지로 이동합니다.");
         navigate("/mypage");
       } else {
-        alert("이동이 취소됩니다.");
         return;
       }
     }
@@ -66,6 +58,7 @@ const Header = () => {
     <S.HeaderBox $isMainPage={isMainPage}>
       <S.HeaderInner>
         <S.Nav>
+          {/* 로고 */}
           <Link to={state ? "/dashboard" : "/"}>
             <svg
               width="101"
@@ -101,6 +94,7 @@ const Header = () => {
             )
           ) : null}
         </S.Nav>
+        {/* 유저정보 */}
         {state ? (
           isCallPage ? (
             <ul>
