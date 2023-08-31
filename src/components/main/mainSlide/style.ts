@@ -100,6 +100,8 @@ export const StepContent = styled.p<{ active: boolean }>`
 export const SliderWrapper = styled.div`
   position: relative;
   flex: 1;
+  max-width: 909px;
+  max-height: 511px;
   border-radius: 20px;
   border: 8px solid black;
   margin-left: 137px;

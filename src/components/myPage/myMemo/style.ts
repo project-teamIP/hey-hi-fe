@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { MainBox } from "../../main/mainTop/style";
 
 export const MyMemoBox = styled.div`
   margin: 4.1875rem 0 0 4.9375rem;
@@ -39,6 +40,11 @@ export const MemoCards = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.9375rem;
+
+  @media (max-width: 1560px) {
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: 10px;
+  }
 `;
 
 export const MemoCard = styled.div`
