@@ -12,7 +12,7 @@ export const FooterBox = styled.div`
 `;
 
 export const FooterTop = styled.div`
-  width: 60%;
+  width: 70%;
   display: flex;
   justify-content: space-between;
 
@@ -47,14 +47,14 @@ export const FooterTop = styled.div`
 `;
 
 export const FooterDivider = styled.div`
-  width: 1800px;
+  width: 90%;
   height: 1px;
   background-color: #444;
   margin: 35px 0;
 `;
 
 export const FooterBottom = styled.div`
-  width: 60%;
+  width: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;
