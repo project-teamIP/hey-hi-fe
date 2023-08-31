@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DashBoardBox from "../DashBoardBox";
 import instance from "../../../api/api";
 import { useQuery } from "react-query";
@@ -47,15 +47,15 @@ const Memo = () => {
               if (index < 4) {
                 return (
                   <S.TextBox key={memo.id}>
-                    <div>
-                      <S.TextBoxInfo>
-                        <p>{memo.date}</p>
-                        <S.TextBoxTag>{memo.nickname}과의 통화</S.TextBoxTag>
-                      </S.TextBoxInfo>
+                    <S.TextBoxInfo>
+                      <p>{memo.date}</p>
+                      <S.TextBoxTag>{memo.nickname}과의 통화</S.TextBoxTag>
+                    </S.TextBoxInfo>
+                    <S.TextBody>
                       <h2>{memo.title}</h2>
                       <p>{memo.content}</p>
-                      {/* <p>Index: {index}</p> */}
-                    </div>
+                    </S.TextBody>
+                    {/* <p>Index: {index}</p> */}
                   </S.TextBox>
                 );
               }
