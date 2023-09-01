@@ -7,8 +7,11 @@ import styled from "styled-components";
 import { useQuery } from "react-query";
 import { getUserInfo } from "../api/api";
 import SocialModal from "../components/common/modal/social/SocialModal";
+import Guide from "./Guide";
+import useWindowSize from "../hooks/UseWindowSize";
 
 const DashBoard = () => {
+  const { isSmallScreen } = useWindowSize();
   // 모달
   const [showModal, setShowModal] = useState(false);
 
@@ -35,20 +38,24 @@ const DashBoard = () => {
 
   return (
     <>
-      <DashBoardWrapper>
-        <DashBoardContainer>
-          <UserContainer>
-            <div style={{ display: "flex", flexDirection: "column", gap: "33px" }}>
-              <div style={{ display: "flex", gap: "33px" }}>
-                <DiallogBox />
-                <CallLog />
+      {isSmallScreen ? (
+        <Guide />
+      ) : (
+        <DashBoardWrapper>
+          <DashBoardContainer>
+            <UserContainer>
+              <div style={{ display: "flex", flexDirection: "column", gap: "33px" }}>
+                <div style={{ display: "flex", gap: "33px" }}>
+                  <DiallogBox />
+                  <CallLog />
+                </div>
+                <Memo />
               </div>
-              <Memo />
-            </div>
-            <Interest />
-          </UserContainer>
-        </DashBoardContainer>
-      </DashBoardWrapper>
+              <Interest />
+            </UserContainer>
+          </DashBoardContainer>
+        </DashBoardWrapper>
+      )}
       {showModal && <SocialModal />}
     </>
   );
