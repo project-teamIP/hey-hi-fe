@@ -8,6 +8,10 @@ import { useQueryClient } from "react-query";
 import Guide from "./Guide";
 import useWindowSize from "../hooks/UseWindowSize";
 
+interface MyPageBoxProps {
+  activePage: string;
+}
+
 const MyPage = () => {
   const { isSmallScreen } = useWindowSize();
   const queryClient = useQueryClient();
@@ -32,7 +36,7 @@ const MyPage = () => {
       {isSmallScreen ? (
         <Guide />
       ) : (
-        <MyPageBox>
+        <MyPageBox activePage={activePage}>
           <MyPageAside activePage={activePage} onClickPageHandler={onClickPageHandler} />
           {activePage === "계정정보" && <MyPageEdit />}
           {activePage === "나의메모" && <MyMemo />}
@@ -45,12 +49,12 @@ const MyPage = () => {
 
 export default MyPage;
 
-export const MyPageBox = styled.div`
+export const MyPageBox = styled.div<MyPageBoxProps>`
   margin: 0 auto;
   margin-top: 70px;
-  max-width: 1920px;
+  max-width: 1556px;
   width: 100vw;
   display: flex;
-  justify-content: start;
+  justify-content: ${({ activePage }) => (activePage === "나의메모" ? "start" : "space-between")};
   align-items: start;
 `;

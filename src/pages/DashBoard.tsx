@@ -75,7 +75,7 @@ const DashBoardWrapper = styled.div`
   align-items: center;
 
   ${mediaQuery.desktop} {
-    width: 1463px;
+    width: 100%;
     padding: 0px 182px 0px;
     box-sizing: border-box;
   }

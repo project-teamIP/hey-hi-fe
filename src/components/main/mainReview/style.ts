@@ -8,6 +8,7 @@ export const MainReviewBox = styled.div`
   width: 100%;
   height: 719px;
   background-color: #2c2c2c;
+  overflow: hidden;
 
   h1 {
     font-size: 50px;
