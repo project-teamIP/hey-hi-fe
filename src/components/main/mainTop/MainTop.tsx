@@ -3,20 +3,25 @@ import Button from "../../common/button/Button";
 import { Link } from "react-router-dom";
 //svg img
 import mainTopSvg from "../../../assets/images/main/maintop.svg";
+import mainTopSvg2 from "../../../assets/images/main/maintop2.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../types/user";
 
 const MainTop = () => {
+  // 로그인한 사용자가 접근 시 로그인 화면 말고 대쉬보드로 연결용
   const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
+
+  // width 1463px 이하에서 svg 변경
+  const isUnder1463 = window.innerWidth < 1463;
 
   return (
     <div>
       <S.MainBox>
         <S.MainInner>
           <S.ImgBox>
-            <img src={mainTopSvg} alt="prev-btn" />
+            <img src={isUnder1463 ? mainTopSvg2 : mainTopSvg} alt="main-top" />
           </S.ImgBox>
-          <div>
+          <S.MainText>
             <S.SvgBox>
               <svg
                 width="234"
@@ -49,7 +54,7 @@ const MainTop = () => {
                 헤이,안녕 시작하기
               </Button.Primary>
             </Link>
-          </div>
+          </S.MainText>
         </S.MainInner>
       </S.MainBox>
       <S.SvgBox2></S.SvgBox2>

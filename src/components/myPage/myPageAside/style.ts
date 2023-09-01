@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import Button from "../../common/button/Button";
 
 export const AsideBox = styled.div`
+  min-width: 217px;
   width: 396px;
   height: 874px;
   border-radius: 20px;
@@ -15,6 +15,7 @@ export const AsideBox = styled.div`
 
 export const AsideNav = styled.div`
   h4 {
+    width: 130px;
     font-size: 30px;
     font-weight: 700;
     margin-bottom: 42px;
@@ -33,6 +34,7 @@ export const Deactivate = styled.button`
 `;
 
 export const NavItem = styled.p<{ isActive: boolean }>`
+  width: 80px;
   font-size: 22px;
   font-weight: ${({ isActive }) => (isActive ? "700" : "500")};
   margin-bottom: 38px;

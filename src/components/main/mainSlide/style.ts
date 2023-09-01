@@ -43,6 +43,7 @@ export const ProgressBar = styled.div`
   /* display: flex;
   align-items: center;
   flex-direction: column; */
+  width: 500px;
 `;
 
 export const StepWrapper = styled.div`
@@ -98,17 +99,18 @@ export const StepContent = styled.p<{ active: boolean }>`
 
 export const SliderWrapper = styled.div`
   position: relative;
-  width: 909px;
-  height: 511px;
+  flex: 1;
+  max-width: 909px;
+  max-height: 511px;
   border-radius: 20px;
   border: 8px solid black;
   margin-left: 137px;
+  overflow: hidden;
 `;
 
 export const SliderImage = styled.img`
   width: 100%;
   height: 100%;
-  overflow: hidden;
   border-radius: 10px;
 `;
 

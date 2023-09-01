@@ -13,11 +13,13 @@ export const MainBox = styled.div`
 `;
 
 export const MainInner = styled.div`
+  width: 100%;
   max-width: 1920px;
   height: 984px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 
   h1 {
     font-size: 60px;
@@ -35,14 +37,20 @@ export const MainInner = styled.div`
 `;
 
 export const ImgBox = styled.div`
-  width: 63.3125rem;
-  height: 53.75rem;
-  margin-right: 5.75rem;
+  // maininner에서 maintext 너비 제외하고 남은 너비 다
+  flex: 1;
+  max-width: 63.3125rem;
+  max-height: 53.75rem;
+  margin-right: 2.9375rem;
 
   img {
     height: 100%;
     width: 100%;
   }
+`;
+
+export const MainText = styled.div`
+  width: 527px;
 `;
 
 export const SvgBox = styled.div`

@@ -7,6 +7,8 @@ import languageSvg from "../../../assets/images/main/language.svg";
 import experienceSvg from "../../../assets/images/main/experience.svg";
 
 const MainKeyword = () => {
+  // width 1463px 이하에서 배열 변경
+  const isUnder1463 = window.innerWidth < 1463;
   return (
     <S.MainKeywordBox>
       <S.SectionNum>WHY?</S.SectionNum>
