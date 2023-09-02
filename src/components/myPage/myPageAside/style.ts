@@ -34,7 +34,7 @@ export const Deactivate = styled.button`
 `;
 
 export const NavItem = styled.p<{ isActive: boolean }>`
-  width: 80px;
+  width: 88px;
   font-size: 22px;
   font-weight: ${({ isActive }) => (isActive ? "700" : "500")};
   margin-bottom: 38px;
