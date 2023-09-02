@@ -15,7 +15,7 @@ export const AsideBox = styled.div`
 
 export const AsideNav = styled.div`
   h4 {
-    width: 130px;
+    width: 150px;
     font-size: 30px;
     font-weight: 700;
     margin-bottom: 42px;
