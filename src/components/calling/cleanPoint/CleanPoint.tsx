@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import svgPath from "../../../assets/images/cleanPointHandle.svg";
 import * as S from "./style";
 // CleanPoint 인터페이스 정의

@@ -7,8 +7,11 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { userRegister } from "../../api/api";
 import { UserData } from "../../types/types";
+import Guide from "../Guide";
+import useWindowSize from "../../hooks/UseWindowSize";
 
 const Signup = () => {
+  const { isSmallScreen } = useWindowSize();
   // useState
   const [slideIndex, setSlideIndex] = useState<number>(0);
   const [userData, setUserData] = useState<UserData>({
@@ -63,44 +66,52 @@ const Signup = () => {
   };
 
   return (
-    <S.Wrap>
-      {/* 회원가입 스탭 */}
-      <S.Header>
-        <h1>회원가입</h1>
-        <S.StepDots>
-          <S.StepDot className={slideIndex >= 0 ? "active hideAfter" : "hideAfter"}>1</S.StepDot>
-          <S.StepDot className={slideIndex >= 1 ? "active" : ""}>2</S.StepDot>
-          <S.StepDot className={slideIndex >= 2 ? "active" : ""}>3</S.StepDot>
-        </S.StepDots>
-      </S.Header>
+    <>
+      {isSmallScreen ? (
+        <Guide />
+      ) : (
+        <S.Wrap>
+          {/* 회원가입 스탭 */}
+          <S.Header>
+            <h1>회원가입</h1>
+            <S.StepDots>
+              <S.StepDot className={slideIndex >= 0 ? "active hideAfter" : "hideAfter"}>
+                1
+              </S.StepDot>
+              <S.StepDot className={slideIndex >= 1 ? "active" : ""}>2</S.StepDot>
+              <S.StepDot className={slideIndex >= 2 ? "active" : ""}>3</S.StepDot>
+            </S.StepDots>
+          </S.Header>
 
-      {/* 회원가입 내용 */}
-      <S.Container>
-        <S.Slides style={{ transform: `translateX(-${slideIndex * 462}px)` }}>
-          {/* 페이지 1 */}
-          <SlideOne
-            userData={userData}
-            setUserData={setUserData}
-            slideIndex={slideIndex}
-            onClickNextButtonHandler={onClickNextButtonHandler}
-          />
-          {/* 페이지 2 */}
-          <SlideTwo
-            userData={userData}
-            setUserData={setUserData}
-            slideIndex={slideIndex}
-            onClickNextButtonHandler={onClickNextButtonHandler}
-          />
-          {/* 페이지 3 */}
-          <SlideThree
-            userData={userData}
-            setUserData={setUserData}
-            slideIndex={slideIndex}
-            onClickUserRegisterHandler={onClickUserRegisterHandler}
-          />
-        </S.Slides>
-      </S.Container>
-    </S.Wrap>
+          {/* 회원가입 내용 */}
+          <S.Container>
+            <S.Slides style={{ transform: `translateX(-${slideIndex * 462}px)` }}>
+              {/* 페이지 1 */}
+              <SlideOne
+                userData={userData}
+                setUserData={setUserData}
+                slideIndex={slideIndex}
+                onClickNextButtonHandler={onClickNextButtonHandler}
+              />
+              {/* 페이지 2 */}
+              <SlideTwo
+                userData={userData}
+                setUserData={setUserData}
+                slideIndex={slideIndex}
+                onClickNextButtonHandler={onClickNextButtonHandler}
+              />
+              {/* 페이지 3 */}
+              <SlideThree
+                userData={userData}
+                setUserData={setUserData}
+                slideIndex={slideIndex}
+                onClickUserRegisterHandler={onClickUserRegisterHandler}
+              />
+            </S.Slides>
+          </S.Container>
+        </S.Wrap>
+      )}
+    </>
   );
 };
 

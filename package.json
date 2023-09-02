@@ -10,7 +10,6 @@
     "@types/chart.js": "^2.9.37",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.39",
-    "@types/react": "^18.2.18",
     "@types/react-chartjs-2": "^2.5.7",
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.3.3",
@@ -69,6 +68,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.3",
+    "@types/react": "^18.2.21",
     "prettier": "^3.0.0"
   }
 }

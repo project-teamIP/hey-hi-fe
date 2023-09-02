@@ -12,8 +12,11 @@ import { logIn } from "../../redux/modules/userAuth";
 import LogoImage from "../../assets/images/LogoImage.svg";
 import Google from "../../assets/images/google.svg";
 import Kakao from "../../assets/images/kakao.svg";
+import Guide from "../Guide";
+import useWindowSize from "../../hooks/UseWindowSize";
 
 const Login = () => {
+  const { isSmallScreen } = useWindowSize();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // 아이디, 비밀번호
@@ -66,53 +69,59 @@ const Login = () => {
     window.location.href = GOOGLE_AUTH_URL;
   };
   return (
-    <Wrap>
-      <Logo>
-        <img src={LogoImage} alt="로고" />
-      </Logo>
-      {/* 일반로그인 */}
-      <LoginContainer>
-        <Input
-          placeholder="이메일을 입력하세요"
-          value={userId}
-          onChangeHandler={onChangeUserIdHandler}
-          size="medium"
-        />
-        <Input
-          placeholder="비밀번호를 입력하세요"
-          type="password"
-          value={password}
-          onChangeHandler={onChangePasswordHandler}
-          size="medium"
-          onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === "Enter") {
-              onClickLoginHandler();
-            }
-          }}
-        />
-      </LoginContainer>
-      {/* OR */}
-      <OR>OR</OR>
-      {/* 소셜로그인 */}
-      <SocialContainer>
-        <Button.Primary size="sns" onClick={onClickGoogleLoginHandler}>
-          <img src={Google} alt="google" />
-          구글로 시작하기
-        </Button.Primary>
-        <Button.Primary size="sns" onClick={onClickKaKaoLoginHandler}>
-          <img src={Kakao} alt="kakao" />
-          카카오로 시작하기
-        </Button.Primary>
-      </SocialContainer>
-      {/* 로그인버튼 */}
-      <LoginButton size="middle" onClick={onClickLoginHandler} bc="#FF6E46">
-        로그인하기
-      </LoginButton>
-      {/* 회원가입 안내문 */}
-      <SignUp>
-        아직 회원이 아니신가요?<SignUpLink to="/signup">회원가입</SignUpLink>
-      </SignUp>
-    </Wrap>
+    <>
+      {isSmallScreen ? (
+        <Guide />
+      ) : (
+        <Wrap>
+          <Logo>
+            <img src={LogoImage} alt="로고" />
+          </Logo>
+          {/* 일반로그인 */}
+          <LoginContainer>
+            <Input
+              placeholder="이메일을 입력하세요"
+              value={userId}
+              onChangeHandler={onChangeUserIdHandler}
+              size="medium"
+            />
+            <Input
+              placeholder="비밀번호를 입력하세요"
+              type="password"
+              value={password}
+              onChangeHandler={onChangePasswordHandler}
+              size="medium"
+              onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                if (e.key === "Enter") {
+                  onClickLoginHandler();
+                }
+              }}
+            />
+          </LoginContainer>
+          {/* OR */}
+          <OR>OR</OR>
+          {/* 소셜로그인 */}
+          <SocialContainer>
+            <Button.Primary size="sns" onClick={onClickGoogleLoginHandler}>
+              <img src={Google} alt="google" />
+              구글로 시작하기
+            </Button.Primary>
+            <Button.Primary size="sns" onClick={onClickKaKaoLoginHandler}>
+              <img src={Kakao} alt="kakao" />
+              카카오로 시작하기
+            </Button.Primary>
+          </SocialContainer>
+          {/* 로그인버튼 */}
+          <LoginButton size="middle" onClick={onClickLoginHandler} bc="#FF6E46">
+            로그인하기
+          </LoginButton>
+          {/* 회원가입 안내문 */}
+          <SignUp>
+            아직 회원이 아니신가요?<SignUpLink to="/signup">회원가입</SignUpLink>
+          </SignUp>
+        </Wrap>
+      )}
+    </>
   );
 };
 

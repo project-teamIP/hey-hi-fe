@@ -4,7 +4,6 @@ import svgPath from "../../../../assets/images/noticeModal_bang.svg";
 import facePath from "../../../../assets/images/dissatisfied_Face.svg";
 import handPath from "../../../../assets/images/sign_language.svg";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 interface NoticecModalProps {
   isNoticeModalOpen: boolean;

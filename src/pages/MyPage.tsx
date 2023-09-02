@@ -5,12 +5,15 @@ import MyPageEdit from "../components/myPage/myPageEdit/MyPageEdit";
 import MyMemo from "../components/myPage/myMemo/MyMemo";
 import MyFriend from "../components/myPage/myFriend/MyFriend";
 import { useQueryClient } from "react-query";
+import Guide from "./Guide";
+import useWindowSize from "../hooks/UseWindowSize";
 
 interface MyPageBoxProps {
   activePage: string;
 }
 
 const MyPage = () => {
+  const { isSmallScreen } = useWindowSize();
   const queryClient = useQueryClient();
   const [activePage, setActivePage] = useState<string>("계정정보");
 
@@ -29,12 +32,18 @@ const MyPage = () => {
   };
 
   return (
-    <MyPageBox activePage={activePage}>
-      <MyPageAside activePage={activePage} onClickPageHandler={onClickPageHandler} />
-      {activePage === "계정정보" && <MyPageEdit />}
-      {activePage === "나의메모" && <MyMemo />}
-      {activePage === "친구관리" && <MyFriend />}
-    </MyPageBox>
+    <>
+      {isSmallScreen ? (
+        <Guide />
+      ) : (
+        <MyPageBox activePage={activePage}>
+          <MyPageAside activePage={activePage} onClickPageHandler={onClickPageHandler} />
+          {activePage === "계정정보" && <MyPageEdit />}
+          {activePage === "나의메모" && <MyMemo />}
+          {activePage === "친구관리" && <MyFriend />}
+        </MyPageBox>
+      )}
+    </>
   );
 };
 
