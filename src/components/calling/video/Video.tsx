@@ -283,6 +283,13 @@ const Video: React.FC<{}> = () => {
         console.log("emit END message:", message);
         socketRef.current.emit("end", message);
       }
+      if (streamRef.current) {
+        if (myVideoRef.current) {
+          myVideoRef.current.srcObject = streamRef.current; // 스트림을 비디오 요소에 할당
+        }
+        const tracks = streamRef.current.getTracks(); // 스트림에서 트랙 가져오기
+        tracks.forEach((track) => track.stop()); // 트랙 중지
+      }
       if (socketRef.current) {
         socketRef.current.disconnect();
         console.log("연결 해제");
