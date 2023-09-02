@@ -1,0 +1,47 @@
+# workflow 이름
+name: heyhi workflow
+
+# workflow 실행 조건
+on: # event 감지
+  push: # main branch가 push 됐을 때
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# job 설정
+jobs:
+  # # job id
+  # deploy:
+  #   # job 이름
+  #   name: heyhi github action
+  #   # job 가상환경 인스턴스
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # step 이름
+  #     - name: checkout source code
+  #       # Uses를 통해 외부 설정 가져오기 : 내 레포 소스 받아오기
+  #       uses: actions/checkout@main
+  run:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: Deploy
+        uses: lbertenasco/s3-deploy@v1
+        with:
+          folder: build
+          bucket: ${{ secrets.S3_BUCKET }}
+          dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          invalidation: / *
