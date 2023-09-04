@@ -28,21 +28,24 @@ export const Container = styled.div`
 // 이미지
 export const Img = styled.img`
   margin-bottom: 16px;
-`
+`;
 
 // 타이틀
 export const Title = styled.div`
-  font-size: 34px;
+  text-align: center;
+  font-size: 30px;
+  font-style: normal;
   font-weight: 700;
   line-height: normal;
-  text-align: center;
   letter-spacing: -4px;
 `;
 
 // 보조 타이틀
 export const SubTitle = styled.div`
-  margin-top: 12px;
+  margin-top: 25px;
+  text-align: center;
   font-size: 17px;
+  font-style: normal;
   font-weight: 500;
   line-height: 135%;
 `;
@@ -50,11 +53,12 @@ export const SubTitle = styled.div`
 // 내용
 export const Content = styled.div`
   margin: 36px 0px 33px;
+  color: #6d6d6d;
+  text-align: center;
   font-size: 15px;
+  font-style: normal;
   font-weight: 500;
   line-height: 140%;
-  text-align: center;
-  color: #6D6D6D;
 `;
 
 // 버튼 컨테이너
