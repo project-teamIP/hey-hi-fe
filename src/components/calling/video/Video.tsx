@@ -59,11 +59,6 @@ const Video: React.FC<{}> = () => {
     setParentTime(newTime);
   };
 
-  if (data.language === "default") {
-    console.log("매칭이 불가능함");
-    navigate("/dasyboard");
-  }
-
   useEffect(() => {
     if (!isLoading && data) {
       userInfoRef.current.loginId = data.loginId;
@@ -71,7 +66,13 @@ const Video: React.FC<{}> = () => {
       userInfoRef.current.country = data.country;
       userInfoRef.current.interests = data.interests;
       userInfoRef.current.cleanPoint = data.cleanPoint;
+      if (data.language === "default") {
+        console.log("data", data);
+        console.log("매칭이 불가능함");
+        navigate("/dasyboard");
+      }
     }
+    console.log("data", data);
   }, [isLoading, data]);
 
   const isStartedMatchSystem = async () => {
