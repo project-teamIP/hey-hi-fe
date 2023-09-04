@@ -11,7 +11,7 @@
 
 <br/>
 
-|               나혜림(FE)                |                 김다솔(FE)                 |                이영우(FE)                 |               박현우(BE)                |                    안종현(BE)                     |                김신형(BE)                 |               안민현(BE)                | 김세영(DE) |
+|            나혜림(FE) 부팀장            |                 김다솔(FE)                 |                이영우(FE)                 |             박현우(BE) 팀장             |                    안종현(BE)                     |                김신형(BE)                 |               안민현(BE)                | 김세영(DE) |
 | :-------------------------------------: | :----------------------------------------: | :---------------------------------------: | :-------------------------------------: | :-----------------------------------------------: | :---------------------------------------: | :-------------------------------------: | :--------: |
 | [HyerimNa](https://github.com/HyerimNa) | [SOL KIM](https://github.com/solightnsalt) | [2Zerozero](https://github.com/2Zerozero) | [hyun1024](https://github.com/hyun1024) | [jonghyeon1013](https://github.com/jonghyeon1013) | [userkim12](https://github.com/userkim12) | [giminion](https://github.com/giminion) |            |
 
@@ -34,20 +34,20 @@
 
 ## 주요 기능
 
-### 유저의 사용기록을 전반적으로 확인할 수 있는 대시보드
+유저의 사용기록을 전반적으로 확인할 수 있는 대시보드
 
 <img src="./public/readme/service_1.png">
 
-### 다른 언어를 사용하는 랜덤한 유저와의 1:1 실시간 영상통화
+다른 언어를 사용하는 랜덤한 유저와의 1:1 실시간 영상통화
 
 <img src="./public/readme/service_2.png">
 
-### 클린한 사이트를 유지하지 위한 신고, 차단, 매너점수 제도
+클린한 사이트를 유지하지 위한 신고, 차단, 매너점수 제도
 
 <img src="./public/readme/service_3.png">
 <img src="./public/readme/service_4.png">
 
-### 통화 시 작성한 메모를 확인 할 수 있는 나의 메모장
+통화 시 작성한 메모를 확인 할 수 있는 나의 메모장
 
 <img src="./public/readme/service_5.png">
 
