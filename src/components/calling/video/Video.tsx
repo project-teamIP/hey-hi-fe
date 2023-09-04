@@ -59,13 +59,10 @@ const Video: React.FC<{}> = () => {
     setParentTime(newTime);
   };
 
-  // useEffect(() => {
-  //   // return () => {
-  //   //   // 컴포넌트가 언마운트될 때 메모되도록 설정
-  //   if (shouldSubmit) {
-  //     console.log("기록성공");
-  //   }
-  // }, [shouldSubmit]);
+  if (data.language === "default") {
+    console.log("매칭이 불가능함");
+    navigate("/dasyboard");
+  }
 
   useEffect(() => {
     if (!isLoading && data) {
