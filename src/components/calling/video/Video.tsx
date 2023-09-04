@@ -59,7 +59,13 @@ const Video: React.FC<{}> = () => {
     setParentTime(newTime);
   };
 
-  //페이지 이동 확인용 변수 선언
+  // useEffect(() => {
+  //   // return () => {
+  //   //   // 컴포넌트가 언마운트될 때 메모되도록 설정
+  //   if (shouldSubmit) {
+  //     console.log("기록성공");
+  //   }
+  // }, [shouldSubmit]);
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -233,7 +239,6 @@ const Video: React.FC<{}> = () => {
       socketRef.current.on("ice", async (data: any) => {
         if (myPeerRef.current) {
           try {
-            // console.log("서버로부터 ice 메시지 수신 : ", data);
             await myPeerRef.current.addIceCandidate(data);
           } catch (e) {
             console.log("아이스", e);
@@ -257,32 +262,18 @@ const Video: React.FC<{}> = () => {
     }
 
     if (socketRef.current) {
-      const HandeleEndEvent = (message: any) => {
+      const HandeleEndEvent = async (message: any) => {
         console.log("통화종료!");
         console.log("message", message);
         alert(`${message}`);
-        if (myPeerRef.current) {
-          // await myPeerRef.current.removeTrack(senderRef.current);
-          myPeerRef.current.close();
-        }
+        await onClickEndCalling();
       };
 
       socketRef.current.on("end", HandeleEndEvent);
-
-      // return () => {
-      //   // 컴포넌트가 언마운트될 때 이벤트 핸들러를 제거합니다.
-      //   if (socketRef.current) socketRef.current.off("end", HandeleEndEvent);
-      // };
     }
 
     //페이지 이동시 메세지 보내기
-
     return () => {
-      if (socketRef.current) {
-        const message = `${userInfoCopy.nickname} 나감!`;
-        console.log("emit END message:", message);
-        socketRef.current.emit("end", message);
-      }
       if (streamRef.current) {
         if (myVideoRef.current) {
           myVideoRef.current.srcObject = streamRef.current; // 스트림을 비디오 요소에 할당
@@ -291,33 +282,44 @@ const Video: React.FC<{}> = () => {
         tracks.forEach((track) => track.stop()); // 트랙 중지
       }
       if (socketRef.current) {
+        const message = `${userInfoCopy.nickname} 나감!`;
+        console.log("emit END message:", message);
+        socketRef.current.emit("end", message);
         socketRef.current.disconnect();
         console.log("연결 해제");
       }
       if (myPeerRef.current) {
         myPeerRef.current.close();
+        navigate("/dashboard");
+        window.location.reload();
       }
     };
   }, []);
 
   let isUnloading = false; // 상태 변수 추가
-  window.addEventListener("beforeunload", function (e) {
+  window.addEventListener("beforeunload", async function (e) {
     if (!isUnloading) {
-      e.returnValue = "통화가 강제종료됩니다.";
-      handleUnload();
-      isUnloading = true; // 상태 변수 업데이트
+      alert("통화가 종료됩니다.");
+      console.log("기능확인");
+      await setShouldSubmit(true);
+      await handleUnload();
+      setTimeout(async () => {
+        isUnloading = true;
+        navigate("/dashboard");
+        window.location.reload();
+      }, 1000);
     }
   });
 
   async function handleUnload() {
     try {
       if (socketRef.current && myPeerRef.current) {
-        const message = `${userInfoRef.current.nickname} 나감!`;
+        const message = await `${userInfoRef.current.nickname} 나감!`;
         console.log("emit END message:", message);
-        socketRef.current.emit("end", message);
-        socketRef.current.disconnect();
+        await socketRef.current.emit("end", message);
+        await socketRef.current.disconnect();
         console.log("연결 해제");
-        myPeerRef.current.close();
+        await myPeerRef.current.close();
       }
     } catch (error) {
       console.error("에러 발생:", error);
@@ -367,7 +369,7 @@ const Video: React.FC<{}> = () => {
   }
 
   const onClickEndCalling = async () => {
-    await alert("메모가 등록됩니다.");
+    // await alert("메모가 등록됩니다.");
     await setShouldSubmit(true);
     setIsExitModalOpen(true);
   };
