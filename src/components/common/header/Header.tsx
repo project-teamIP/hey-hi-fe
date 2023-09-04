@@ -21,12 +21,12 @@ const Header = () => {
 
   //통화방에서는 눌렀을때 경고창뜨기
   const isCallPage = location.pathname === "/calling";
-  const navigate = useNavigate();
   const onClickLinkToDashboard = () => {
     if (state && isCallPage) {
       const result = window.confirm("페이지 이동 시 통화 연결이 끊어집니다.");
       if (result) {
-        navigate("/dashboard");
+        const newURL = "/dashboard";
+        window.location.replace(newURL);
       } else {
         return;
       }
@@ -36,7 +36,8 @@ const Header = () => {
     if (state && isCallPage) {
       const result = window.confirm("페이지 이동 시 통화 연결이 끊어집니다.");
       if (result) {
-        navigate("/mypage");
+        const newURL = "/mypage";
+        window.location.replace(newURL);
       } else {
         return;
       }

@@ -32,13 +32,13 @@ const Timer: React.FC<TimerProps> = (props) => {
     onTimeChange(time); // 타이머 시작할 때 현재 time 값을 전달
   };
 
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
+  const formattedMinutes = String(Math.floor(time / 60)).padStart(2, "0");
+  const formattedSeconds = String(time % 60).padStart(2, "0");
 
   return (
     <div>
       <S.CallTimer>
-        {minutes}:{seconds}
+        {formattedMinutes}: {formattedSeconds}
       </S.CallTimer>
       {running ? <button hidden={true} onClick={handleStart}></button> : <></>}
     </div>
