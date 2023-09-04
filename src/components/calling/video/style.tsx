@@ -157,6 +157,7 @@ export const ButtonStyle = styled.button`
   border-radius: 15px;
   font-size: 17px;
   font-weight: 500;
+  cursor: pointer;
 
   &:active {
     border-color: #ff6e46;
