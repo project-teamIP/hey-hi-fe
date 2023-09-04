@@ -6,7 +6,7 @@ export interface PrimitiveButtonProps {
   bc?: string;
   color?: string;
   fw?: string;
-  size?: "large" | "middle" | "small" | "the smallest" | "loginbtn" | "sns";
+  size?: "modal" | "large" | "middle" | "small" | "the smallest" | "loginbtn" | "sns";
   width?: string;
   height?: string;
   activebc?: string;
@@ -30,6 +30,15 @@ export const StyledButton = styled.button<PrimitiveButtonProps>`
 
   ${({ size }) => {
     switch (size) {
+      case "modal":
+        return css`
+          height: 70px;
+          width: 404px;
+          border-radius: 50px;
+          font-weight: 700;
+          font-size: 26px;
+          letter-spacing: -0.52px;
+        `;
       case "large":
         return css`
           height: 66px;
