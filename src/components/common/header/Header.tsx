@@ -26,7 +26,8 @@ const Header = () => {
     if (state && isCallPage) {
       const result = window.confirm("페이지 이동 시 통화 연결이 끊어집니다.");
       if (result) {
-        navigate("/dashboard");
+        const newURL = "/dashboard";
+        window.location.replace(newURL);
       } else {
         return;
       }
@@ -36,7 +37,8 @@ const Header = () => {
     if (state && isCallPage) {
       const result = window.confirm("페이지 이동 시 통화 연결이 끊어집니다.");
       if (result) {
-        navigate("/mypage");
+        const newURL = "/mypage";
+        window.location.replace(newURL);
       } else {
         return;
       }

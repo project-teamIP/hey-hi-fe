@@ -72,6 +72,7 @@ const CallingPageMemo: React.FC<MemoProps> = ({ nickname, shouldSubmit }) => {
               partnerNickname: nickname,
             };
         const response = await instance.post("/api/memo", requestData);
+        alert("메모가 저장됩니다.");
         setTitleError(null);
       } catch (error) {
         console.error("Error while creating memo:", error);
