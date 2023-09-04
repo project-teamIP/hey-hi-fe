@@ -1,7 +1,7 @@
 import CallingPageMemo from "../memo/CallingPageMemo";
 import CallingPageInterestSelect from "../interest/CallingPageInterestSelect";
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 import {
   BsFillCameraVideoFill,
