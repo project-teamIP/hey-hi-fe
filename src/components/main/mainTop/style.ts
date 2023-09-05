@@ -20,22 +20,6 @@ export const MainInner = styled.div`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-
-  h1 {
-    font-size: 60px;
-    font-weight: 800;
-    margin-bottom: 62px;
-    width: 581px;
-  }
-
-  p {
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: -0.36px;
-    line-height: 140%;
-    margin-bottom: 68px;
-    width: 618px;
-  }
 `;
 
 export const ImgBox = styled.div`
@@ -52,7 +36,21 @@ export const ImgBox = styled.div`
 `;
 
 export const MainText = styled.div`
-  width: 527px;
+  width: 618px;
+
+  h1 {
+    font-size: 60px;
+    font-weight: 800;
+    margin-bottom: 62px;
+  }
+
+  p {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.36px;
+    line-height: 140%;
+    margin-bottom: 68px;
+  }
 `;
 
 export const SvgBox = styled.div`
