@@ -36,15 +36,15 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: .env 설정
-            run: |
-              echo "REACT_APP_KAKAO_REST_API_KEY=${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}" >> .env
-              echo "REACT_APP_KAKAO_REDIRECT_URI=${{ secrets.REACT_APP_KAKAO_REDIRECT_URI }}" >> .env
-              echo "REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}" >> .env
-              echo "REACT_APP_GOOGLE_REDIRECT_URI=${{ secrets.REACT_APP_GOOGLE_REDIRECT_URI }}" >> .env
-              echo "REACT_APP_SERVER_URL=${{ secrets.REACT_APP_SERVER_URL }}" >> .env
-              echo "REACT_APP_WEBSOCKET_SERVER_URL=${{ secrets.REACT_APP_WEBSOCKET_SERVER_URL }}" >> .env
-              cat .env
-            # cat.env .env 파일 내용을 워크플로우 콘솔에 표시 > 파일에 올바르게 추가되었는지 확인하기 위한 디버깅 단계
+        run: |
+          echo "REACT_APP_KAKAO_REST_API_KEY=${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}" >> .env
+          echo "REACT_APP_KAKAO_REDIRECT_URI=${{ secrets.REACT_APP_KAKAO_REDIRECT_URI }}" >> .env
+          echo "REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}" >> .env
+          echo "REACT_APP_GOOGLE_REDIRECT_URI=${{ secrets.REACT_APP_GOOGLE_REDIRECT_URI }}" >> .env
+          echo "REACT_APP_SERVER_URL=${{ secrets.REACT_APP_SERVER_URL }}" >> .env
+          echo "REACT_APP_WEBSOCKET_SERVER_URL=${{ secrets.REACT_APP_WEBSOCKET_SERVER_URL }}" >> .env
+          cat .env
+        # cat.env .env 파일 내용을 워크플로우 콘솔에 표시 > 파일에 올바르게 추가되었는지 확인하기 위한 디버깅 단계
 
       - name: Build
         run: |
