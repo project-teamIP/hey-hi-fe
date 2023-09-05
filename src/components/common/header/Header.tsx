@@ -60,7 +60,7 @@ const Header = () => {
       <S.HeaderInner>
         <S.Nav>
           {/* 로고 */}
-          <Link to={state ? "/dashboard" : "/"}>
+          <Link to="/">
             <svg
               width="101"
               height="24"
