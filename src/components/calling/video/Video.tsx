@@ -1,7 +1,7 @@
 import CallingPageMemo from "../memo/CallingPageMemo";
 import CallingPageInterestSelect from "../interest/CallingPageInterestSelect";
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 import {
   BsFillCameraVideoFill,
@@ -66,7 +66,13 @@ const Video: React.FC<{}> = () => {
       userInfoRef.current.country = data.country;
       userInfoRef.current.interests = data.interests;
       userInfoRef.current.cleanPoint = data.cleanPoint;
+      if (data.language === "default") {
+        console.log("data", data);
+        console.log("매칭이 불가능함");
+        navigate("/dasyboard");
+      }
     }
+    console.log("data", data);
   }, [isLoading, data]);
 
   const isStartedMatchSystem = async () => {
@@ -121,6 +127,8 @@ const Video: React.FC<{}> = () => {
   }
 
   useEffect(() => {
+    // userInfoRef.current의 값을 다른 변수에 복사
+    const userInfoCopy = userInfoRef.current;
     if (socketUrl) {
       socketRef.current = io(socketUrl);
       socketRef.current.on("wait", (data: any) => {
@@ -129,10 +137,10 @@ const Video: React.FC<{}> = () => {
       socketRef.current.on("success", async (data: any) => {
         console.log("서버로부터 메시지 success 메시지 수신:", data);
         const message = {
-          nickname: userInfoRef.current.nickname,
-          country: userInfoRef.current.country,
-          interests: userInfoRef.current.interests,
-          cleanPoint: userInfoRef.current.cleanPoint,
+          nickname: userInfoCopy.nickname,
+          country: userInfoCopy.country,
+          interests: userInfoCopy.interests,
+          cleanPoint: userInfoCopy.cleanPoint,
         };
         console.log("message", message);
         try {
@@ -155,10 +163,10 @@ const Video: React.FC<{}> = () => {
         await getMedia();
         await makeConnection();
         const message = {
-          nickname: userInfoRef.current.nickname,
-          country: userInfoRef.current.country,
-          interests: userInfoRef.current.interests,
-          cleanPoint: userInfoRef.current.cleanPoint,
+          nickname: userInfoCopy.nickname,
+          country: userInfoCopy.country,
+          interests: userInfoCopy.interests,
+          cleanPoint: userInfoCopy.cleanPoint,
         };
         // console.log("message", message);
         try {
@@ -229,7 +237,6 @@ const Video: React.FC<{}> = () => {
       socketRef.current.on("ice", async (data: any) => {
         if (myPeerRef.current) {
           try {
-            // console.log("서버로부터 ice 메시지 수신 : ", data);
             await myPeerRef.current.addIceCandidate(data);
           } catch (e) {
             console.log("아이스", e);
@@ -251,27 +258,73 @@ const Video: React.FC<{}> = () => {
     } else {
       console.log("socketUrl undefined");
     }
+
+    if (socketRef.current) {
+      const HandeleEndEvent = async (message: any) => {
+        console.log("통화종료!");
+        console.log("message", message);
+        alert(`${message}`);
+        await onClickEndCalling();
+      };
+
+      socketRef.current.on("end", HandeleEndEvent);
+    }
+
+    //페이지 이동시 메세지 보내기
     return () => {
+      if (streamRef.current) {
+        if (myVideoRef.current) {
+          myVideoRef.current.srcObject = streamRef.current; // 스트림을 비디오 요소에 할당
+        }
+        const tracks = streamRef.current.getTracks(); // 스트림에서 트랙 가져오기
+        tracks.forEach((track) => track.stop()); // 트랙 중지
+      }
       if (socketRef.current) {
+        const message = `${userInfoCopy.nickname} 나감!`;
+        console.log("emit END message:", message);
+        socketRef.current.emit("end", message);
         socketRef.current.disconnect();
         console.log("연결 해제");
       }
-
       if (myPeerRef.current) {
         myPeerRef.current.close();
+        navigate("/dashboard");
+        window.location.reload();
       }
     };
   }, []);
 
-  if (socketRef.current) {
-    socketRef.current.on("end", () => {
-      console.log("통화종료!");
-      if (myPeerRef.current) {
-        // await myPeerRef.current.removeTrack(senderRef.current);
-        myPeerRef.current.close();
+  let isUnloading = false; // 상태 변수 추가
+  window.addEventListener("beforeunload", async function (e) {
+    if (!isUnloading) {
+      alert("통화가 종료됩니다.");
+      console.log("기능확인");
+      await setShouldSubmit(true);
+      await handleUnload();
+      setTimeout(async () => {
+        isUnloading = true;
+        navigate("/dashboard");
+        window.location.reload();
+      }, 1000);
+    }
+  });
+
+  async function handleUnload() {
+    try {
+      if (socketRef.current && myPeerRef.current) {
+        const message = await `${userInfoRef.current.nickname} 나감!`;
+        console.log("emit END message:", message);
+        await socketRef.current.emit("end", message);
+        await socketRef.current.disconnect();
+        console.log("연결 해제");
+        await myPeerRef.current.close();
       }
-    });
+    } catch (error) {
+      console.error("에러 발생:", error);
+      // 에러 처리 로직 추가
+    }
   }
+
   async function makeConnection() {
     // console.log("메이크 커넥션");
     myPeerRef.current = new RTCPeerConnection({
@@ -314,7 +367,7 @@ const Video: React.FC<{}> = () => {
   }
 
   const onClickEndCalling = async () => {
-    await alert("메모가 등록됩니다.");
+    // await alert("메모가 등록됩니다.");
     await setShouldSubmit(true);
     setIsExitModalOpen(true);
   };
@@ -349,7 +402,7 @@ const Video: React.FC<{}> = () => {
   const onClickConfirmExitRoom = () => {
     setIsExitModalOpen(false);
     if (socketRef.current) {
-      const message = "나가기 버튼 누름!";
+      const message = `${userInfoRef.current.nickname}나감`;
       socketRef.current.emit("end", message);
     }
     setIsPointModalOpen(true);

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Video from "../components/calling/video/Video";
 
-const Calling: React.FC = () => {
+const Calling = () => {
   return (
     <div>
       <TotalContentWrapper>

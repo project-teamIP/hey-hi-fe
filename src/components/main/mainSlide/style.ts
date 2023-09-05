@@ -40,9 +40,6 @@ export const MainSlideInner = styled.div`
 `;
 
 export const ProgressBar = styled.div`
-  /* display: flex;
-  align-items: center;
-  flex-direction: column; */
   width: 500px;
 `;
 
@@ -65,7 +62,6 @@ export const StepLine = styled.div<{ active: boolean }>`
   width: 3px;
   height: 100%;
   background-color: ${(props) => (props.active ? "#FF5A00" : colors.light_blue)};
-  /* transform: translateY(-50%); */
   position: absolute;
   top: 1%;
   left: 3%;
@@ -118,21 +114,21 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 0;
   width: 100%;
 `;
 
-// export const SlideBtn = styled.button`
-//   width: 73px;
-//   height: 73px;
-//   padding: 8px 16px;
-//   background: none;
-//   border: none;
-//   cursor: pointer;
+export const SlideBtn = styled.button`
+  width: 30px;
+  height: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
 
-//   img {
-//     width: 100%;
-//     height: 100%;
-//   }
-// `;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+`;

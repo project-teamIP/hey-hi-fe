@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { FormEvent, useState, useEffect, useCallback } from "react";
 import * as S from "./style";
 import instance from "../../../api/api";
 
@@ -17,6 +17,12 @@ const CallingPageMemo: React.FC<MemoProps> = ({ nickname, shouldSubmit }) => {
   const [contentError, setContentError] = useState<string | null>(null); // 에러 메시지 상태
   const [titleLength, setTitleLength] = useState(0);
   const [contentLength, setContentLength] = useState(0); // 글자 수 상태
+
+  const handleEnterKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  };
 
   const memoTitleChangeHandler = useCallback((e: any) => {
     setTitle(e.target.value);
@@ -44,9 +50,7 @@ const CallingPageMemo: React.FC<MemoProps> = ({ nickname, shouldSubmit }) => {
   }, []);
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      // e.preventDefault();
-
+    async (e: FormEvent<HTMLFormElement>) => {
       if (!title && !content) {
         alert("메모가 없습니다. 저장 없이 대시보드로 이동합니다.");
         return;
@@ -68,6 +72,7 @@ const CallingPageMemo: React.FC<MemoProps> = ({ nickname, shouldSubmit }) => {
               partnerNickname: nickname,
             };
         const response = await instance.post("/api/memo", requestData);
+        alert("메모가 저장됩니다.");
         setTitleError(null);
       } catch (error) {
         console.error("Error while creating memo:", error);
@@ -96,6 +101,7 @@ const CallingPageMemo: React.FC<MemoProps> = ({ nickname, shouldSubmit }) => {
               placeholder="제목을 입력해주세요."
               maxLength={21}
               onChange={memoTitleChangeHandler}
+              onKeyDown={handleEnterKeyDown}
             />
             <hr />
             {titleError && (
