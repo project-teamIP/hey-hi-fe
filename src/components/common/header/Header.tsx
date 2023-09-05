@@ -86,10 +86,7 @@ const Header = () => {
             ) : (
               <ul>
                 <li>
-                  <S.StyledLink to="/dashboard">home</S.StyledLink>
-                </li>
-                <li>
-                  <S.StyledLink to="/mypage">my page</S.StyledLink>
+                  <S.StyledLink to="/dashboard">Dashboard</S.StyledLink>
                 </li>
               </ul>
             )
