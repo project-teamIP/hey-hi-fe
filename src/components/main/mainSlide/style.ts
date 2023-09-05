@@ -118,21 +118,21 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 0;
   width: 100%;
 `;
 
-// export const SlideBtn = styled.button`
-//   width: 73px;
-//   height: 73px;
-//   padding: 8px 16px;
-//   background: none;
-//   border: none;
-//   cursor: pointer;
+export const SlideBtn = styled.button`
+  width: 30px;
+  height: 30px;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
 
-//   img {
-//     width: 100%;
-//     height: 100%;
-//   }
-// `;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
