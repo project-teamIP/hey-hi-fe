@@ -60,7 +60,7 @@ const Header = () => {
       <S.HeaderInner>
         <S.Nav>
           {/* 로고 */}
-          <Link to={state ? "/dashboard" : "/"}>
+          <Link to="/">
             <svg
               width="101"
               height="24"
@@ -86,10 +86,7 @@ const Header = () => {
             ) : (
               <ul>
                 <li>
-                  <S.StyledLink to="/dashboard">home</S.StyledLink>
-                </li>
-                <li>
-                  <S.StyledLink to="/mypage">my page</S.StyledLink>
+                  <S.StyledLink to="/dashboard">Dashboard</S.StyledLink>
                 </li>
               </ul>
             )
