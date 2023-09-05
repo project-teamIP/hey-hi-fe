@@ -25,6 +25,7 @@ export const MainInner = styled.div`
     font-size: 60px;
     font-weight: 800;
     margin-bottom: 62px;
+    width: 581px;
   }
 
   p {
@@ -33,6 +34,7 @@ export const MainInner = styled.div`
     letter-spacing: -0.36px;
     line-height: 140%;
     margin-bottom: 68px;
+    width: 618px;
   }
 `;
 
