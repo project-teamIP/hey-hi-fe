@@ -15,7 +15,7 @@ export const AsideBox = styled.div`
 
 export const AsideNav = styled.div`
   h4 {
-    width: 130px;
+    width: 150px;
     font-size: 30px;
     font-weight: 700;
     margin-bottom: 42px;
@@ -34,7 +34,7 @@ export const Deactivate = styled.button`
 `;
 
 export const NavItem = styled.p<{ isActive: boolean }>`
-  width: 80px;
+  width: 88px;
   font-size: 22px;
   font-weight: ${({ isActive }) => (isActive ? "700" : "500")};
   margin-bottom: 38px;
