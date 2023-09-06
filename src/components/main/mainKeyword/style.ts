@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled, { css } from "styled-components";
 import { colors } from "../../../assets/styles/colors";
 
 export const MainKeywordBox = styled.div`
@@ -12,11 +12,9 @@ export const MainKeywordBox = styled.div`
   h2 {
     font-size: 40px;
     font-weight: 700;
-    width: fit-content;
-    height: 171px;
     line-height: 48px;
     text-align: center;
-    margin: 21px 0 73px 0;
+    margin: 21px 0 68px 0;
   }
 
   p {
@@ -25,7 +23,11 @@ export const MainKeywordBox = styled.div`
     font-weight: 500;
     text-align: center;
     color: #666;
-    letter-spacing: -0.4px;
+    letter-spacing: -2.4px;
+  }
+
+  @media (max-width: 1464px) {
+    height: 1200px;
   }
 `;
 
@@ -46,9 +48,19 @@ export const SectionNum = styled.div`
 export const BoxContainer = styled.div`
   display: flex;
   justify-content: center;
+
+  @media (max-width: 1464px) {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-row-gap: 3.125rem;
+    justify-items: center;
+  }
 `;
 
 export const KeywordImgBox = styled.div`
+  height: 385px;
+  width: 206px;
+
   &:nth-child(2n) {
     margin: 0 89px;
   }
@@ -58,5 +70,20 @@ export const KeywordImgBox = styled.div`
     height: 288px;
     border-radius: 23px;
     object-fit: cover;
+  }
+
+  @media (max-width: 1464px) {
+    &:nth-child(1),
+    &:nth-child(2),
+    &:nth-child(3) {
+      grid-column: span 2;
+    }
+
+    &:nth-child(4) {
+      grid-column: 2 / span 2;
+    }
+    &:nth-child(5) {
+      grid-column: 4 / span 2;
+    }
   }
 `;

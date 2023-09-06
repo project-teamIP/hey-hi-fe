@@ -2,14 +2,15 @@ import { getMemos } from "../../../api/api";
 import * as S from "./style";
 import * as C from "../../../assets/styles/commonStyle";
 import rabbitSvg from "../../../assets/images/profileImg/rabbit1.svg";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { MemosType } from "../../../types/user";
 import Pagination from "../../common/pagination/Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatDateTime } from "../../../utils/formattedDate";
-import MemoModal from "./MemoModal";
+import ViewMemoModal from "./viewMemoModal/ViewMemoModal";
 
 const MyMemo = () => {
+  const queryClient = useQueryClient();
   const [currentPage, setCurrentPage] = useState(1);
   const { data, isLoading } = useQuery(["myMemos", currentPage], () => getMemos(currentPage));
 
@@ -28,6 +29,7 @@ const MyMemo = () => {
 
   const closeModalHandler = () => {
     setSelectedMemo(null);
+    queryClient.prefetchQuery(["myMemos", currentPage]);
   };
 
   // 로딩중 스피너 설정
@@ -70,7 +72,9 @@ const MyMemo = () => {
         onChangePageHandler={setCurrentPage}
       />
       {/* 모달 */}
-      {selectedMemo && <MemoModal memo={selectedMemo} onCloseModalHandler={closeModalHandler} />}
+      {selectedMemo && (
+        <ViewMemoModal memo={selectedMemo} onCloseModalHandler={closeModalHandler} />
+      )}
     </S.MyMemoBox>
   );
 };

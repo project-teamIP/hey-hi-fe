@@ -5,8 +5,15 @@ import MyPageEdit from "../components/myPage/myPageEdit/MyPageEdit";
 import MyMemo from "../components/myPage/myMemo/MyMemo";
 import MyFriend from "../components/myPage/myFriend/MyFriend";
 import { useQueryClient } from "react-query";
+import Guide from "./Guide";
+import useWindowSize from "../hooks/UseWindowSize";
+
+interface MyPageBoxProps {
+  activePage: string;
+}
 
 const MyPage = () => {
+  const { isSmallScreen } = useWindowSize();
   const queryClient = useQueryClient();
   const [activePage, setActivePage] = useState<string>("계정정보");
 
@@ -25,23 +32,29 @@ const MyPage = () => {
   };
 
   return (
-    <MyPageBox>
-      <MyPageAside activePage={activePage} onClickPageHandler={onClickPageHandler} />
-      {activePage === "계정정보" && <MyPageEdit />}
-      {activePage === "나의메모" && <MyMemo />}
-      {activePage === "친구관리" && <MyFriend />}
-    </MyPageBox>
+    <>
+      {isSmallScreen ? (
+        <Guide />
+      ) : (
+        <MyPageBox activePage={activePage}>
+          <MyPageAside activePage={activePage} onClickPageHandler={onClickPageHandler} />
+          {activePage === "계정정보" && <MyPageEdit />}
+          {activePage === "나의메모" && <MyMemo />}
+          {activePage === "친구관리" && <MyFriend />}
+        </MyPageBox>
+      )}
+    </>
   );
 };
 
 export default MyPage;
 
-export const MyPageBox = styled.div`
+export const MyPageBox = styled.div<MyPageBoxProps>`
   margin: 0 auto;
   margin-top: 70px;
-  max-width: 1920px;
+  max-width: 1556px;
   width: 100vw;
   display: flex;
-  justify-content: start;
+  justify-content: ${({ activePage }) => (activePage === "나의메모" ? "start" : "space-between")};
   align-items: start;
 `;

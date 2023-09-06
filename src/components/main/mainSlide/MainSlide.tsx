@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./style";
 
 const stepTexts = [
@@ -30,15 +30,15 @@ const MainSlide = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   // 이전 페이지
-  // const onClickPrevSlideHandler = () => {
-  //   const newStep = ((currentStep - 2 + stepTexts.length) % stepTexts.length) + 1;
-  //   setCurrentStep(newStep);
-  // };
+  const onClickPrevSlideHandler = () => {
+    const newStep = ((currentStep - 2 + stepTexts.length) % stepTexts.length) + 1;
+    setCurrentStep(newStep);
+  };
   // 다음 페이지
-  // const onClickNextSlideHandler = () => {
-  //   const newStep = (currentStep % stepTexts.length) + 1;
-  //   setCurrentStep(newStep);
-  // };
+  const onClickNextSlideHandler = () => {
+    const newStep = (currentStep % stepTexts.length) + 1;
+    setCurrentStep(newStep);
+  };
 
   useEffect(() => {
     // 5초 간격으로 슬라이드 자동 넘김
@@ -83,14 +83,14 @@ const MainSlide = () => {
             src={require(`../../../assets/images/main/${images[currentStep - 1]}.png`)}
             alt={`Slide ${currentStep}`}
           />
-          {/* <S.ButtonWrapper>
-          <S.SlideBtn onClick={onClickPrevSlideHandler}>
-            <img src={require(`../../../assets/images/main/prev.png`)} alt="prev-btn" />
-          </S.SlideBtn>
-          <S.SlideBtn onClick={onClickNextSlideHandler}>
-            <img src={require(`../../../assets/images/main/next.png`)} alt="next-btn" />
-          </S.SlideBtn>
-        </S.ButtonWrapper> */}
+          <S.ButtonWrapper>
+            <S.SlideBtn onClick={onClickPrevSlideHandler}>
+              <img src={require(`../../../assets/images/main/prev.png`)} alt="prev-btn" />
+            </S.SlideBtn>
+            <S.SlideBtn onClick={onClickNextSlideHandler}>
+              <img src={require(`../../../assets/images/main/next.png`)} alt="next-btn" />
+            </S.SlideBtn>
+          </S.ButtonWrapper>
         </S.SliderWrapper>
       </S.MainSlideInner>
     </S.MainSlideBox>

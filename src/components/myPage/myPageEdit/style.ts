@@ -3,15 +3,7 @@ import { styled } from "styled-components";
 export const MyPageEditBox = styled.div`
   height: 874px;
   width: 750px;
-  margin-left: 351px;
   margin-top: 87px;
-`;
-
-export const FormLabel = styled.label`
-  display: block;
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 16px;
 `;
 
 export const ProfileTop = styled.div`
@@ -27,62 +19,86 @@ export const ProfileTop = styled.div`
   }
 `;
 
-export const ImgForm = styled.div`
-  height: 156px;
-  width: 156px;
+export const ProfileTopLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ProfileImageBox = styled.div`
+  height: 103px;
+  width: 103px;
   position: relative;
 
   img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
 `;
 
-export const ImgInput = styled.div`
-  label {
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    left: 0;
-    bottom: -10px;
-    cursor: pointer;
-  }
+export const ModalToggleBtn = styled.button`
+  background: none;
+  border: none;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  right: 1px;
+  bottom: 6px;
+  padding: 0;
+  cursor: pointer;
+`;
 
-  /* 파일 필드 숨기기 */
-  input[type="file"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-  }
-
-  button {
-    background: none;
-    border: none;
-    width: 33px;
-    height: 33px;
-    position: absolute;
-    right: 1px;
-    bottom: 6px;
-    padding: 0;
-    cursor: pointer;
-  }
+export const MannerPoint = styled.div`
+  width: 92px;
+  height: 29px;
+  color: #373737;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.24px;
+  border-radius: 10px;
+  background-color: #efefef;
+  padding-top: 10px;
+  text-align: center;
+  margin-top: 11px;
 `;
 
 export const FormGroup = styled.div`
   margin-bottom: 34px;
 `;
 
+export const FormLabel = styled.label`
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+`;
+
 export const Gap = styled.div`
   & > :not(:last-child) {
     margin-right: 22px;
   }
+`;
+
+export const NickCheckBtn = styled.button`
+  width: 141px;
+  height: 60px;
+  border-radius: 15px;
+  border: none;
+  background: #757575;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+export const NickCheckMsg = styled.div`
+  color: #ff5049;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: -13px;
 `;
 
 export const EmailReadOnly = styled.div`
@@ -158,4 +174,83 @@ export const SingleCheckbox = styled.div`
       color: #323232;
     }
   }
+`;
+
+/* ! image change modal */
+export const ImgChangeModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(94, 94, 94, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`;
+
+export const ImgChangeModalBox = styled.div`
+  width: 541px;
+  height: 493px;
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h3 {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 700;
+  }
+`;
+
+export const ImgArray = styled.div`
+  width: 400px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-row-gap: 14px;
+  grid-column-gap: 29px;
+  margin: 51px auto;
+
+  img {
+    width: 77px;
+    height: 77px;
+    border-radius: 50%;
+    text-align: center;
+    object-fit: contain;
+    cursor: pointer;
+  }
+  /* 기본 이미지 선택 시 테두리 */
+  img.selected {
+    box-shadow: #ff6e46 0px 0px 0px 5px;
+  }
+
+  input {
+    display: none;
+  }
+`;
+
+export const BtnBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 19px;
+`;
+
+export const ModalBtn = styled.button<{ bc?: string; tc?: string }>`
+  width: 185px;
+  height: 70px;
+  border-radius: 50px;
+  background: ${(props) => props.bc || "#FF6E46"};
+  color: ${(props) => props.tc || "#fff"};
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.52px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 `;

@@ -18,19 +18,21 @@ function App() {
     <div>
       <GlobalStyle />
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/review" element={<Review />} />
-          <Route path="/calling" element={<Calling />} />
-          <Route path="/oauth/kakao" element={<KakaoRedirect />} />
-          <Route path="/oauth/google" element={<GoogleRedirect />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
+        <>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<DashBoard />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/review" element={<Review />} />
+            <Route path="/calling" element={<Calling />} />
+            <Route path="/oauth/kakao" element={<KakaoRedirect />} />
+            <Route path="/oauth/google" element={<GoogleRedirect />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </>
       </BrowserRouter>
     </div>
   );

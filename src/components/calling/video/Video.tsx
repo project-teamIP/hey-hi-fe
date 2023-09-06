@@ -1,7 +1,7 @@
 import CallingPageMemo from "../memo/CallingPageMemo";
 import CallingPageInterestSelect from "../interest/CallingPageInterestSelect";
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 import {
   BsFillCameraVideoFill,
@@ -53,6 +53,11 @@ const Video: React.FC<{}> = () => {
     interests: [],
     cleanPoint: "",
   });
+  const [parentTime, setParentTime] = useState(600); // 초 단위로 초기화
+
+  const handleParentTimeChange = (newTime: number) => {
+    setParentTime(newTime);
+  };
 
   useEffect(() => {
     if (!isLoading && data) {
@@ -61,7 +66,13 @@ const Video: React.FC<{}> = () => {
       userInfoRef.current.country = data.country;
       userInfoRef.current.interests = data.interests;
       userInfoRef.current.cleanPoint = data.cleanPoint;
+      if (data.language === "default") {
+        console.log("data", data);
+        console.log("매칭이 불가능함");
+        navigate("/dasyboard");
+      }
     }
+    console.log("data", data);
   }, [isLoading, data]);
 
   const isStartedMatchSystem = async () => {
@@ -116,6 +127,8 @@ const Video: React.FC<{}> = () => {
   }
 
   useEffect(() => {
+    // userInfoRef.current의 값을 다른 변수에 복사
+    const userInfoCopy = userInfoRef.current;
     if (socketUrl) {
       socketRef.current = io(socketUrl);
       socketRef.current.on("wait", (data: any) => {
@@ -124,10 +137,10 @@ const Video: React.FC<{}> = () => {
       socketRef.current.on("success", async (data: any) => {
         console.log("서버로부터 메시지 success 메시지 수신:", data);
         const message = {
-          nickname: userInfoRef.current.nickname,
-          country: userInfoRef.current.country,
-          interests: userInfoRef.current.interests,
-          cleanPoint: userInfoRef.current.cleanPoint,
+          nickname: userInfoCopy.nickname,
+          country: userInfoCopy.country,
+          interests: userInfoCopy.interests,
+          cleanPoint: userInfoCopy.cleanPoint,
         };
         console.log("message", message);
         try {
@@ -150,10 +163,10 @@ const Video: React.FC<{}> = () => {
         await getMedia();
         await makeConnection();
         const message = {
-          nickname: userInfoRef.current.nickname,
-          country: userInfoRef.current.country,
-          interests: userInfoRef.current.interests,
-          cleanPoint: userInfoRef.current.cleanPoint,
+          nickname: userInfoCopy.nickname,
+          country: userInfoCopy.country,
+          interests: userInfoCopy.interests,
+          cleanPoint: userInfoCopy.cleanPoint,
         };
         // console.log("message", message);
         try {
@@ -224,7 +237,6 @@ const Video: React.FC<{}> = () => {
       socketRef.current.on("ice", async (data: any) => {
         if (myPeerRef.current) {
           try {
-            // console.log("서버로부터 ice 메시지 수신 : ", data);
             await myPeerRef.current.addIceCandidate(data);
           } catch (e) {
             console.log("아이스", e);
@@ -246,17 +258,73 @@ const Video: React.FC<{}> = () => {
     } else {
       console.log("socketUrl undefined");
     }
+
+    if (socketRef.current) {
+      const HandeleEndEvent = async (message: any) => {
+        console.log("통화종료!");
+        console.log("message", message);
+        alert(`${message}`);
+        await onClickEndCalling();
+      };
+
+      socketRef.current.on("end", HandeleEndEvent);
+    }
+
+    //페이지 이동시 메세지 보내기
+    return () => {
+      if (streamRef.current) {
+        if (myVideoRef.current) {
+          myVideoRef.current.srcObject = streamRef.current; // 스트림을 비디오 요소에 할당
+        }
+        const tracks = streamRef.current.getTracks(); // 스트림에서 트랙 가져오기
+        tracks.forEach((track) => track.stop()); // 트랙 중지
+      }
+      if (socketRef.current) {
+        const message = `${userInfoCopy.nickname} 나감!`;
+        console.log("emit END message:", message);
+        socketRef.current.emit("end", message);
+        socketRef.current.disconnect();
+        console.log("연결 해제");
+      }
+      if (myPeerRef.current) {
+        myPeerRef.current.close();
+        navigate("/dashboard");
+        window.location.reload();
+      }
+    };
   }, []);
 
-  if (socketRef.current) {
-    socketRef.current.on("end", () => {
-      console.log("통화종료!");
-      if (myPeerRef.current) {
-        // await myPeerRef.current.removeTrack(senderRef.current);
-        myPeerRef.current.close();
+  let isUnloading = false; // 상태 변수 추가
+  window.addEventListener("beforeunload", async function (e) {
+    if (!isUnloading) {
+      alert("통화가 종료됩니다.");
+      console.log("기능확인");
+      await setShouldSubmit(true);
+      await handleUnload();
+      setTimeout(async () => {
+        isUnloading = true;
+        navigate("/dashboard");
+        window.location.reload();
+      }, 1000);
+    }
+  });
+
+  async function handleUnload() {
+    try {
+      if (socketRef.current && myPeerRef.current) {
+        const message = await `${userInfoRef.current.nickname} 나감!`;
+        console.log("emit END message:", message);
+        await socketRef.current.emit("end", message);
+        await socketRef.current.disconnect();
+        console.log("연결 해제");
+        await myPeerRef.current.close();
       }
-    });
+    } catch (error) {
+      console.error("에러 발생:", error);
+      // 에러 처리 로직 추가
+    }
   }
+
   async function makeConnection() {
     // console.log("메이크 커넥션");
     myPeerRef.current = new RTCPeerConnection({
@@ -299,22 +367,12 @@ const Video: React.FC<{}> = () => {
   }
 
   const onClickEndCalling = async () => {
-    await alert("메모가 등록됩니다.");
+    // await alert("메모가 등록됩니다.");
     await setShouldSubmit(true);
-    if (socketRef.current) {
-      const message = "나가기 버튼 누름!";
-      if (myPeerRef.current) {
-        // if (myPeerRef.current && senderRef.current) {
-        // myPeerRef.current.removeTrack(senderRef.current);
-        myPeerRef.current.close();
-      }
-      socketRef.current.emit("end", message);
-      // setIsExitModalOpen(true);
-      setIsExitModalOpen(true);
-    }
+    setIsExitModalOpen(true);
   };
 
-  const onClickcloseMatchingModal = () => {
+  const onClickcloseMatchingModal = async () => {
     setIsMatchingModalOpen(false);
     navigate("/dashboard");
   };
@@ -343,6 +401,10 @@ const Video: React.FC<{}> = () => {
 
   const onClickConfirmExitRoom = () => {
     setIsExitModalOpen(false);
+    if (socketRef.current) {
+      const message = `${userInfoRef.current.nickname}나감`;
+      socketRef.current.emit("end", message);
+    }
     setIsPointModalOpen(true);
   };
   //클린포인트
@@ -361,8 +423,14 @@ const Video: React.FC<{}> = () => {
     setIsReportModalOpen(false);
   };
 
+  if (parentTime === 0 && running) {
+    setRunning(false);
+    alert("통화시간이 종료되었습니다.");
+    onClickEndCalling();
+  }
+
   return (
-    <>
+    <S.MediaWrapper>
       <MatchingModal
         isMatchingModalOpen={isMatchingModalOpen}
         isCallHidden={isCallHidden}
@@ -370,122 +438,127 @@ const Video: React.FC<{}> = () => {
         onClickcloseMatchingModal={onClickcloseMatchingModal}
       />
       <S.MediaBox>
-        <div style={{ display: "flex", gap: "20px" }}>
+        <S.TextTimerGroup>
           <S.CallingTextGroup>
             <h4>{opponentInfoRef.current.country}에 거주중인</h4>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "28px",
-                alignItems: "flex-end",
-              }}>
-              <h2>{opponentInfoRef.current.nickname} 님과 통화 중</h2>
-              <Timer onStart={handleTimerStart} running={running} />
-            </div>
+            <h2>{opponentInfoRef.current.nickname} 님과 통화 중</h2>
           </S.CallingTextGroup>
-        </div>
+          <div style={{ marginTop: "10px" }}>
+            <Timer
+              onStart={handleTimerStart}
+              running={running}
+              time={parentTime} // time prop으로 parentTime 값을 전달
+              onTimeChange={handleParentTimeChange}
+            />
+          </div>
+        </S.TextTimerGroup>
         <S.TotalBox>
-          <div style={{ display: "flex" }}>
-            <S.VideoWrapper>
-              <div style={{ display: "flex", gap: "20px" }}>
-                <S.VideoContainer>
-                  <S.WithVedioTag>
-                    <S.VideoBox>
-                      <video id="myFace" ref={myVideoRef} autoPlay playsInline muted />
-                      <h4>{userInfoRef.current.nickname}(나)</h4>
-                    </S.VideoBox>
-                  </S.WithVedioTag>
-                </S.VideoContainer>
-                <S.VideoContainer>
-                  <S.WithVedioTag>
-                    <S.VideoBox>
-                      <video id="PeerFace" ref={PeerFaceRef} autoPlay playsInline />
-                      <h4>{opponentInfoRef.current.nickname}(상대방)</h4>
-                    </S.VideoBox>
-                  </S.WithVedioTag>
-                </S.VideoContainer>
-              </div>
-              <S.ButtonGroup>
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <S.ButtonStyle onClick={onClickCameraOffHandler}>
-                    {isCameraOn ? (
-                      <div>
-                        <S.ButtonInnerStyle>
-                          <BsFillCameraVideoOffFill size={4.5 * 4.5} />
-                          <p>비디오 끄기</p>
-                        </S.ButtonInnerStyle>
-                      </div>
-                    ) : (
-                      <div>
-                        <S.ButtonInnerStyle>
-                          <BsFillCameraVideoFill size={4.5 * 4.5} />
-                          <p>비디오 켜기</p>
-                        </S.ButtonInnerStyle>
-                      </div>
-                    )}
-                  </S.ButtonStyle>
-                  <S.ButtonStyle onClick={onClickAudioOffHandler}>
-                    {isAudioOn ? (
-                      <div>
-                        <S.ButtonInnerStyle>
-                          <BsFillMicMuteFill size={4.5 * 4.5} />
-                          <p>마이크 끄기</p>
-                        </S.ButtonInnerStyle>
-                      </div>
-                    ) : (
-                      <div>
-                        <S.ButtonInnerStyle>
-                          <BsFillMicFill size={4.5 * 4.5} />
-                          <p>마이크 켜기</p>
-                        </S.ButtonInnerStyle>
-                      </div>
-                    )}
-                  </S.ButtonStyle>
-                  <S.ButtonStyle onClick={() => setIsReportModalOpen(true)}>
-                    <S.ButtonInnerStyle>
-                      <BsFillXOctagonFill size={4.5 * 4.5} />
-                      <p>신고하기</p>
-                    </S.ButtonInnerStyle>
-                  </S.ButtonStyle>
-                  <ReportModal
-                    isReportModalOpen={isReportModalOpen}
-                    onClickCancelReport={() => setIsReportModalOpen(false)}
-                    onClickConfirmReport={onClickConfirmReport}
-                    nickname={opponentInfoRef.current.nickname}
-                  />
-                </div>
-                <S.ButtonStyle onClick={onClickEndCalling}>
+          <S.VideoWrapper>
+            <div style={{ display: "flex", gap: "20px" }}>
+              <S.VideoContainer>
+                <S.WithVedioTag>
+                  <S.VideoBox>
+                    <video id="myFace" ref={myVideoRef} autoPlay playsInline muted />
+                    <h4>{userInfoRef.current.nickname}(나)</h4>
+                  </S.VideoBox>
+                </S.WithVedioTag>
+              </S.VideoContainer>
+              <S.VideoContainer>
+                <S.WithVedioTag>
+                  <S.VideoBox>
+                    <video id="PeerFace" ref={PeerFaceRef} autoPlay playsInline />
+                    <h4>{opponentInfoRef.current.nickname}(상대방)</h4>
+                  </S.VideoBox>
+                </S.WithVedioTag>
+              </S.VideoContainer>
+            </div>
+            <S.ButtonGroup>
+              <S.ThreeButton>
+                <S.ButtonStyle onClick={onClickCameraOffHandler}>
+                  {isCameraOn ? (
+                    <div>
+                      <S.ButtonInnerStyle>
+                        <BsFillCameraVideoOffFill size={4.5 * 4.5} />
+                        <p>비디오 끄기</p>
+                      </S.ButtonInnerStyle>
+                    </div>
+                  ) : (
+                    <div>
+                      <S.ButtonInnerStyle>
+                        <BsFillCameraVideoFill size={4.5 * 4.5} />
+                        <p>비디오 켜기</p>
+                      </S.ButtonInnerStyle>
+                    </div>
+                  )}
+                </S.ButtonStyle>
+                <S.ButtonStyle onClick={onClickAudioOffHandler}>
+                  {isAudioOn ? (
+                    <div>
+                      <S.ButtonInnerStyle>
+                        <BsFillMicMuteFill size={4.5 * 4.5} />
+                        <p>마이크 끄기</p>
+                      </S.ButtonInnerStyle>
+                    </div>
+                  ) : (
+                    <div>
+                      <S.ButtonInnerStyle>
+                        <BsFillMicFill size={4.5 * 4.5} />
+                        <p>마이크 켜기</p>
+                      </S.ButtonInnerStyle>
+                    </div>
+                  )}
+                </S.ButtonStyle>
+                <S.ButtonStyle onClick={() => setIsReportModalOpen(true)}>
                   <S.ButtonInnerStyle>
-                    <BsBoxArrowRight size={4.5 * 4.5} />
-                    <p>나가기</p>
+                    <BsFillXOctagonFill size={4.5 * 4.5} />
+                    <p>신고하기</p>
                   </S.ButtonInnerStyle>
                 </S.ButtonStyle>
-                <ExitModal
-                  isExitModalOpen={isExitModalOpen}
-                  onClickCancelExitRoom={onClickCancelExitRoom}
-                  onClickConfirmExitRoom={onClickConfirmExitRoom}
-                />
-                <CleanPointModal
-                  isPointModalOpen={isPointModalOpen}
-                  onClickCancelPoint={onClickCancelPoint}
-                  onClickConfirmPoint={onClickConfirmPoint}
+                <ReportModal
+                  isReportModalOpen={isReportModalOpen}
+                  onClickCancelReport={() => setIsReportModalOpen(false)}
+                  onClickConfirmReport={onClickConfirmReport}
                   nickname={opponentInfoRef.current.nickname}
                 />
-              </S.ButtonGroup>
-            </S.VideoWrapper>
-          </div>
+              </S.ThreeButton>
+              <S.ButtonStyle onClick={onClickEndCalling}>
+                <S.ButtonInnerStyle>
+                  <BsBoxArrowRight size={4.5 * 4.5} />
+                  <p>나가기</p>
+                </S.ButtonInnerStyle>
+              </S.ButtonStyle>
+              <ExitModal
+                isExitModalOpen={isExitModalOpen}
+                onClickCancelExitRoom={onClickCancelExitRoom}
+                onClickConfirmExitRoom={onClickConfirmExitRoom}
+              />
+              <CleanPointModal
+                isPointModalOpen={isPointModalOpen}
+                onClickCancelPoint={onClickCancelPoint}
+                onClickConfirmPoint={onClickConfirmPoint}
+                nickname={opponentInfoRef.current.nickname}
+              />
+            </S.ButtonGroup>
+          </S.VideoWrapper>
           <S.SideBox>
-            <CleanPoint cleanPoint={opponentCleanPoint} />
+            <div
+              style={{
+                paddingTop: "10px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}>
+              <CleanPoint cleanPoint={opponentCleanPoint} />
+              <CallingPageInterestSelect MatchingUserData={MatchingUserData} />
+            </div>
             <CallingPageMemo
               shouldSubmit={shouldSubmit}
               nickname={opponentInfoRef.current.nickname}
             />
-            <CallingPageInterestSelect MatchingUserData={MatchingUserData} />
           </S.SideBox>
         </S.TotalBox>
       </S.MediaBox>
-    </>
+    </S.MediaWrapper>
   );
 };
 

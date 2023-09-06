@@ -65,3 +65,11 @@ export const Icon = styled.img`
   height: 36px;
   border-radius: 30px;
 `;
+
+//통화방 li스타일 컨포넌트
+export const StyledLi = styled.li`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+`;

@@ -187,7 +187,7 @@ export const getUserInfo = async () => {
 };
 
 // 프로필 이미지 변경
-export const changeProfileImg = async (image: FormData) => {
+export const changeProfileImgFormData = async (image: FormData) => {
   try {
     const request = await instance.put(`/api/users/image`, image, {
       headers: { "Content-Type": "multipart/form-data" },

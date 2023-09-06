@@ -36,9 +36,16 @@ const ReportModal: React.FC<ReportModalProps> = (props) => {
     if (selectedRadio) {
       // 선택된 신고 사유를 처리하는 로직을 추가하세요
       console.log("Selected Report Reason:", selectedRadio);
-      ReportMatchingUser(); //내일 백엔드한테 물어보고 해결하기
-      // 모달을 닫습니다.
-      onClickConfirmReport();
+      const result = window.confirm("정말 신고하시겠습니까?");
+      if (result) {
+        window.alert("신고을 진행합니다.");
+        ReportMatchingUser();
+        // 모달을 닫습니다.
+        onClickConfirmReport();
+      } else {
+        window.alert("신고를 취소했습니다.");
+        return;
+      }
     } else {
       console.log("Please select a report reason.");
     }

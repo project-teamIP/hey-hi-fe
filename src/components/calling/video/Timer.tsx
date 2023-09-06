@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import * as S from "./style";
 
 interface TimerProps {
   onStart: () => void;
   running: boolean; // running 값을 전달받을 prop을 추가합니다.
+  time: number;
+  onTimeChange: (newTime: number) => void;
 }
 const Timer: React.FC<TimerProps> = (props) => {
-  const { onStart, running } = props;
-  const navigate = useNavigate();
-  const initialTimeMinutes = 10; // 초기 시간을 분 단위로 설정합니다.
-  const [time, setTime] = useState(initialTimeMinutes * 60); // 초 단위로 변환하여 저장합니다.
-  const [isRunning, setIsRunning] = useState(running);
-
+  const { onStart, running, time, onTimeChange } = props;
   useEffect(() => {
-    let interval: NodeJS.Timeout | undefined; // 초기화를 위해 undefined로 설정
+    let interval: NodeJS.Timeout | undefined;
 
     if (running && time > 0) {
       interval = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
+        onTimeChange(time - 1);
       }, 1000);
     } else if (time === 0) {
       clearInterval(interval);
@@ -26,30 +22,25 @@ const Timer: React.FC<TimerProps> = (props) => {
 
     return () => {
       if (interval !== undefined) {
-        // undefined 체크 추가
         clearInterval(interval);
       }
     };
-  }, [running, time]);
+  }, [running, time, onTimeChange]);
 
   const handleStart = () => {
-    setIsRunning(true);
     onStart();
+    onTimeChange(time); // 타이머 시작할 때 현재 time 값을 전달
   };
 
-  const minutes = Math.floor(time / 60); // 초를 분으로 변환
-  const seconds = time % 60; // 남은 초 계산
+  const formattedMinutes = String(Math.floor(time / 60)).padStart(2, "0");
+  const formattedSeconds = String(time % 60).padStart(2, "0");
 
-  if (time === 0) {
-    alert("통화시간이 종료되었습니다.");
-    navigate("/dashboard");
-  }
   return (
     <div>
       <S.CallTimer>
-        {minutes}:{seconds}
+        {formattedMinutes}: {formattedSeconds}
       </S.CallTimer>
-      {isRunning ? <button onClick={handleStart}></button> : <></>}
+      {running ? <button hidden={true} onClick={handleStart}></button> : <></>}
     </div>
   );
 };

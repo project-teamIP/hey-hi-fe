@@ -7,8 +7,11 @@ import styled from "styled-components";
 import { useQuery } from "react-query";
 import { getUserInfo } from "../api/api";
 import SocialModal from "../components/common/modal/social/SocialModal";
+import Guide from "./Guide";
+import useWindowSize from "../hooks/UseWindowSize";
 
 const DashBoard = () => {
+  const { isSmallScreen } = useWindowSize();
   // 모달
   const [showModal, setShowModal] = useState(false);
 
@@ -19,7 +22,7 @@ const DashBoard = () => {
   const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
 
   const userInfo = data;
-  // console.log(userInfo)
+
   // 소셜 로그인 최초 로그인시
   useEffect(() => {
     if (!isLoading && userInfo && userInfo.interests) {
@@ -35,23 +38,32 @@ const DashBoard = () => {
 
   return (
     <>
-      <DashBoardWrapper>
-        <DashBoardContainer>
-          <div style={{ display: "flex", gap: "33px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "33px" }}>
-              <div style={{ display: "flex", gap: "33px" }}>
-                <DiallogBox />
-                <CallLog />
+      {isSmallScreen ? (
+        <Guide />
+      ) : (
+        <DashBoardWrapper>
+          <DashBoardContainer>
+            <UserContainer>
+              <div style={{ display: "flex", flexDirection: "column", gap: "33px" }}>
+                <div style={{ display: "flex", gap: "33px" }}>
+                  <DiallogBox />
+                  <CallLog />
+                </div>
+                <Memo />
               </div>
-              <Memo />
-            </div>
-            <Interest />
-          </div>
-        </DashBoardContainer>
-      </DashBoardWrapper>
+              <Interest />
+            </UserContainer>
+          </DashBoardContainer>
+        </DashBoardWrapper>
+      )}
       {showModal && <SocialModal />}
     </>
   );
+};
+
+// 미디어 쿼리
+const mediaQuery = {
+  desktop: "@media (max-width: 1463px)",
 };
 
 const DashBoardWrapper = styled.div`
@@ -61,6 +73,12 @@ const DashBoardWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${mediaQuery.desktop} {
+    width: 100%;
+    padding: 0px 182px 0px;
+    box-sizing: border-box;
+  }
 `;
 const DashBoardContainer = styled.div`
   margin-top: 50px;
@@ -74,19 +92,23 @@ const DashBoardContainer = styled.div`
   align-items: center;
   max-width: 1555px;
   width: 100%;
+
+  ${mediaQuery.desktop} {
+    display: flex;
+    gap: 33px;
+    flex-direction: column;
+  }
 `;
-// const DashboardContainer = styled.div`
-//   max-width: 1555px;
-//   width: 100%;
-//   display: flex;
-//   justify-content: start;
-//   align-items: start;
-//   display: flex;
-//   position: absolute;
-//   height: 100%;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-// `;
+
+const UserContainer = styled.div`
+  display: flex;
+  gap: 33px;
+
+  ${mediaQuery.desktop} {
+    display: flex;
+    gap: 26px;
+    flex-direction: column;
+  }
+`;
 
 export default DashBoard;

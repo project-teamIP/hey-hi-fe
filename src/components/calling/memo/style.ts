@@ -35,6 +35,7 @@ export const MemoTitle = styled.input`
   font-weight: 600;
   line-height: normal;
   border: none;
+  outline: none;
 `;
 
 export const MemoTextArea = styled.textarea`
@@ -49,6 +50,7 @@ export const MemoTextArea = styled.textarea`
   font-style: normal;
   font-weight: 500;
   overflow-y: scroll;
+  outline: none;
 `;
 
 export const ErrorMessage = styled.div`
@@ -103,6 +105,8 @@ export const CounterBox = styled.div`
 `;
 
 export const MemoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   h2 {
     color: #000;
     font-size: 20px;

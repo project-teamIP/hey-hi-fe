@@ -12,8 +12,11 @@ import { logIn } from "../../redux/modules/userAuth";
 import LogoImage from "../../assets/images/LogoImage.svg";
 import Google from "../../assets/images/google.svg";
 import Kakao from "../../assets/images/kakao.svg";
+import Guide from "../Guide";
+import useWindowSize from "../../hooks/UseWindowSize";
 
 const Login = () => {
+  const { isSmallScreen } = useWindowSize();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // 아이디, 비밀번호
@@ -38,9 +41,14 @@ const Login = () => {
       dispatch(logIn());
       navigate("/dashboard");
     },
-    onError: () => {
-      // 아이디나 비밀번호가 올바르지 않을때.
-      alert("아이디나 비밀번호가 올바르지 않습니다.");
+    onError: (error: any) => {
+      if (error.response?.data.status === "FORBIDDEN") {
+        // 정지된 계정, 탈퇴한 계정이 로그인 시도 시.
+        alert("사용이 정지된 계정입니다.");
+      } else {
+        // 아이디나 비밀번호가 올바르지 않을때.
+        alert("아이디나 비밀번호가 올바르지 않습니다.");
+      }
     },
   });
 
@@ -61,61 +69,59 @@ const Login = () => {
     window.location.href = GOOGLE_AUTH_URL;
   };
   return (
-    <Wrap>
-      <Logo>
-        <img src={LogoImage} alt="로고" />
-      </Logo>
-      {/* 일반로그인 */}
-      <LoginContainer>
-        <Input
-          placeholder="이메일을 입력하세요"
-          value={userId}
-          onChangeHandler={onChangeUserIdHandler}
-          size="medium"
-        />
-        <Input
-          placeholder="비밀번호를 입력하세요"
-          type="password"
-          value={password}
-          onChangeHandler={onChangePasswordHandler}
-          size="medium"
-          onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === "Enter") {
-              onClickLoginHandler();
-            }
-          }}
-        />
-      </LoginContainer>
-      {/* OR */}
-      <OR>OR</OR>
-      {/* 소셜로그인 */}
-      <SocialContainer>
-        <Button.Primary
-          size="loginbtn"
-          bc="#F8F8F8"
-          color="#000000"
-          onClick={onClickGoogleLoginHandler}>
-          <img src={Google} alt="google" />
-          구글로 시작하기
-        </Button.Primary>
-        <Button.Primary
-          size="loginbtn"
-          bc="#F8F8F8"
-          color="#000000"
-          onClick={onClickKaKaoLoginHandler}>
-          <img src={Kakao} alt="kakao" />
-          카카오로 시작하기
-        </Button.Primary>
-      </SocialContainer>
-      {/* 로그인버튼 */}
-      <LoginButton size="middle" onClick={onClickLoginHandler} bc="#FF6E46">
-        로그인하기
-      </LoginButton>
-      {/* 회원가입 안내문 */}
-      <SignUp>
-        아직 회원이 아니신가요? <Link to="/signup">회원가입</Link>
-      </SignUp>
-    </Wrap>
+    <>
+      {isSmallScreen ? (
+        <Guide />
+      ) : (
+        <Wrap>
+          <Logo>
+            <img src={LogoImage} alt="로고" />
+          </Logo>
+          {/* 일반로그인 */}
+          <LoginContainer>
+            <Input
+              placeholder="이메일을 입력하세요"
+              value={userId}
+              onChangeHandler={onChangeUserIdHandler}
+              size="medium"
+            />
+            <Input
+              placeholder="비밀번호를 입력하세요"
+              type="password"
+              value={password}
+              onChangeHandler={onChangePasswordHandler}
+              size="medium"
+              onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                if (e.key === "Enter") {
+                  onClickLoginHandler();
+                }
+              }}
+            />
+          </LoginContainer>
+          {/* OR */}
+          <OR>OR</OR>
+          {/* 소셜로그인 */}
+          <SocialContainer>
+            <Button.Primary size="sns" onClick={onClickGoogleLoginHandler}>
+              <img src={Google} alt="google" />
+              구글로 시작하기
+            </Button.Primary>
+            <Button.Primary size="sns" onClick={onClickKaKaoLoginHandler}>
+              <img src={Kakao} alt="kakao" />
+              카카오로 시작하기
+            </Button.Primary>
+          </SocialContainer>
+          {/* 로그인버튼 */}
+          <LoginButton size="middle" onClick={onClickLoginHandler} bc="#FF6E46">
+            로그인하기
+          </LoginButton>
+          {/* 회원가입 안내문 */}
+          <SignUp>
+            아직 회원이 아니신가요?<SignUpLink to="/signup">회원가입</SignUpLink>
+          </SignUp>
+        </Wrap>
+      )}
+    </>
   );
 };
 
@@ -196,4 +202,12 @@ const LoginButton = styled(Button.Primary)`
 const SignUp = styled.div`
   display: flex;
   justify-content: center;
+  color: #a0a0a0;
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const SignUpLink = styled(Link)`
+  color: #a0a0a0;
+  margin-left: 15px;
 `;

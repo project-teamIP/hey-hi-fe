@@ -1,5 +1,9 @@
 import styled, { css } from "styled-components";
 
+// 미디어 쿼리
+const mediaQuery = {
+  desktop: "@media (max-width: 1463px)",
+};
 export interface DashBoardStyleProps {
   children: React.ReactNode;
   size?: "diallogBox" | "callLog" | "memo" | "interest";
@@ -32,6 +36,12 @@ export const StyledContainer = styled.div<DashBoardStyleProps>`
         return css`
           height: 818px;
           width: 430px;
+
+          ${mediaQuery.desktop} {
+            height: 392px;
+            width: 1100px;
+            margin-bottom: 57px;
+          }
         `;
       default:
         return css`

@@ -6,6 +6,7 @@ import { CallLogInfo } from "./style";
 import { getDashboardData } from "../../../api/api";
 import noCallLogPath from "../../../assets/images/noCallLog.svg";
 import instance from "../../../api/api";
+import { AxiosError } from "axios";
 
 const CallLog: React.FC = () => {
   const [callLogData, setCallLogData] = useState<CallLogInfo[]>([]); // 빈 배열로 초기화
@@ -20,9 +21,19 @@ const CallLog: React.FC = () => {
   const PlusFriend = async (nickname: string) => {
     try {
       const response = await instance.post(`/api/users/buddy/${nickname}`);
+      if (response.status === 200) {
+        alert(`${nickname}과 친구가 되었습니다.`);
+      }
       return response;
     } catch (error) {
-      console.error("친구 추가 Error:", error);
+      const axiosError = error as AxiosError;
+      console.error("친구 추가 Error:", axiosError);
+      // HTTP 상태 코드에 따른 분기 처리
+      if (axiosError.response?.status === 400) {
+        alert(`${nickname}은 이미 친구입니다.`);
+      } else if (axiosError.response?.status === 404) {
+        alert("친구 추가 실패: 잘못된 경로입니다.");
+      }
     }
   };
 

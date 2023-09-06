@@ -3,19 +3,40 @@ import * as M from "./style";
 import svgPath from "../../../../assets/images/noticeModal_bang.svg";
 import facePath from "../../../../assets/images/dissatisfied_Face.svg";
 import handPath from "../../../../assets/images/sign_language.svg";
+import styled from "styled-components";
 
 interface NoticecModalProps {
   isNoticeModalOpen: boolean;
+  setIsNoticeModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onClickOpenMatchingModal: () => void;
 }
 
 const NoticeModal: React.FC<NoticecModalProps> = (props) => {
-  const { isNoticeModalOpen, onClickOpenMatchingModal } = props;
+  const { isNoticeModalOpen, setIsNoticeModalOpen, onClickOpenMatchingModal } = props;
+
+  const onClickCancleBtn = () => {
+    setIsNoticeModalOpen(false);
+  };
   return (
     <>
       {isNoticeModalOpen && (
         <M.Wrap>
           <M.Container>
+            <ExitIconstyle>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M2.1 27.3L0 25.2L11.55 13.65L0 2.1L2.1 0L13.65 11.55L25.2 0L27.3 2.1L15.75 13.65L27.3 25.2L25.2 27.3L13.65 15.75L2.1 27.3Z"
+                  fill="#000"
+                  style={{ cursor: "pointer" }}
+                  onClick={onClickCancleBtn}
+                />
+              </svg>
+            </ExitIconstyle>
             <M.Icon>
               <img style={{ width: "100%" }} src={svgPath} alt="bang" />
             </M.Icon>
@@ -51,5 +72,14 @@ const NoticeModal: React.FC<NoticecModalProps> = (props) => {
     </>
   );
 };
+
+const ExitIconstyle = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 100%;
+  height: 20px;
+`;
 
 export default NoticeModal;

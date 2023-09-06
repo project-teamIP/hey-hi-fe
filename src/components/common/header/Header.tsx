@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Button from "../button/Button";
 import * as S from "./style";
@@ -11,16 +11,38 @@ import { getUserInfo } from "../../../api/api";
 const Header = () => {
   //유저 정보
   // const { data, isLoading } = useQuery("userInfo", () => getUserInfo());
-  const { data, refetch } = useQuery("userInfo", () => getUserInfo(), {
+  const { data: userInfo, refetch } = useQuery("userInfo", () => getUserInfo(), {
     enabled: false, // 초기 데이터 가져오기를 수동으로 트리거하도록 설정
   });
-
-  const userInfo = data;
-  console.log(userInfo);
 
   //메인헤더만 오렌지컬러
   const location = useLocation();
   const isMainPage = location.pathname === "/";
+
+  //통화방에서는 눌렀을때 경고창뜨기
+  const isCallPage = location.pathname === "/calling";
+  const onClickLinkToDashboard = () => {
+    if (state && isCallPage) {
+      const result = window.confirm("페이지 이동 시 통화 연결이 끊어집니다.");
+      if (result) {
+        const newURL = "/dashboard";
+        window.location.replace(newURL);
+      } else {
+        return;
+      }
+    }
+  };
+  const onClickLinkToMyPage = () => {
+    if (state && isCallPage) {
+      const result = window.confirm("페이지 이동 시 통화 연결이 끊어집니다.");
+      if (result) {
+        const newURL = "/mypage";
+        window.location.replace(newURL);
+      } else {
+        return;
+      }
+    }
+  };
 
   //로그인 상태 따라 버튼 변경
   const state = useSelector((state: RootState) => state.isLoggedIn.isLoggedIn);
@@ -37,6 +59,7 @@ const Header = () => {
     <S.HeaderBox $isMainPage={isMainPage}>
       <S.HeaderInner>
         <S.Nav>
+          {/* 로고 */}
           <Link to="/">
             <svg
               width="101"
@@ -51,26 +74,41 @@ const Header = () => {
             </svg>
           </Link>
           {state ? (
-            <ul>
-              <li>
-                <S.StyledLink to="/dashboard">home</S.StyledLink>
-              </li>
-              <li>
-                <S.StyledLink to="/mypage">my page</S.StyledLink>
-              </li>
-              <li>
-                <S.StyledLink to="/">FAQ</S.StyledLink>
-              </li>
-            </ul>
+            isCallPage ? (
+              <ul>
+                <li style={{ cursor: "pointer" }} onClick={onClickLinkToDashboard}>
+                  home
+                </li>
+                <li style={{ cursor: "pointer" }} onClick={onClickLinkToMyPage}>
+                  my page
+                </li>
+              </ul>
+            ) : (
+              <ul>
+                <li>
+                  <S.StyledLink to="/dashboard">Dashboard</S.StyledLink>
+                </li>
+              </ul>
+            )
           ) : null}
         </S.Nav>
+        {/* 유저정보 */}
         {state ? (
-          <div>
-            <S.StyledLink to="/mypage">
-              <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
-              <S.Icon src={userInfo?.image} alt="유저 이미지" />
-            </S.StyledLink>
-          </div>
+          isCallPage ? (
+            <ul>
+              <S.StyledLi onClick={onClickLinkToMyPage}>
+                <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
+                <S.Icon src={userInfo?.image} alt="유저 이미지" />
+              </S.StyledLi>
+            </ul>
+          ) : (
+            <div>
+              <S.StyledLink to="/mypage">
+                <S.UserName>{userInfo?.nickname}&nbsp;님</S.UserName>
+                <S.Icon src={userInfo?.image} alt="유저 이미지" />
+              </S.StyledLink>
+            </div>
+          )
         ) : (
           <S.StyledLink to="/login">
             <Button.Primary size="loginbtn" outlined="true">

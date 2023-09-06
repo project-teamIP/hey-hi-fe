@@ -1,0 +1,57 @@
+# workflow 이름
+name: hey,Annyeong CI/CD workflow
+
+# workflow 실행 조건
+on: # event 감지
+  push: # main branch가 push 됐을 때
+    branches:
+      - main
+  pull_request: # main branch에 pull request가 발생할 때
+    branches:
+      - main
+
+# workflow 안에서 실행할 작업의 단위
+jobs:
+  # job id
+  deploy:
+    # 작업을 실행할 환경을 정의(가상환경 인스턴스)
+    runs-on: ubuntu-latest
+    # 실행될 작업들
+    steps:
+      - name: checkout source code
+        # 다른 GitHub Actions 액션을 가져와서 사용하도록 지시하는 부분
+        # GitHub Actions에서 제공하는 공식 레포 actions / actions 레포에서 제공되는 특정 액션
+        # Git레포를 클론(체크아웃)하고 워크플로우에서 사용할 수 있도록 레포 소스 가져오도록 동작.
+        uses: actions/checkout@v3 # @v3: 액션의 버전
+        # 즉, GitHub Actions 워크플로우에서 소스 코드를 가져와서 사용할 수 있도록 하는 중요한 단계!
+
+      - name: AWS IAM User 자격 증명 setting
+        # GitHub Actions에서 AWS 자격 증명을 설정하기 위한 액션을 가져와서 사용
+        uses: aws-actions/configure-aws-credentials@v2
+        with: # 액션에 대한 입력 매개변수를 설정
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: .env 설정
+            run: |
+              echo "REACT_APP_KAKAO_REST_API_KEY=${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}" >> .env
+              echo "REACT_APP_KAKAO_REDIRECT_URI=${{ secrets.REACT_APP_KAKAO_REDIRECT_URI }}" >> .env
+              echo "REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}" >> .env
+              echo "REACT_APP_GOOGLE_REDIRECT_URI=${{ secrets.REACT_APP_GOOGLE_REDIRECT_URI }}" >> .env
+              echo "REACT_APP_SERVER_URL=${{ secrets.REACT_APP_SERVER_URL }}" >> .env
+              echo "REACT_APP_WEBSOCKET_SERVER_URL=${{ secrets.REACT_APP_WEBSOCKET_SERVER_URL }}" >> .env
+              cat .env
+            # cat.env .env 파일 내용을 워크플로우 콘솔에 표시 > 파일에 올바르게 추가되었는지 확인하기 위한 디버깅 단계
+
+      - name: 리액트 Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to S3 bucket
+        run: aws s3 sync build/ s3://hey-annyeong.com
+        # AWS CLI를 사용하여 앱을 S3 버킷으로 배포
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

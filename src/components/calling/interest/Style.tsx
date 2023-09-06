@@ -17,7 +17,6 @@ export const CategoriStyle = styled.div`
   border: 1px solid #d8dee9;
   border-radius: 15px;
   background: #ffffff;
-  cursor: pointer;
 
   ${(props) =>
     props.className === "box-color-0" &&
@@ -44,6 +43,11 @@ export const CategoriStyle = styled.div`
     css`
       background-color: #ff6e46; /* 예시 색상 4 */
     `}
+
+    
+  @media (max-width: 1240px) {
+    width: 90%;
+  }
 `;
 
 export const Image = styled.div`

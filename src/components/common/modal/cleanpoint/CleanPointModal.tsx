@@ -5,6 +5,7 @@ import * as M from "../notice/style";
 import instance from "../../../../api/api";
 import pointPath from "../../../../assets/images/pointBox.svg";
 import { useNavigate } from "react-router";
+import { AxiosError } from "axios";
 
 interface CleanPointModalProps {
   isPointModalOpen: boolean;
@@ -63,12 +64,21 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
   const PlusFriend = async () => {
     try {
       const response = await instance.post(`/api/users/buddy/${nickname}`);
+      if (response.status === 200) {
+        alert(`${nickname}과 친구가 되었습니다.`);
+      }
       return response;
     } catch (error) {
-      console.error("친구 추가 Error:", error);
+      const axiosError = error as AxiosError;
+      console.error("친구 추가 Error:", axiosError);
+      // HTTP 상태 코드에 따른 분기 처리
+      if (axiosError.response?.status === 400) {
+        alert(`${nickname}은 이미 친구입니다.`);
+      } else if (axiosError.response?.status === 404) {
+        alert("친구 추가 실패: 잘못된 경로입니다.");
+      }
     }
   };
-
   const onClickConfirmCleanPoint = () => {
     // console.log("매너점수:", score);
     PostCleanPoint();
@@ -77,7 +87,14 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
       PlusFriend();
     }
     if (selectedBlockRadio) {
-      BlockMatchingUser();
+      const result = window.confirm("정말 차단하시겠습니까?");
+      if (result) {
+        window.alert("차단을 진행합니다.");
+        BlockMatchingUser();
+      } else {
+        window.alert("차단을 취소했습니다.");
+        return;
+      }
     }
     navigate("/dashboard");
   };
@@ -93,8 +110,8 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
               <S.SliderBox>
                 <S.SliderTrack value={score}>
                   <S.SliderImageContainer>
-                    <S.SliderImage src={pointPath} alt="pointbox" />
-                    <S.ScoreText>{score}점</S.ScoreText>
+                    <S.SliderImage value={score} src={pointPath} alt="pointbox" />
+                    <S.ScoreText value={score}>{score}점</S.ScoreText>
                   </S.SliderImageContainer>
                 </S.SliderTrack>
                 <S.SliderBackground />
@@ -114,7 +131,7 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
                     <input
                       type="radio"
                       name="addFriend"
-                      value={"nickname"}
+                      value={"addFriend"}
                       checked={selectedRadio}
                       onClick={handleRadioClick}
                     />
@@ -123,8 +140,8 @@ const CleanPointModal: React.FC<CleanPointModalProps> = (props) => {
                   <S.AddFriend>
                     <input
                       type="radio"
-                      name="addFriend"
-                      value={"nickname"}
+                      name="blockUser"
+                      value={"blockUser"}
                       checked={selectedBlockRadio}
                       onClick={handleBlockRadioClick}
                     />
