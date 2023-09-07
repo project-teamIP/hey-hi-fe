@@ -56,4 +56,8 @@
 <img src="./public/readme/profile.gif">
 <img src="./public/readme/memo.gif">
 
+반응형을 이용한 UI 편의성
+
+<img src="./public/readme/responsive-01.gif">
+<img src="./public/readme/responsive-02.gif">
 <br/>
