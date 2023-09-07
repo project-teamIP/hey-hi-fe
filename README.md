@@ -40,6 +40,7 @@
 
 다른 언어를 사용하는 랜덤한 유저와의 1:1 실시간 영상통화
 
+<img src="./public/readme/matching.gif">
 <img src="./public/readme/service_2.png">
 
 클린한 사이트를 유지하지 위한 신고, 차단, 매너점수 제도
@@ -50,5 +51,9 @@
 통화 시 작성한 메모를 확인 할 수 있는 나의 메모장
 
 <img src="./public/readme/service_5.png">
+
+마이페이지에서 프로필, 작성한 메모도 수정이 가능해요
+<img src="./public/readme/profile.gif">
+<img src="./public/readme/memo.gif">
 
 <br/>
