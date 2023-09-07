@@ -31,8 +31,6 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background: #fafafa;
-    width: 100%;
-    height: 100%;
   }
 `;
 
