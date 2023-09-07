@@ -96,14 +96,14 @@ export const CardHeader = styled.div`
   }
   /* 상대방 */
   & > span:last-child {
-    width: 7rem;
+    width: fit-content;
     height: 1.5rem;
     background-color: #ffe4dc;
     border-radius: 1.875rem;
     color: #ff6e46;
     font-size: 0.8125rem;
     font-weight: 600;
-    padding: 0.4375rem 0;
+    padding: 0.4375rem 12px;
     text-align: center;
   }
 `;

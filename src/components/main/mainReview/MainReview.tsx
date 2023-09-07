@@ -40,7 +40,7 @@ const MainReview = () => {
     <S.MainReviewBox>
       <S.SectionNum>SAY</S.SectionNum>
       <h1>생생한 유저들의 후기!</h1>
-      <p className="subtitle">헤이, 안녕을 이용한 사용자들의 다양한 이야기들을 들려드립니다.</p>
+      <p className="subtitle">헤이, 안녕을 이용한 사용자들의 다양한 이야기들을 들어보아요.</p>
       <S.ReviewWrapper>
         <S.Cards>
           <Slider {...settings}>

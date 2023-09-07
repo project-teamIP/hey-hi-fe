@@ -49,7 +49,7 @@ const ImageChangeModal: React.FC<ImageChangeModalProps> = ({ onClickToggleModalH
 
   // 프로필 이미지 서버로 전송
   const onClickImageSubmitHandler = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (profileImg) {
       const imgFormData = new FormData();
       // profileImg가 문자열인 경우 (기본 이미지 선택)
